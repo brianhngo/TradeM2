@@ -2,13 +2,13 @@
 import db from './firebase';
 import React from 'react';
 
+import LoginPage from './Forms/LoginPage';
 function App() {
-  console.log("Message", db)
   return (
-    <div className="App"></div>
+    <div className="App">
+      <LoginPage />
+    </div>
   );
 }
-
-
 
 export default App;
