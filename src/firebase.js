@@ -1,19 +1,44 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import dotenv from 'dotenv';
-dotenv.config();
+import { getDatabase, ref, set } from "firebase/database";
+//import dotenv from 'dotenv';
+//dotenv.config();
 
 //firbase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  apiKey: "AIzaSyCQb8eNiSowhDpBL6T68DrQz9xs2xbNVsA",
+  authDomain: "tradem-1d4bd.firebaseapp.com",
+  projectId: "tradem-1d4bd",
+  storageBucket: "tradem-1d4bd.appspot.com",
+  messagingSenderId: "300111259041",
+  appId: "1:300111259041:web:b20bc9b3f88e07707817e0",
+  measurementId: "G-2PGRCY32RX",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getDatabase(app);
+const reference = ref(db, "Users/" + 3);
+
+function writeUserData(
+  
+  description,
+ 
+) {
+  
+
+  set(reference, {
+  
+    Description: description, 
+    
+  });
+
+}
+
+
+writeUserData('Coffee' )
+
+// const analytics = getAnalytics(app);
+
+export default db;
