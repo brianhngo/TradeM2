@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 //firebase configuration
 const firebaseConfig = {
@@ -17,16 +18,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
-const reference = ref(db, "Users/" + 3);
+const reference = ref(db, 'Users/' + 4);
 
 function writeUserData(description) {
   set(reference, {
-    Description: description,  
+    Description: description,
   });
 }
 
-writeUserData('Coffee' )
+writeUserData('Ketchup');
 
 // const analytics = getAnalytics(app);
+
+export const auth = getAuth(app);
 
 export default db;

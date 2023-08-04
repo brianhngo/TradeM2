@@ -1,0 +1,58 @@
+body {
+    background-color: pink;
+  --bs-body-font-family: var(--bs-font-);
+  /* --primary-color: #0a1118; */
+  --bs-body-bg:#0a1118;
+  /* --primary-color-highlight: #233D54; */
+  --bs-body-font-family: 'Montserrat', sans-serif; 
+}
+
+
+
+
+.green-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.green__overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0a1118;
+  opacity: 0.7;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.green {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Navigation Bar */
+
+.green__content{
+    z-index: 1;
+
+}
+
+
+
+
+@media (max-width: 991px) {
+    .sidebar {
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(22px);
+    }
+  }
