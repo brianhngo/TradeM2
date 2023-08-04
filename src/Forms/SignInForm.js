@@ -41,6 +41,7 @@ export default function SignInForm() {
           onChange={passwordHandler}
           value={password}
           placeholder="Password"></input>
+        <p id="forgetPassword"> Forget Password Link</p>
         <button> Submit </button>
       </form>
     </section>
