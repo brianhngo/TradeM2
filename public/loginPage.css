@@ -14,8 +14,8 @@ body {
 }
 
 .modalContainer {
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -37,7 +37,7 @@ body {
   padding: 10px 10px;
   width: 250px;
   outline: none;
-  color: white;
+
   border-radius: 24px;
   transition: 0.25s;
 }
@@ -52,7 +52,6 @@ body {
   border: 0;
   background: none;
   display: block;
-  margin: 20px auto;
   text-align: center;
   border: 2px solid #3498db;
   padding: 10px 10px;
@@ -61,6 +60,7 @@ body {
   color: rgb(13, 13, 13);
   border-radius: 24px;
   transition: 0.25s;
+  margin: 10px auto;
 }
 
 .loginBody button:hover {
@@ -76,7 +76,83 @@ body {
   font-family: 'Arial', sans-serif;
   text-align: justify;
 }
-
+.footer {
+  text-align: center;
+}
 .footer p:hover {
   text-decoration: underline;
+}
+
+#forgetPassword {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#forgetPassword :hover {
+  text-decoration: underline;
+}
+
+.facebook-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.facebook-icon svg {
+  /* color: #1877f2; */
+  font-size: 20px;
+}
+
+.google-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #ea4335;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.google-icon svg {
+  color: #ea4335;
+  font-size: 20px;
+}
+
+.login-button {
+  width: 250px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-button.facebook {
+  background-color: #3b5998;
+}
+
+.login-button.google {
+  background-color: #db4a39;
+}
+
+.login-button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.login-button {
+  margin-bottom: 10px;
 }
