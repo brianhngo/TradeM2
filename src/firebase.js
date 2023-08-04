@@ -18,7 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
-const reference = ref(db, 'Users/' + 3);
+const reference = ref(db, 'Users/' + 4);
 
 function writeUserData(description) {
   set(reference, {
@@ -26,7 +26,7 @@ function writeUserData(description) {
   });
 }
 
-writeUserData('Coffee');
+writeUserData('Ketchup');
 
 // const analytics = getAnalytics(app);
 

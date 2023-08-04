@@ -1,82 +1,58 @@
 body {
-  padding: 0;
-  margin: 0;
+    background-color: pink;
+  --bs-body-font-family: var(--bs-font-);
+  /* --primary-color: #0a1118; */
+  --bs-body-bg:#0a1118;
+  /* --primary-color-highlight: #233D54; */
+  --bs-body-font-family: 'Montserrat', sans-serif; 
 }
 
-.modalBackground {
-  width: 100vw;
+
+
+
+.green-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.green__overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0a1118;
+  opacity: 0.7;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.green {
+  position: relative;
   height: 100vh;
-  background-color: rgb(200, 200, 200);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+  z-index: -1;
 }
 
-.modalContainer {
-  width: 500px;
-  height: 500px;
-  border-radius: 12px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.loginBody input[type='email'],
-.loginBody input[type='password'] {
-  border: 0;
-  background: none;
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-  border: 2px solid #3498db;
-  padding: 10px 10px;
-  width: 250px;
-  outline: none;
-  color: white;
-  border-radius: 24px;
-  transition: 0.25s;
+/* Navigation Bar */
+
+.green__content{
+    z-index: 1;
+
 }
 
-.loginBody input[type='email']:focus,
-.loginBody input[type='password']:focus {
-  width: 300px;
-  border-color: #2ecc71;
-}
 
-.loginBody button {
-  border: 0;
-  background: none;
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-  border: 2px solid #3498db;
-  padding: 10px 10px;
-  width: 250px;
-  outline: none;
-  color: rgb(13, 13, 13);
-  border-radius: 24px;
-  transition: 0.25s;
-}
 
-.loginBody button:hover {
-  width: 300px;
-  border-color: #2ecc71;
-  background-color: #2ecc71;
-}
 
-.modalContainer p {
-  font-size: 16px;
-  line-height: 1.5;
-  margin: 10px 0;
-  font-family: 'Arial', sans-serif;
-  text-align: justify;
-}
-
-.footer p:hover {
-  text-decoration: underline;
-}
+@media (max-width: 991px) {
+    .sidebar {
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(22px);
+    }
+  }

@@ -5,7 +5,7 @@ import AuthDetails from './AuthDetails';
 
 export default function LoginPage() {
   return (
-    <div className="modalBackground">
+    <div id="login-section" className="modalBackground">
       <div className="modalContainer">
         <div className="title">
           <h1> LOGIN </h1>

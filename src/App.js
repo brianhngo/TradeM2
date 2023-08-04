@@ -1,8 +1,9 @@
 //import './App.css';
 import db from './firebase';
 import React from 'react';
+import LoginPage from './Forms/LoginPage'
 
-import LoginPage from './Forms/LoginPage';
+
 function App() {
   return (
     <div className="App">
