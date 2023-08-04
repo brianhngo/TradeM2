@@ -1,8 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getDatabase, ref, set } from "firebase/database";
-//import dotenv from 'dotenv';
-//dotenv.config();
 
 //firebase configuration
 const firebaseConfig = {
@@ -21,21 +19,11 @@ const analytics = getAnalytics(app);
 const db = getDatabase(app);
 const reference = ref(db, "Users/" + 3);
 
-function writeUserData(
-  
-  description,
- 
-) {
-  
-
+function writeUserData(description) {
   set(reference, {
-  
-    Description: description, 
-    
+    Description: description,  
   });
-
 }
-
 
 writeUserData('Coffee' )
 

@@ -1,11 +1,13 @@
 //import './App.css';
 import db from './firebase';
 import React from 'react';
+import User from './component/User'
 
 function App() {
-  console.log("Message", db)
   return (
-    <div className="App"></div>
+    <div className="App">
+      <User />
+    </div>
   );
 }
 
