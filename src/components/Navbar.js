@@ -13,6 +13,9 @@ export default function navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const isSmallScreen = useMediaQuery({ maxWidth: 767 });
 
+  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 991 });
+
+
   const handleLoginModalOpen = () => {
     setShowLoginModal(true);
   };
@@ -29,8 +32,8 @@ export default function navbar() {
     <>
       <Navbar bg="dark" data-bs-theme="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/home">TradeM</Navbar.Brand>
-          {isSmallScreen ? (
+          <Navbar.Brand  className="nav-title fs-4" href="/home">TradeM</Navbar.Brand>
+          {isSmallScreen || isMediumScreen ? (
             <>
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
@@ -38,7 +41,7 @@ export default function navbar() {
               />
               <Offcanvas show={showOffcanvas} onHide={handleOffcanvasToggle}>
                 <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>Trade Market</Offcanvas.Title>
+                  <Offcanvas.Title className="offcanvas-nav-title">Trade Market</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className="offcanvas-panel">
                   <Nav className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
@@ -53,11 +56,11 @@ export default function navbar() {
           ) : (
             // Regular Navbar for medium and large screens
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="/home" className="fs-5">Home</Nav.Link>
-                <Nav.Link href="/about" className="fs-5">About</Nav.Link>
-                <Nav.Link onClick={handleLoginModalOpen} className="fs-5">Login</Nav.Link>
-                <Nav.Link href="/map" className="fs-5">Map</Nav.Link>
+              <Nav className="me-auto mx-auto">
+                <Nav.Link href="/home" className="fs-5 me-4">Home</Nav.Link>
+                <Nav.Link href="/about" className="fs-5 me-4">About</Nav.Link>
+                <Nav.Link onClick={handleLoginModalOpen} className="fs-5 me-4">Login</Nav.Link>
+                <Nav.Link href="/map" className="fs-5 me-4">Map</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           )}
