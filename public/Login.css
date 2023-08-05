@@ -2,11 +2,14 @@ body {
   padding: 0;
   margin: 0;
 }
-
+.title{
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.4em;;
+  
+}
 .modalBackground {
   width: 100vw;
   height: 100vh;
-  background-color: #0a1118;
   position: fixed;
   display: flex;
   justify-content: center;

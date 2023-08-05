@@ -1,0 +1,10 @@
+.offcanvas-panel{
+    background-color: #061032;
+   
+}
+
+
+.hover-effect:hover{
+    background-color:  white; 
+    border-radius: 10%;
+  }
