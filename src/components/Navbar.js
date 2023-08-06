@@ -40,7 +40,7 @@ export default function navbar() {
                 onClick={handleOffcanvasToggle}
               />
               <Offcanvas className='bg-black' show={showOffcanvas} onHide={handleOffcanvasToggle}>
-                <Offcanvas.Header  className="justify-content-center" closeButton>
+                <Offcanvas.Header  className="justify-content-center border-bottom border-light" closeButton>
                   <Offcanvas.Title className="offcanvas-nav-title fs-4 text-light">Trade Market</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className="offcanvas-panel">

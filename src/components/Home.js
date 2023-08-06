@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import TypingEffect from "./TypingEffect";
 export default function Home() {
   return (
    
@@ -16,7 +16,7 @@ export default function Home() {
           height: "100%",
           top: 0,
           left: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // Change overlay color here
+          backgroundColor: "rgba(0, 0, 0, 0.5)", 
           zIndex: "-1",
         }}
       />
@@ -44,12 +44,11 @@ export default function Home() {
         <Container>
           <Row className="justify-content-start">
             <Col xs={12} md={8} lg={6}>
-              <div className="text-white">
+              <div className="text-white fade-in">
                 <h1 className="display-3 ">Welcome to <span className="display-2" style={{ fontFamily:  'Courier New, Courier, monospace' }}>TradeM</span></h1>
-                <p className="lead">
-                  "Sell Locally, Thrive Globally: Your Gateway to Sustainable
-                  Living."
-                </p>
+                <TypingEffect
+                text=  "Sell Locally, Thrive Globally: Your Gateway to Sustainable Living."
+              />
               </div>
             </Col>
           </Row>
