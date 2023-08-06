@@ -39,9 +39,9 @@ export default function navbar() {
                 aria-controls="basic-navbar-nav"
                 onClick={handleOffcanvasToggle}
               />
-              <Offcanvas show={showOffcanvas} onHide={handleOffcanvasToggle}>
-                <Offcanvas.Header closeButton>
-                  <Offcanvas.Title className="offcanvas-nav-title">Trade Market</Offcanvas.Title>
+              <Offcanvas className='bg-black' show={showOffcanvas} onHide={handleOffcanvasToggle}>
+                <Offcanvas.Header  className="justify-content-center" closeButton>
+                  <Offcanvas.Title className="offcanvas-nav-title fs-4 text-light">Trade Market</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className="offcanvas-panel">
                   <Nav className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
