@@ -1,6 +1,6 @@
 import React from 'react';
-import './loginPage.css';
-import SignInForm from './SignInForm';
+import CreateNewUser from './CreateNewUser';
+import { Link } from 'react-router-dom';
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -8,9 +8,8 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase';
 import AuthDetails from './AuthDetails';
-import { Link } from 'react-router-dom';
-
-export default function LoginPage() {
+import './loginPage.css';
+export default function SignUpModal() {
   const handleGoogle = async (event) => {
     const provider = await new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
@@ -25,22 +24,21 @@ export default function LoginPage() {
     <div id="login-section" className="modalBackground">
       <div className="modalContainer">
         <div className="title">
-          <h1> LOGIN </h1>
-          <p> Please enter your login and password! </p>
+          <h1> Sign Up </h1>
         </div>
         <div className="body">
-          <SignInForm />
+          <CreateNewUser />
         </div>
 
         <div className="footer">
           <div className="footerLinks">
             <p>
-              <Link to="/signup"> Sign Up </Link>
-            </p>
-            <p>
-              <Link to="/forgetPassword"> Forget Password? </Link>
+              <Link to="/login"> Back to Login </Link>
             </p>
           </div>
+        </div>
+
+        <div className="footer">
           <div className="thirdPartyUrl">
             <button onClick={handleGoogle} className="login-button google">
               <svg
