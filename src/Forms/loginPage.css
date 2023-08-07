@@ -12,10 +12,12 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+.title p {
+  text-align: center;
+}
 .modalContainer {
-  width: 600px;
-  height: 600px;
+  width: 700px;
+
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -27,6 +29,7 @@ body {
   text-align: center;
 }
 .loginBody input[type='email'],
+.loginBody input[type='text'],
 .loginBody input[type='password'] {
   border: 0;
   background: none;
@@ -43,9 +46,14 @@ body {
 }
 
 .loginBody input[type='email']:focus,
+.loginBody input[type='text'],
 .loginBody input[type='password']:focus {
   width: 300px;
   border-color: #2ecc71;
+}
+.loginBody input[type='password']:focus,
+.loginBody input[type='text']:focus {
+  left: 15px;
 }
 
 .loginBody button {
@@ -74,24 +82,19 @@ body {
   line-height: 1.5;
   margin: 10px 0;
   font-family: 'Arial', sans-serif;
-  text-align: justify;
+  /* text-align: justify; */
 }
-.footer {
+.footer p {
   text-align: center;
+  cursor: pointer;
+  color: #212529;
 }
 .footer p:hover {
   text-decoration: underline;
 }
-
-#forgetPassword {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-#forgetPassword :hover {
-  text-decoration: underline;
+.footer a {
+  color: #212529;
+  text-decoration: none;
 }
 
 .facebook-icon {
@@ -105,7 +108,6 @@ body {
 }
 
 .facebook-icon svg {
-  /* color: #1877f2; */
   font-size: 20px;
 }
 
@@ -155,4 +157,70 @@ body {
 
 .login-button {
   margin-bottom: 10px;
+}
+
+.loginBody input.errorStatusBorder {
+  border-color: red;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.password-input-container {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  margin: 0 auto;
+  margin-left: 15px;
+}
+
+.toggle-password-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.password-requirements {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  z-index: 1;
+  color: red;
+}
+
+.loginBody input {
+  padding-bottom: 20px;
+}
+
+.password-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.password-requirements {
+  width: 80px;
+  height: 85px;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  border-radius: 5px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-bar {
+  width: 70%;
+  background-color: red;
+}
+.passwordStrengthContainer {
+  width: 80%;
+
+  margin-left: 10%;
 }

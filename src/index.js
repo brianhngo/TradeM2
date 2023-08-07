@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import App from './App.js';
-import LoginPage from './Forms/LoginPage.js';
 
 const container = document.getElementById('App');
 const root = createRoot(container);
