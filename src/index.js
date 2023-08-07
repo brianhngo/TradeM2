@@ -20,11 +20,5 @@ root.render(
   <Router>
     <Navbar />
     <App />
-    <Routes>
-      <Route path="/home" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      {/* <Route path="/login" element={<LoginPage />} /> */}
-      <Route path="/map" element={<Map />} />
-    </Routes>
   </Router>
 );
