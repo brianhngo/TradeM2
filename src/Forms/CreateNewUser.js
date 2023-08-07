@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from 'firebase/auth';
+import React, { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import PasswordStrengthMeter from './PasswordStrengthMeter';
+import './loginPage.css';
 
 export default function CreateNewUser() {
   const [email, setEmail] = useState('');

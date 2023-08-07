@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase';
 import AuthDetails from './AuthDetails';
-
+import './loginPage.css';
 export default function SignUpModal() {
   const handleGoogle = async (event) => {
     const provider = await new GoogleAuthProvider();

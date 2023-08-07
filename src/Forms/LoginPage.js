@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
+import './loginPage.css';
 import SignInForm from './SignInForm';
 import {
   signInWithPopup,

@@ -1,6 +1,6 @@
 import React from 'react';
 import zxcvbn from 'zxcvbn';
-
+import './loginPage.css';
 export default function PasswordStrengthMeter({ password }) {
   const testResult = zxcvbn(password);
   const num = (testResult.score * 100) / 4;
