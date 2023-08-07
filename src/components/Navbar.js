@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import LoginPage from "../Forms/LoginPage";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useMediaQuery } from "react-responsive";
+import './Styles.css'; 
 
 export default function navbar() {
   const [showLoginModal, setShowLoginModal] = useState(false);

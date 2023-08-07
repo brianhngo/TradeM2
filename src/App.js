@@ -9,7 +9,6 @@ import { Route, Routes } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import SignUpModal from './Forms/SignUpModal';
 import ForgetPassword from './Forms/ForgetPassword';
-import { Route, Routes } from 'react-router-dom';
 
 function App() {
   
