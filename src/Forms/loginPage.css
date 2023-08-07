@@ -1,0 +1,226 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.modalBackground {
+  width: 100vw;
+  height: 100vh;
+  background-color: #0a1118;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title p {
+  text-align: center;
+}
+.modalContainer {
+  width: 700px;
+
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.loginBody input[type='email'],
+.loginBody input[type='text'],
+.loginBody input[type='password'] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 10px 10px;
+  width: 250px;
+  outline: none;
+
+  border-radius: 24px;
+  transition: 0.25s;
+}
+
+.loginBody input[type='email']:focus,
+.loginBody input[type='text'],
+.loginBody input[type='password']:focus {
+  width: 300px;
+  border-color: #2ecc71;
+}
+.loginBody input[type='password']:focus,
+.loginBody input[type='text']:focus {
+  left: 15px;
+}
+
+.loginBody button {
+  border: 0;
+  background: none;
+  display: block;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 10px 10px;
+  width: 250px;
+  outline: none;
+  color: rgb(13, 13, 13);
+  border-radius: 24px;
+  transition: 0.25s;
+  margin: 10px auto;
+}
+
+.loginBody button:hover {
+  width: 300px;
+  border-color: #2ecc71;
+  background-color: #2ecc71;
+}
+
+.modalContainer p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 10px 0;
+  font-family: 'Arial', sans-serif;
+  /* text-align: justify; */
+}
+.footer p {
+  text-align: center;
+  cursor: pointer;
+  color: #212529;
+}
+.footer p:hover {
+  text-decoration: underline;
+}
+.footer a {
+  color: #212529;
+  text-decoration: none;
+}
+
+.facebook-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.facebook-icon svg {
+  font-size: 20px;
+}
+
+.google-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #ea4335;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.google-icon svg {
+  color: #ea4335;
+  font-size: 20px;
+}
+
+.login-button {
+  width: 250px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-button.facebook {
+  background-color: #3b5998;
+}
+
+.login-button.google {
+  background-color: #db4a39;
+}
+
+.login-button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.login-button {
+  margin-bottom: 10px;
+}
+
+.loginBody input.errorStatusBorder {
+  border-color: red;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.password-input-container {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  margin: 0 auto;
+  margin-left: 15px;
+}
+
+.toggle-password-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.password-requirements {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  z-index: 1;
+  color: red;
+}
+
+.loginBody input {
+  padding-bottom: 20px;
+}
+
+.password-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.password-requirements {
+  width: 80px;
+  height: 85px;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  border-radius: 5px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-bar {
+  width: 70%;
+  background-color: red;
+}
+.passwordStrengthContainer {
+  width: 80%;
+
+  margin-left: 10%;
+}

@@ -1,7 +1,7 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { auth } from '../firebase';
-
+import './loginPage.css';
 export default function AuthDetails() {
   // storing the User Info as a state
   const [authUser, setAuthUser] = useState(null);

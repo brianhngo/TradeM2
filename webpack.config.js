@@ -1,5 +1,5 @@
 const Dotenv = require('dotenv-webpack');
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'development',
   entry: ['./src/index.js'],
@@ -24,13 +24,13 @@ module.exports = {
           presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       },
-      {
-        test: /\.(sass|less|css)$/,
-        use: ["style-loader", "css-loader", 'sass-loader'],
-      },
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
+    }),
     new Dotenv(),
   ],
 };

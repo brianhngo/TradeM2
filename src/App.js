@@ -7,6 +7,10 @@ import About from './components/About';
 import Map from './components/Map';
 import { Route, Routes } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import SignUpModal from './Forms/SignUpModal';
+import ForgetPassword from './Forms/ForgetPassword';
+import { Route, Routes } from 'react-router-dom';
+
 function App() {
   
   return (
@@ -22,6 +26,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/map" element={<Map />} />
+
+      <Route path="/signup" element={<SignUpModal />} />
+      <Route path="/forgetPassword" element={<ForgetPassword />} />
         
       </Routes>
 
@@ -29,6 +36,8 @@ function App() {
     </div>
    
     </>
+   
+     
   );
 }
 
