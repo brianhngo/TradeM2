@@ -26,8 +26,8 @@ export default function LoginPage({ show, handleClose }) {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <div className="title text-center">
-          <Modal.Title className="text-center">Login</Modal.Title>
+        <div className="title w-100  text-center">
+          <Modal.Title className="text-center w-100">Login</Modal.Title>
         </div>
       </Modal.Header>
 
@@ -46,7 +46,8 @@ export default function LoginPage({ show, handleClose }) {
               <Link to="/forgetPassword"> Forget Password? </Link>
             </p>
           </div>
-          <div className="thirdPartyUrl">
+          <div className="thirdPartyUrl d-flex flex-column align-items-center">
+
             <Button onClick={handleGoogle} className="login-button google">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,24 +80,3 @@ export default function LoginPage({ show, handleClose }) {
   );
 }
 
-// export default function LoginPage() {
-//   return (
-//     <div id="login-section" className="modalBackground">
-//       <div className="modalContainer">
-//         <div className="title">
-//           <h1> LOGIN </h1>
-//           <p> Please enter your login and password! </p>
-//         </div>
-//         <div className="body">
-//           <SignInForm />
-//         </div>
-
-//         <div className="footer">
-//           <p> Create New User Link</p>
-//           <p> Forget Password Link</p>
-//           <div className="thirdPartyUrl"></div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
