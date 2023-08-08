@@ -5,10 +5,15 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
-} from 'firebase/auth';
-import { auth } from '../firebase';
-import AuthDetails from './AuthDetails';
-import { Link } from 'react-router-dom';
+
+} from "firebase/auth";
+import { auth } from "../firebase";
+import AuthDetails from "./AuthDetails";
+
+import { Link } from "react-router-dom";
+
+
+
 
 export default function LoginPage() {
   const handleGoogle = async (event) => {
@@ -23,11 +28,14 @@ export default function LoginPage() {
 
   return (
     <div id="login-section" className="modalBackground">
-      <div className="modalContainer">
-        <div className="title">
-          <h1> LOGIN </h1>
-          <p> Please enter your login and password! </p>
-        </div>
+
+    <div className="modalContainer">
+      <div className="title">
+        <h1> LOGIN </h1>
+        <p> Please enter your login and password! </p>
+      </div>
+
+
         <div className="body">
           <SignInForm />
         </div>
