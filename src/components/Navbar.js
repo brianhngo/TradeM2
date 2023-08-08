@@ -3,27 +3,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Modal from "react-bootstrap/Modal";
-import LoginPage from "../Forms/LoginPage";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useMediaQuery } from "react-responsive";
+import LoginPage from "../Forms/LoginPage";
 import "./Styles.css";
 
 export default function navbar() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const isSmallScreen = useMediaQuery({ maxWidth: 767 });
   const [darkMode, setDarkMode] = useState(true);
 
   const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 991 });
 
-  const handleLoginModalOpen = () => {
-    setShowLoginModal(true);
-  };
-
-  const handleLoginModalClose = () => {
-    setShowLoginModal(false);
-  };
 
   const handleOffcanvasToggle = () => {
     setShowOffcanvas(!showOffcanvas);
@@ -94,8 +85,7 @@ export default function navbar() {
                     </Nav.Link>
 
                     <Nav.Link
-                      className="text-primary fs-2 fw-light hover-effect my-3"
-                      onClick={handleLoginModalOpen}
+                      className="text-primary fs-2 fw-light hover-effect my-3" href="/login"
                     >
                       Login
                     </Nav.Link>
@@ -113,7 +103,7 @@ export default function navbar() {
                 <Nav.Link href="/about" className="fs-5 me-4">
                   About
                 </Nav.Link>
-                <Nav.Link onClick={handleLoginModalOpen} className="fs-5 me-4">
+                <Nav.Link href="/login" className="fs-5 me-4">
                   Login
                 </Nav.Link>
                 <Nav.Link href="/map" className="fs-5 me-4">
@@ -159,7 +149,7 @@ export default function navbar() {
                 </div>
       </Navbar>
 
-      <LoginPage show={showLoginModal} handleClose={handleLoginModalClose} />
+
     </>
   );
 }

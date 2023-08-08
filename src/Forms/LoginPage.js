@@ -8,11 +8,10 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import AuthDetails from "./AuthDetails";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-export default function LoginPage({ show, handleClose }) {
+export default function LoginPage() {
   const handleGoogle = async (event) => {
     const provider = await new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
@@ -24,15 +23,12 @@ export default function LoginPage({ show, handleClose }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <div className="title w-100  text-center">
-          <Modal.Title className="text-center w-100">Login</Modal.Title>
-        </div>
-      </Modal.Header>
-
-      <Modal.Body>
+    <div id="login-section" className="modalBackground">
+    <div className="modalContainer">
+      <div className="title">
+        <h1> LOGIN </h1>
         <p> Please enter your login and password! </p>
+      </div>
 
         <div className="body">
           <SignInForm />
@@ -75,8 +71,8 @@ export default function LoginPage({ show, handleClose }) {
           </div>
         </div>
         <AuthDetails />
-      </Modal.Body>
-    </Modal>
+      </div>
+    </div>
   );
 }
 
