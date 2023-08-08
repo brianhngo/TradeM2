@@ -16,7 +16,7 @@ const UserProfile = ({ user }) => {
       setImage(e.target.files[0]);
     }
   };
-
+ 
   //this is for uploading selected file to firebase
   const handleSubmitImage = () => {
     const storage = getStorage();
