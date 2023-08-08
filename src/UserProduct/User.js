@@ -1,58 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import firebase from '../firebase';
 import UserProfile from './UserProfile';
 import ProductGrid from './ProductGrid';
-import { useParams } from 'react-router-dom';
-import './User.css'
 
-const User = ({ match }) => {
-  const [user, setUser] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+export default function User() {
+  const [user, setUser] = useState({
+    name: "John Doe",
+    profileImageUrl: "https://xsgames.co/randomusers/assets/avatars/male/27.jpg"
+  });
+  const [products, setProducts] = useState([
+    {id: 1, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-ToyTruck.jpg', name: 'product 1', description: 'product description', price: '10', category: 'category 1'},
+    {id: 2, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Boxing.jpg', name: 'product 2', description: 'product description', price: '15', category: 'category 2'},
+    {id: 3, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Cup.jpg', name: 'product 3', description: 'product description', price: '20', category: 'category 3'},
+    {id: 4, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Rocker.jpg', name: 'product 4', description: 'product description', price: '21', category: 'category 4'},
+    {id: 5, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Commodore64.jpg', name: 'product 5', description: 'product description', price: '210', category: 'category 5'},
+  ]);
 
-  //get user id from url ex) http://localhost:3000/user/1
-  const { userId } = useParams();
-  //const { userId } = match.params;
-
-  //get user data and user's products
-  useEffect(() => {
-    const fetchUserAndProducts = async () => {
-      const userRef = firebase.database().ref('Users').child(userId);
-      const userSnapshot = await userRef.once('value');
-      const userData = userSnapshot.val();
-      
-      const productsRef = firebase.database().ref('Products');
-      const productsSnapshot = await productsRef.once('value');
-      const productsData = productsSnapshot.val();
-      
-      const userProducts = Object.values(productsData).filter(
-        product => product.userId === userId
-      );
-
-      setUser(userData);
-      setProducts(userProducts);
-    };
-
-    fetchUserAndProducts();
-  }, [userId]);
-
-  //check auth for logged in user
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      setCurrentUser(user);
-    });
-  }, []);
-
-  if (!user || !products) {
-    return <div>Loading...</div>;
-  }
+  // useEffect(() => {
+  //   fetchUserData().then(data => setUser(data));
+  //   fetchProductsData().then(data => setProducts(data));
+  // }, []);
 
   return (
-    <div className="user-page">
-      <UserProfile user={user} isCurrentUser={currentUser && currentUser.uid === userId} />
-      <ProductGrid products={products} isCurrentUser={currentUser && currentUser.uid === userId} />
-    </div>
+    <div className="body">
+    <UserProfile user={user} />
+    <ProductGrid products={products} />
+  </div>
   );
-};
-
-export default User;
+}

@@ -2,7 +2,6 @@ import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
-import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage'; 
@@ -19,28 +18,28 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getDatabase(app);
+
+function writeUserData(userId, description) {
+  const reference = ref(db, 'Users/' + userId);
+  set(reference, {
+    Description: description,
+  });
 }
 
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// const db = getDatabase(app);
-// const reference = ref(db, 'Users/' + 4);
+export const auth = getAuth(app);
 
-// function writeUserData(description) {
-//   set(reference, {
-//     Description: description,
-//   });
+export default db;
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// } else {
+//   firebase.app();
 // }
 
-writeUserData('Ketchup');
-
-// const analytics = getAnalytics(app);
-
-export const db = firebase.database();
-export const auth = firebase.auth();
-export const storage = firebase.storage();
-export default firebase;
+// export const db = firebase.database();
+// export const auth = firebase.auth();
+// export const storage = firebase.storage();
+// export default firebase;
