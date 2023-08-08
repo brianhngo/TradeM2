@@ -1,0 +1,34 @@
+.profileContainer {
+  width: 100vw;
+  height: 100vh;
+  background-color: #0a1118;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: fixed;
+}
+.userProfilePic {
+  position: absolute;
+  max-width: '100px';
+  max-height: '100px';
+  top: 15%;
+  left: 20%;
+}
+.profileName {
+  position: absolute;
+  color: aliceblue;
+  top: 30%;
+  left: 47%;
+  font-size: 40px;
+}
+.userProfileDetails {
+  position: absolute;
+  color: aliceblue;
+  top: 40%;
+  left: 47%;
+}
+.userProfileDetails h6 {
+  font-size: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
