@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products, deleteProduct }) => {
   return (
     <div className="product-grid">
       {Array.isArray(products) && products.map((product) => (
@@ -11,7 +11,7 @@ const ProductGrid = ({ products }) => {
           <p>{product.price}</p>
           <p>{product.category}</p>
           <button>Edit</button>
-          <button>Delete</button>
+          <button onClick={() => deleteProduct(product.id)}>Delete</button>
         </div>
       ))}
     </div>
