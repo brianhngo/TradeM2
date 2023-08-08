@@ -25,8 +25,21 @@ module.exports = {
         },
       },
       {
-        test: /\.(sass|less|css)$/,
-        use: ["style-loader", "css-loader", 'sass-loader'],
+        test: /\.css$/,
+        use: [
+          process.env.NODE_ENV !== 'production'
+            ? 'style-loader'
+            : MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
     ],
   },
