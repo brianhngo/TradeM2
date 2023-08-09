@@ -4,7 +4,7 @@ import { useState } from "react";
 import React from 'react';
 import './UserProduct.css'
 
-const UserProfile = ({ user }) => {
+const UserCard = ({ user }) => {
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
@@ -55,4 +55,4 @@ const UserProfile = ({ user }) => {
   );
 };
 
-export default UserProfile;
+export default UserCard;
