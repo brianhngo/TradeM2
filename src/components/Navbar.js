@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -7,7 +7,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useMediaQuery } from 'react-responsive';
 import LoginPage from '../Forms/LoginPage';
 import './Styles.css';
-
+import { auth } from '../firebase';
 export default function navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const isSmallScreen = useMediaQuery({ maxWidth: 767 });
@@ -21,6 +21,22 @@ export default function navbar() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+  };
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = () => {
+    auth.signOut();
   };
 
   return (
@@ -97,9 +113,19 @@ export default function navbar() {
                 <Nav.Link href="/about" className="fs-5 me-4">
                   About
                 </Nav.Link>
-                <Nav.Link href="/login" className="fs-5 me-4">
-                  Login
-                </Nav.Link>
+                 {/* Conditional rendering of login/logout button */}
+                 {user ? (
+                  <Nav.Link
+                    href="#"
+                    className="fs-5 me-4"
+                    onClick={handleLogout}>
+                    Logout
+                  </Nav.Link>
+                ) : (
+                  <Nav.Link href="/login" className="fs-5 me-4">
+                    Login
+                  </Nav.Link>
+                )}
                 <Nav.Link href="/map" className="fs-5 me-4">
                   Map
                 </Nav.Link>
