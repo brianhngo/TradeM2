@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import './loginPage.css';
+import { useNavigate } from 'react-router-dom';
 export default function SignInForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
@@ -25,8 +27,11 @@ export default function SignInForm() {
     // Checks the token to see if the Username and Password associated to token matches input
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setErrorStatus(false);
         console.log(userCredential);
+        setErrorStatus(false);
+        // navigate(`/profile/${userCredential.user.uid}`);
+        navigate('/profile', { state: { uid: userCredential.user.uid } });
+        // navigate(`/profile`);
       })
       .catch((error) => {
         setErrorStatus(true);

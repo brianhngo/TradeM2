@@ -26,7 +26,7 @@ export default function SignUpModal() {
         <div className="title">
           <h1> Sign Up </h1>
         </div>
-        <div className="body">
+        <div className="bodyForum">
           <CreateNewUser />
         </div>
 
