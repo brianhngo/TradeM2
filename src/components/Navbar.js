@@ -83,6 +83,12 @@ export default function navbar() {
                     >
                       Map
                     </Nav.Link>
+                    <Nav.Link
+                      className="text-secondary fs-2 fw-light hover-effect my-3"
+                      href="/products"
+                    >
+                      Products
+                    </Nav.Link>
 
                     <Nav.Link
                       className="text-primary fs-2 fw-light hover-effect my-3" href="/login"
