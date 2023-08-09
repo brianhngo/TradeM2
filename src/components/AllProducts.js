@@ -23,7 +23,11 @@ const AllProducts = () => {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            <h3>Name: {product['Name']}</h3>
+            <img src={product['Image']} />
+            <p>Category: {product ['Category']} </p>
+            <p>Name: {product['ProductName']} </p>
+       
+            
             <p>Description: {product ['Description']}</p>
             <p>Price: ${product['Price']}</p>
           </li>
