@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserProfile from './UserProfile';
 import ProductGrid from './ProductGrid';
+import './UserProduct.css'
 
 export default function User() {
 
@@ -58,15 +59,17 @@ const addProduct = () => {
     <div className="body">
     <UserProfile user={user} />
     
-  <div>
-    <h4>Add New Product</h4>
-    <input type="text" placeholder="Image URL" name="imageUrl" value={newProduct.imageUrl} onChange={handleInputChange} />
-    <input type="text" placeholder="Product Name" name="name" value={newProduct.name} onChange={handleInputChange} />
-    <input type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
-    <input type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />
-    <input type="text" placeholder="Category" name="category" value={newProduct.category} onChange={handleInputChange} />
-    <button onClick={addProduct}>Add Product</button>
-  </div>
+    <div>
+      <div className="add-product-section">
+        <h4 className="add-product-title">Add New Product</h4>
+        <input className="input-product-image-url" type="text" placeholder="Image URL" name="imageUrl" value={newProduct.imageUrl} onChange={handleInputChange} />
+        <input className="input-product-name" type="text" placeholder="Product Name" name="name" value={newProduct.name} onChange={handleInputChange} />
+        <input className="input-product-description" type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
+        <input className="input-product-price" type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />
+        <input className="input-product-category" type="text" placeholder="Category" name="category" value={newProduct.category} onChange={handleInputChange} />
+        <button className="add-product-btn" onClick={addProduct}>Add Product</button>
+      </div>
+    </div>
 
 <ProductGrid products={products} deleteProduct={deleteProduct} />
 </div>

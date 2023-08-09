@@ -1,17 +1,18 @@
 import React from 'react';
+import './UserProduct.css'
 
 const ProductGrid = ({ products, deleteProduct }) => {
   return (
     <div className="product-grid">
       {Array.isArray(products) && products.map((product) => (
         <div key={product.id} className="product-card">
-          <img src={product.imageUrl} alt={product.name} />
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-          <p>{product.category}</p>
-          <button>Edit</button>
-          <button onClick={() => deleteProduct(product.id)}>Delete</button>
+          <img className="product-image" src={product.imageUrl} alt={product.name} />
+          <h3 className="product-name">{product.name}</h3>
+          <p className="product-description">{product.description}</p>
+          <p className="product-price">{product.price}</p>
+          <p className="product-category">{product.category}</p>
+          <button className="edit-product-btn">Edit</button>
+          <button className="delete-product-btn" onClick={() => deleteProduct(product.id)}>Delete</button>
         </div>
       ))}
     </div>

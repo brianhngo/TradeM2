@@ -2,6 +2,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { auth } from "../firebase";
 import { useState } from "react";
 import React from 'react';
+import './UserProduct.css'
 
 const UserProfile = ({ user }) => {
   const [image, setImage] = useState(null);
@@ -20,7 +21,8 @@ const UserProfile = ({ user }) => {
   //this is for uploading selected file to firebase
   const handleSubmitImage = () => {
     const storage = getStorage();
-    const storageRef = ref(storage, `profileImages/${auth.currentUser.uid}`);
+    const storageRef = ref(storage, `profileImages//profileImages`);
+    //const storageRef = ref(storage, `profileImages/${auth.currentUser.uid}`); check for auth user uid to save profile image
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on('state_changed', 
@@ -41,15 +43,15 @@ const UserProfile = ({ user }) => {
   };
 
   return (
+  <div className="profile-card-container">
     <div className="user-profile">
-      <img src={url || user.profileImageUrl} alt="User profile" />
-      <h2>{user.name}</h2>
-      <h4>Upload Profile Image</h4>
-      <input type="file" onChange={handleImageChange} />
-      <button onClick={handleSubmitImage}>Submit Profile Image</button>
-      <h4>Add new product</h4>
-      <button onClick={handleAddProduct}>Add a new product</button>
+      <img className="user-profile-image" src={url || user.profileImageUrl} alt="User profile" />
+      <h2 className="user-name">{user.name}</h2>
+      <h4 className="upload-profile-image-title">Upload Profile Image</h4>
+      <input className="upload-profile-image-input" type="file" onChange={handleImageChange} />
+      <button className="submit-profile-image-btn" onClick={handleSubmitImage}>Submit Profile Image</button>
     </div>
+  </div>
   );
 };
 
