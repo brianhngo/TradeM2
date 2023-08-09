@@ -9,9 +9,22 @@
 
 .product-card {
     border: 1px solid #726b6b;
+    background-color: #21212c;
     padding: 16px;
     border-radius: 8px;
-    max-width: 200px;
+    box-shadow: 0 5px 10px #a9a9b9;
+    max-width: 300px;
+    position: relative;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    opacity: 1;
+    transform: translateY(-20px);
 }
 
 .product-image {
@@ -23,6 +36,7 @@
 
 .product-name, .product-description, .product-price, .product-category {
     margin-top: 8px;
+    color: #fff;
 }
 
 .edit-product-btn, .delete-product-btn {
@@ -144,7 +158,8 @@
 }
 
 .upload-profile-image-title {
-    font-size: 12px;
+    color: #fff;
+    font-size: 14px;
     font-weight: 300;
     text-transform: initial;
 }

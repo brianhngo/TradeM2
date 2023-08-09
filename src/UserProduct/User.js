@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UserProfile from './UserProfile';
+import UserCard from './UserCardjs';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css'
 
@@ -57,7 +57,7 @@ const addProduct = () => {
 
   return (
     <div className="body">
-    <UserProfile user={user} />
+    <UserCard user={user} />
     
     <div>
       <div className="add-product-section">
