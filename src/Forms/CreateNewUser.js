@@ -106,7 +106,7 @@ export default function CreateNewUser() {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const reference = ref(db, 'Users/' + userCredential.user.uid);
-
+          console.log(userCredential);
           // Inputting the newly created uid from Firebase Auth into our DB
           function writeUserData(id, email) {
             set(reference, {
@@ -124,7 +124,9 @@ export default function CreateNewUser() {
           setEmail('');
           setPassword('');
           setPassword2('');
-          navigate('/profile');
+          // navigate(`/profile/${userCredential.user.uid}`);
+          // navigate('/profile');
+          navigate('/profile', { state: { uid: userCredential.user.uid } });
         })
 
         .catch((error) => {

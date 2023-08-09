@@ -27,8 +27,11 @@ export default function SignInForm() {
     // Checks the token to see if the Username and Password associated to token matches input
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        console.log(userCredential);
         setErrorStatus(false);
-        navigate('/profile');
+        // navigate(`/profile/${userCredential.user.uid}`);
+        navigate('/profile', { state: { uid: userCredential.user.uid } });
+        // navigate(`/profile`);
       })
       .catch((error) => {
         setErrorStatus(true);

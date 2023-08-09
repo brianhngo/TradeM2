@@ -35,7 +35,7 @@ export default function ForgetPassword() {
             where you can change your password.
           </p>
         </div>
-        <div className="body">
+        <div className="bodyForum">
           {status === true ? (
             <p> Email Confirmation has been sent!</p>
           ) : (
