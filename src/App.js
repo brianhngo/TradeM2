@@ -1,4 +1,3 @@
-import db from './firebase';
 import React from 'react';
 import LoginPage from './Forms/LoginPage';
 

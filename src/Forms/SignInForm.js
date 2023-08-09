@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import './loginPage.css';
+import { useNavigate } from 'react-router-dom';
 export default function SignInForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
@@ -26,7 +28,7 @@ export default function SignInForm() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setErrorStatus(false);
-        console.log(userCredential);
+        navigate('/profile');
       })
       .catch((error) => {
         setErrorStatus(true);
