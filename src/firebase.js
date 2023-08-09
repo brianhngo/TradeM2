@@ -2,6 +2,9 @@ import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/storage'; 
 
 //firebase configuration
 const firebaseConfig = {
@@ -18,18 +21,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
-const reference = ref(db, 'Users/' + 8);
 
-function writeUserData(description) {
+function writeUserData(userId, description) {
+  const reference = ref(db, 'Users/' + userId);
   set(reference, {
     Description: description,
   });
 }
 
-writeUserData('Latte');
-
-// const analytics = getAnalytics(app);
-
 export const auth = getAuth(app);
 
 export default db;
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// } else {
+//   firebase.app();
+// }
+
+// export const db = firebase.database();
+// export const auth = firebase.auth();
+// export const storage = firebase.storage();
+// export default firebase;
