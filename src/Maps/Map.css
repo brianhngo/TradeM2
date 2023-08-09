@@ -1,13 +1,13 @@
+/* Map.css */
 .mapContainer {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  height: 50vh;
-  width: 50vh;
-  background-color: navy;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(11, 11, 11);
 }
 
 .leaflet-container {
-  width: 50vh;
-  height: 50vh;
+  width: 80vh;
+  height: 80vh;
 }
