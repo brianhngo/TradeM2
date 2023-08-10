@@ -9,6 +9,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
+import User from '../UserProduct/User';
 
 export default function UserProfile() {
   const [user, setUser] = useState(null);
@@ -37,11 +38,11 @@ export default function UserProfile() {
     // User's DB reference
     try {
       const newData = {
-        Address: streetAddress,
-        city: city,
-        postalCode: postalCode,
-        region: region,
-        country: country,
+        // Address: streetAddress,
+        // city: city,
+        // postalCode: postalCode,
+        // region: region,
+        // country: country,
         Admin: false,
         EmailAddress: email,
         FirstName: firstName,
@@ -111,11 +112,11 @@ export default function UserProfile() {
   useEffect(() => {
     if (user) {
       setEmail(user.EmailAddress);
-      setStreetAddress(user.Address);
-      setCity(user.city);
-      setPostalCode(user.postalCode);
-      setRegion(user.region);
-      setCountry(user.country);
+      // setStreetAddress(user.Address);
+      // setCity(user.city);
+      // setPostalCode(user.postalCode);
+      // setRegion(user.region);
+      // setCountry(user.country);
       setFirstName(user.FirstName);
       setLastName(user.LastName);
       setUsername(user.userName);
@@ -132,9 +133,14 @@ export default function UserProfile() {
             <p>Loading...</p>
           ) : user ? (
             <div className="modalProfileOverlay">
-              <div className="modalProfileContainer">
-                <div className="leftProfileContainer">
-                  <img src={url ? url : 'testimage2.png'} alt="User profile" />
+              <div className="profile-card-container">
+                <div className="user-profile">
+                  <img
+                    src={url ? url : 'testimage2.png'}
+                    alt="User profile"
+                    className="user-profile-image"
+                  />
+                  <h2 className="user-name">{firstName}</h2>
                   <h4 className="upload-profile-image-title">
                     Upload Profile Image
                   </h4>
@@ -150,7 +156,10 @@ export default function UserProfile() {
                   </button>
                   <div> {user?.firstName} </div>
                 </div>
-                <div className="middleProfileContainer">
+              </div>
+
+              <div className="userinput-container">
+                <div className="userinput-container-profile">
                   <h2>Profile Settings</h2>
                   <form onSubmit={submitHandler}>
                     <div className="namesContainer">
@@ -210,7 +219,7 @@ export default function UserProfile() {
                       />
                     </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <label htmlFor="address">Street Address</label>
                       <input
                         type="text"
@@ -263,26 +272,15 @@ export default function UserProfile() {
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
                       />
-                    </div>
+                    </div> */}
 
                     <div className="buttonContainer">
                       <button className="saveButton">Save</button>
                     </div>
                   </form>
                 </div>
-
-                <div className="rightProfileContainer">
-                  <h2> Items Listed </h2>
-                  <ul className="itemsList">
-                    <li>
-                      <p> Item 1 Listed</p>
-                    </li>
-                    <li>
-                      <p>Item 2 Listed</p>
-                    </li>
-                  </ul>
-                </div>
               </div>
+              <User />
             </div>
           ) : (
             <p className="user">No user data available.</p>

@@ -88,14 +88,8 @@ export default function navbar() {
                       Map
                     </Nav.Link>
                     <Nav.Link
-<<<<<<< HEAD
-                      className="text-secondary fs-2 fw-light hover-effect my-3"
-                      href="/products">
-=======
                       className="btn text-secondary fs-2 fw-light hover-effect my-3"
-                      href="/products"
-                    >
->>>>>>> main
+                      href="/products">
                       Products
                     </Nav.Link>
 

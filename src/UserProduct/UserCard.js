@@ -60,17 +60,6 @@ const UserCard = ({ user }) => {
           alt="User profile"
         />
         <h2 className="user-name">{user.name}</h2>
-        <h4 className="upload-profile-image-title">Upload Profile Image</h4>
-        <input
-          className="upload-profile-image-input"
-          type="file"
-          onChange={handleImageChange}
-        />
-        <button
-          className="submit-profile-image-btn"
-          onClick={handleSubmitImage}>
-          Submit Profile Image
-        </button>
       </div>
     </div>
   );
