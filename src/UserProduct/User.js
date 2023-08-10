@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css'
+import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
 
 export default function User() {
 
@@ -31,30 +32,56 @@ export default function User() {
     {id: 5, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Commodore64.jpg', name: 'product 5', description: 'product description', price: '210', category: 'category 5'},
   ]);
 
-  
-  const deleteProduct = (productId) => {
-    setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
-  }
-
-const addProduct = () => {
+  const addProduct = () => {
     if (!newProduct.name || !newProduct.description || !newProduct.price || !newProduct.category) return;
-    setProducts(prevProducts => [...prevProducts, { ...newProduct, id: prevProducts.length + 1 }]);
+  
+    const database = getDatabase();
+    const productsRef = ref(database, 'Products'); 
+  
+    const newProductData = {
+      imageUrl: newProduct.imageUrl,
+      name: newProduct.name,
+      description: newProduct.description,
+      price: newProduct.price,
+      category: newProduct.category,
+    };
+  
+    push(productsRef, newProductData);
+    
     setNewProduct({
       id: null,
       imageUrl: '',
       name: '',
       description: '',
       price: '',
-      category: ''
+      category: '',
     });
   }
+  
+  const deleteProduct = (productId) => {
+    const database = getDatabase();
+    const productRef = ref(database, `Products/${productId}`); // 'products' is the name of your database node
+  
+    remove(productRef);
+  }
+  
 
-
-  // useEffect(() => {
-  //   fetchUserData().then(data => setUser(data));
-  //   fetchProductsData().then(data => setProducts(data));
-  // }, []);
-
+  useEffect(() => {
+    const database = getDatabase();
+    const productsRef = ref(database, 'Products'); // 'products' is the name of your database node
+  
+    const unsubscribe = onValue(productsRef, (snapshot) => {
+      const data = snapshot.val();
+      const productsArray = data ? Object.values(data) : [];
+      setProducts(productsArray);
+    });
+  
+    return () => {
+      // Unsubscribe from the database listener when the component unmounts
+      unsubscribe();
+    };
+  }, []);
+  
   return (
     <div className="body">
     <UserCard user={user} />
@@ -62,7 +89,7 @@ const addProduct = () => {
     <div>
       <div className="add-product-section">
         <h4 className="add-product-title">Add New Product</h4>
-        <input className="input-product-image-url" type="text" placeholder="Image URL" name="imageUrl" value={newProduct.imageUrl} onChange={handleInputChange} />
+        <input className="input-product-image-url" type="text" placeholder="Image URL" name="Image" value={newProduct.imageUrl} onChange={handleInputChange} />
         <input className="input-product-name" type="text" placeholder="Product Name" name="name" value={newProduct.name} onChange={handleInputChange} />
         <input className="input-product-description" type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
         <input className="input-product-price" type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />

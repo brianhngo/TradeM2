@@ -75,11 +75,11 @@ useEffect(() => {
           <ul className="product-list">
             {filteredProducts.map((product) => (
               <li className="product-item" key={product.id}>
-                <img className="product-img" src={product['Image']} alt={product['ProductName']} />
-                  <p>Category: {product['Category']} </p>
-                  <p>Name: {product['ProductName']} </p>
-                  <p>Description: {product['Description']}</p>
-                  <p>Price: ${product['Price']}</p>
+                <img className="product-img" src={product['imageUrl']} alt={product['ProductName']} />
+                  <p>Category: {product['category']} </p>
+                  <p>Name: {product['name']} </p>
+                  <p>Description: {product['description']}</p>
+                  <p>Price: ${product['price']}</p>
                 </li>
               ))}
           </ul>

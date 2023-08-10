@@ -3,8 +3,12 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import PasswordStrengthMeter from './PasswordStrengthMeter';
 import './loginPage.css';
+import db from '../firebase';
+import { ref, set } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateNewUser() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -35,6 +39,7 @@ export default function CreateNewUser() {
   const togglePassword2 = () => {
     setPassword2Shown(!password2Shown);
   };
+
   // Cases of Error Messaging
 
   // if the Passwords dont match
@@ -100,6 +105,18 @@ export default function CreateNewUser() {
     else {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          const reference = ref(db, 'Users/' + userCredential.user.uid);
+          console.log(userCredential);
+          // Inputting the newly created uid from Firebase Auth into our DB
+          function writeUserData(id, email) {
+            set(reference, {
+              profileStatus: false,
+              id: id,
+              email: email,
+            });
+          }
+          writeUserData(userCredential.user.uid, userCredential.user.email);
+
           // Case where user types it in wrong first, then puts it in correctly. Turning off error sensor
           setPasswordLengthErrorStatus(false);
           setPasswordErrorStatus(false);
@@ -107,7 +124,9 @@ export default function CreateNewUser() {
           setEmail('');
           setPassword('');
           setPassword2('');
-          console.log(userCredential);
+          // navigate(`/profile/${userCredential.user.uid}`);
+          // navigate('/profile');
+          navigate('/profile', { state: { uid: userCredential.user.uid } });
         })
 
         .catch((error) => {
@@ -136,14 +155,14 @@ export default function CreateNewUser() {
           The Password you have entered does not match. Please Try Again
         </p>
       ) : null}
-      {emailExistError ? (
+      {emailExistError === true ? (
         <p className="errorMessage">
           {' '}
           The Email you have typed already Exist. Please Login or use a
           different email.
         </p>
       ) : null}
-      {passwordLengthErrorStatus ? (
+      {passwordLengthErrorStatus === true ? (
         <p className="errorMessage">
           {' '}
           The password you have entered does not meet the length requirement

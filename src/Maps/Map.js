@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 
@@ -7,7 +7,6 @@ import {
   TileLayer,
   Marker,
   Popup,
-  useMapEvents,
 } from "react-leaflet";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
@@ -33,19 +32,47 @@ export default function Map() {
     iconSize: [38, 38],
   });
 
+  const [userLocation, setUserLocation] = useState(null);
+  const mapRef = useRef(); // Create a reference to the MapContainer
+
+  const locateUser = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setUserLocation([latitude, longitude]);
+
+        if (mapRef.current) {
+          const map = mapRef.current; 
+          map.setView([latitude, longitude], 16); // Set the view to user's location
+        }
+      },
+      (error) => {
+        console.error("Error getting user location:", error);
+      }
+    );
+  };
+
   return (
     <div className="mapContainer">
-      <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+      <MapContainer
+        ref={mapRef}
+        center={userLocation || [48.8566, 2.3522]}
+        zoom={userLocation ? 16 : 13}
+      >
         <TileLayer
           attribution="© OpenStreetMap"
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <Search position="topleft" showMarker={true} showPopup={false} />
+        {userLocation && (
+          <Marker position={userLocation} icon={customIcon}>
+            <Popup>
+              <h2>Your Location</h2>
+            </Popup>
+          </Marker>
+        )}
 
-        <MarkerClusterGroup
-          chunkedLoading // Loads marker 1 by 1 helps with performance
-        >
+        <MarkerClusterGroup chunkedLoading>
           {dummyDataMarkers.map((marker, idx) => (
             <Marker key={idx} position={marker.geocode} icon={customIcon}>
               <Popup>
@@ -54,13 +81,12 @@ export default function Map() {
             </Marker>
           ))}
         </MarkerClusterGroup>
-        {useMapEvents({
-          "search:locationfound": (e) => {
-            const map = e.target;
-            map.setView(e.latlng, 16);
-          },
-        })}
       </MapContainer>
+
+      {/* Locate Me button */}
+      <button className="locateButton" onClick={locateUser}>
+        Locate Me
+      </button>
     </div>
   );
 }
