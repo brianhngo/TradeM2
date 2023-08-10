@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
-import './UserProduct.css'
+import './UserProduct.css';
 import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
 import axios from 'axios';
 export default function User() {
-
   const [newProduct, setNewProduct] = useState({
     id: null,
     imageUrl: '',
@@ -13,25 +12,64 @@ export default function User() {
     description: '',
     price: '',
     category: '',
+
     location: '',
+
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewProduct(prevState => ({ ...prevState, [name]: value }));
-  }
+    setNewProduct((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   const [user, setUser] = useState({
-    name: "John Doe",
-    profileImageUrl: "https://xsgames.co/randomusers/assets/avatars/male/27.jpg"
+    name: 'John Doe',
+    profileImageUrl:
+      'https://xsgames.co/randomusers/assets/avatars/male/27.jpg',
   });
   const [products, setProducts] = useState([
-    {id: 1, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-ToyTruck.jpg', name: 'product 1', description: 'product description', price: '10', category: 'category 1'},
-    {id: 2, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Boxing.jpg', name: 'product 2', description: 'product description', price: '15', category: 'category 2'},
-    {id: 3, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Cup.jpg', name: 'product 3', description: 'product description', price: '20', category: 'category 3'},
-    {id: 4, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Rocker.jpg', name: 'product 4', description: 'product description', price: '21', category: 'category 4'},
-    {id: 5, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Commodore64.jpg', name: 'product 5', description: 'product description', price: '210', category: 'category 5'},
+    {
+      id: 1,
+      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-ToyTruck.jpg',
+      name: 'product 1',
+      description: 'product description',
+      price: '10',
+      category: 'category 1',
+    },
+    {
+      id: 2,
+      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Boxing.jpg',
+      name: 'product 2',
+      description: 'product description',
+      price: '15',
+      category: 'category 2',
+    },
+    {
+      id: 3,
+      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Cup.jpg',
+      name: 'product 3',
+      description: 'product description',
+      price: '20',
+      category: 'category 3',
+    },
+    {
+      id: 4,
+      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Rocker.jpg',
+      name: 'product 4',
+      description: 'product description',
+      price: '21',
+      category: 'category 4',
+    },
+    {
+      id: 5,
+      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Commodore64.jpg',
+      name: 'product 5',
+      description: 'product description',
+      price: '210',
+      category: 'category 5',
+    },
   ]);
+
   const geocodeAddress = async (address) => {
     try {
       const response = await axios.get(
@@ -50,10 +88,12 @@ export default function User() {
     }
   };
   const addProduct = async () => {
+
     if (
       !newProduct.name ||
       !newProduct.description ||
       !newProduct.price ||
+
       !newProduct.category ||
       !newProduct.location
     )
@@ -69,6 +109,7 @@ export default function User() {
     const database = getDatabase();
     const productsRef = ref(database, "Products");
   
+    
     const newProductData = {
       imageUrl: newProduct.imageUrl,
       name: newProduct.name,
@@ -77,9 +118,13 @@ export default function User() {
       category: newProduct.category,
       location: `${coordinates.lat},${coordinates.lon}`,
     };
-  
+
     push(productsRef, newProductData);
+
   
+
+
+
     setNewProduct({
       id: null,
       imageUrl: "",
@@ -90,34 +135,33 @@ export default function User() {
       location: "",
     });
   };
-  
-  
+
   const deleteProduct = (productId) => {
     const database = getDatabase();
     const productRef = ref(database, `Products/${productId}`); // 'products' is the name of your database node
-  
+
     remove(productRef);
-  }
-  
+  };
 
   useEffect(() => {
     const database = getDatabase();
     const productsRef = ref(database, 'Products'); // 'products' is the name of your database node
-  
+
     const unsubscribe = onValue(productsRef, (snapshot) => {
       const data = snapshot.val();
       const productsArray = data ? Object.values(data) : [];
       setProducts(productsArray);
     });
-  
+
     return () => {
       // Unsubscribe from the database listener when the component unmounts
       unsubscribe();
     };
   }, []);
-  
+
   return (
     <div className="body">
+
     <UserCard user={user} />
     
     <div>
@@ -131,10 +175,12 @@ export default function User() {
         <input className="input-product-location" type="text" placeholder="Location" name="location" value={newProduct.location} onChange={handleInputChange} />
         {/* might need to link with user uid? */}
         <button className="add-product-btn" onClick={addProduct}>Add Product</button>
-      </div>
-    </div>
 
-<ProductGrid products={products} deleteProduct={deleteProduct} />
-</div>
-);
+      {/* <UserCard user={user} /> */}
+
+      </div>
+
+      <ProductGrid products={products} deleteProduct={deleteProduct} />
+    </div>
+  );
 }
