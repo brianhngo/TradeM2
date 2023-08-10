@@ -44,6 +44,7 @@ export default function User() {
       description: newProduct.description,
       price: newProduct.price,
       category: newProduct.category,
+      location: newProduct.location,
     };
   
     push(productsRef, newProductData);
@@ -89,11 +90,13 @@ export default function User() {
     <div>
       <div className="add-product-section">
         <h4 className="add-product-title">Add New Product</h4>
-        <input className="input-product-image-url" type="text" placeholder="Image URL" name="Image" value={newProduct.imageUrl} onChange={handleInputChange} />
+        <input className="input-product-image-url" type="text" placeholder="Image URL" name="imageUrl" value={newProduct.imageUrl} onChange={handleInputChange} />
         <input className="input-product-name" type="text" placeholder="Product Name" name="name" value={newProduct.name} onChange={handleInputChange} />
         <input className="input-product-description" type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
         <input className="input-product-price" type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />
         <input className="input-product-category" type="text" placeholder="Category" name="category" value={newProduct.category} onChange={handleInputChange} />
+        <input className="input-product-location" type="text" placeholder="Location (e.g., 48.86, 2.3522)" name="location" value={newProduct.location} onChange={handleInputChange} />
+        {/* might need to link with user uid? */}
         <button className="add-product-btn" onClick={addProduct}>Add Product</button>
       </div>
     </div>
