@@ -89,8 +89,7 @@ export default function navbar() {
                     </Nav.Link>
                     <Nav.Link
                       className="text-secondary fs-2 fw-light hover-effect my-3"
-                      href="/products"
-                    >
+                      href="/products">
                       Products
                     </Nav.Link>
 
@@ -113,10 +112,10 @@ export default function navbar() {
                 <Nav.Link href="/about" className="fs-5 me-4">
                   About
                 </Nav.Link>
-                 {/* Conditional rendering of login/logout button */}
-                 {user ? (
+                {/* Conditional rendering of login/logout button */}
+                {user ? (
                   <Nav.Link
-                    href="#"
+                    href="/home"
                     className="fs-5 me-4"
                     onClick={handleLogout}>
                     Logout
@@ -129,9 +128,11 @@ export default function navbar() {
                 <Nav.Link href="/map" className="fs-5 me-4">
                   Map
                 </Nav.Link>
-                <Nav.Link href="/profile" className="fs-5 me-4">
-                  Profile
-                </Nav.Link>
+                {user ? (
+                  <Nav.Link href="/profile" className="fs-5 me-4">
+                    Profile
+                  </Nav.Link>
+                ) : null}
               </Nav>
             </Navbar.Collapse>
           )}
