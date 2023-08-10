@@ -3,7 +3,7 @@ import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css'
 import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
-
+import axios from 'axios';
 export default function User() {
 
   const [newProduct, setNewProduct] = useState({
@@ -12,7 +12,8 @@ export default function User() {
     name: '',
     description: '',
     price: '',
-    category: ''
+    category: '',
+    location: '',
   });
 
   const handleInputChange = (event) => {
@@ -33,7 +34,8 @@ export default function User() {
   ]);
 
   const addProduct = () => {
-    if (!newProduct.name || !newProduct.description || !newProduct.price || !newProduct.category) return;
+    if (!newProduct.name || !newProduct.description || !newProduct.price || !newProduct.category || !newProduct.location 
+    ) return;
   
     const database = getDatabase();
     const productsRef = ref(database, 'Products'); 
@@ -56,6 +58,7 @@ export default function User() {
       description: '',
       price: '',
       category: '',
+      location: '',
     });
   }
   
