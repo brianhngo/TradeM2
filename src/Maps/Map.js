@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
+import { getDatabase, ref, get } from "firebase/database";
 
 import {
   MapContainer,
@@ -13,20 +14,27 @@ import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 
 export default function Map() {
-  const dummyDataMarkers = [
-    {
-      geocode: [48.86, 2.3522],
-      popUp: "Hello, I am pop up 1",
-    },
-    {
-      geocode: [48.85, 2.3522],
-      popUp: "Hello, I am pop up 2",
-    },
-    {
-      geocode: [48.855, 2.34],
-      popUp: "Hello , I am pop up 3",
-    },
-  ];
+
+  const [productMarkers, setProductMarkers] = useState([]);
+
+  useEffect(() => {
+    const db = getDatabase();
+    const productsRef = ref(db, 'Products');
+    get(productsRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const productsData = snapshot.val();
+        const productsList = Object.values(productsData);
+        const locations = productsList.map(product => {
+          const [lat, lng] = product.location.split(',');
+          return {
+            geocode: [+lat, +lng],
+            productDetails: product
+          };
+        });
+        setProductMarkers(locations);
+      }
+    });
+  }, []);
 
   const customIcon = new Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
@@ -80,10 +88,14 @@ export default function Map() {
         )}
 
         <MarkerClusterGroup chunkedLoading>
-          {dummyDataMarkers.map((marker, idx) => (
+          {productMarkers.map((marker, idx) => (
             <Marker key={idx} position={marker.geocode} icon={customIcon}>
               <Popup>
-                <h2>{marker.popUp}</h2>
+              <h2>{marker.productDetails.name}</h2>
+              <img src={marker.productDetails.imageUrl} alt={marker.productDetails.name} width="100" />
+              <p>Category: {marker.productDetails.category}</p>
+              <p>{marker.productDetails.description}</p>
+              <p>Price: ${marker.productDetails.price}</p>
               </Popup>
             </Marker>
           ))}
