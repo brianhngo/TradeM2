@@ -32,13 +32,42 @@ export default function User() {
     {id: 4, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Rocker.jpg', name: 'product 4', description: 'product description', price: '21', category: 'category 4'},
     {id: 5, imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Commodore64.jpg', name: 'product 5', description: 'product description', price: '210', category: 'category 5'},
   ]);
-
-  const addProduct = () => {
-    if (!newProduct.name || !newProduct.description || !newProduct.price || !newProduct.category || !newProduct.location 
-    ) return;
+  const geocodeAddress = async (address) => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
+      );
+      if (response.data && response.data.length > 0) {
+        const { lat, lon } = response.data[0];
+        return { lat: parseFloat(lat), lon: parseFloat(lon) };
+      } else {
+        console.log("Address not found");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error geocoding address:", error);
+      return null;
+    }
+  };
+  const addProduct = async () => {
+    if (
+      !newProduct.name ||
+      !newProduct.description ||
+      !newProduct.price ||
+      !newProduct.category ||
+      !newProduct.location
+    )
+      return;
+  
+    const coordinates = await geocodeAddress(newProduct.location);
+  
+    if (!coordinates) {
+      console.log("Error geocoding address");
+      return;
+    }
   
     const database = getDatabase();
-    const productsRef = ref(database, 'Products'); 
+    const productsRef = ref(database, "Products");
   
     const newProductData = {
       imageUrl: newProduct.imageUrl,
@@ -46,21 +75,22 @@ export default function User() {
       description: newProduct.description,
       price: newProduct.price,
       category: newProduct.category,
-      location: newProduct.location,
+      location: `${coordinates.lat},${coordinates.lon}`,
     };
   
     push(productsRef, newProductData);
-    
+  
     setNewProduct({
       id: null,
-      imageUrl: '',
-      name: '',
-      description: '',
-      price: '',
-      category: '',
-      location: '',
+      imageUrl: "",
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      location: "",
     });
-  }
+  };
+  
   
   const deleteProduct = (productId) => {
     const database = getDatabase();
@@ -98,7 +128,7 @@ export default function User() {
         <input className="input-product-description" type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
         <input className="input-product-price" type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />
         <input className="input-product-category" type="text" placeholder="Category" name="category" value={newProduct.category} onChange={handleInputChange} />
-        <input className="input-product-location" type="text" placeholder="Location (e.g., 48.86, 2.3522)" name="location" value={newProduct.location} onChange={handleInputChange} />
+        <input className="input-product-location" type="text" placeholder="Location" name="location" value={newProduct.location} onChange={handleInputChange} />
         {/* might need to link with user uid? */}
         <button className="add-product-btn" onClick={addProduct}>Add Product</button>
       </div>
