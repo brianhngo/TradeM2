@@ -8,11 +8,11 @@
 }
 
 
-.hover-effect:hover{
+/* .hover-effect:hover{
   color:white;
   text-align: center;
   letter-spacing: 0.2em;
-}
+} */
 
 
 .nav-title{
@@ -25,6 +25,12 @@
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
 
+}
+
+.btn:hover{
+  background: transparent;
+  width: 100%;
+  box-shadow:  0 0 5px #020139, 0 0 25px #020139, 0 0 50px #020139, 0 0 200px #020139;
 }
 
 /* --------------------------------- HOME PAGE CSS --------------------------------------  */
