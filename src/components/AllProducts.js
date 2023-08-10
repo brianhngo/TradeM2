@@ -73,7 +73,7 @@ useEffect(() => {
           </select>
         </div>
           <ul className="product-list">
-            {filteredProducts.map((product) => (  // <-- Changed from 'products' to 'filteredProducts'
+            {filteredProducts.map((product) => (
               <li className="product-item" key={product.id}>
                 <img className="product-img" src={product['Image']} alt={product['ProductName']} />
                   <p>Category: {product['Category']} </p>
