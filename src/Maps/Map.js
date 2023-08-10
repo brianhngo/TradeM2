@@ -7,6 +7,7 @@ import {
   TileLayer,
   Marker,
   Popup,
+  Circle, // Import Circle component
 } from "react-leaflet";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
@@ -33,7 +34,9 @@ export default function Map() {
   });
 
   const [userLocation, setUserLocation] = useState(null);
-  const mapRef = useRef(); // Create a reference to the MapContainer
+  //Change Radius Size
+  const [radius, setRadius] = useState(600);
+  const mapRef = useRef();
 
   const locateUser = () => {
     navigator.geolocation.getCurrentPosition(
@@ -42,8 +45,9 @@ export default function Map() {
         setUserLocation([latitude, longitude]);
 
         if (mapRef.current) {
-          const map = mapRef.current; 
-          map.setView([latitude, longitude], 16); // Set the view to user's location
+          const map = mapRef.current;
+          // Zoom out to view radius
+          map.setView([latitude, longitude], 13); 
         }
       },
       (error) => {
@@ -57,7 +61,7 @@ export default function Map() {
       <MapContainer
         ref={mapRef}
         center={userLocation || [48.8566, 2.3522]}
-        zoom={userLocation ? 16 : 13}
+        zoom={userLocation ? 13 : 7} // Zoom out initially
       >
         <TileLayer
           attribution="© OpenStreetMap"
@@ -65,11 +69,14 @@ export default function Map() {
         />
 
         {userLocation && (
-          <Marker position={userLocation} icon={customIcon}>
-            <Popup>
-              <h2>Your Location</h2>
-            </Popup>
-          </Marker>
+          <>
+            <Circle center={userLocation} radius={radius} /> {/* Display the radius */}
+            <Marker position={userLocation} icon={customIcon}>
+              <Popup>
+                <h2>Your Location</h2>
+              </Popup>
+            </Marker>
+          </>
         )}
 
         <MarkerClusterGroup chunkedLoading>
@@ -83,7 +90,6 @@ export default function Map() {
         </MarkerClusterGroup>
       </MapContainer>
 
-      {/* Locate Me button */}
       <button className="locateButton" onClick={locateUser}>
         Locate Me
       </button>
