@@ -4,7 +4,7 @@ import ProductGrid from './ProductGrid';
 import './UserProduct.css';
 import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
 
-export default function User() {
+export default function User({uid}) {
   const [newProduct, setNewProduct] = useState({
     id: null,
     imageUrl: '',
@@ -86,6 +86,7 @@ export default function User() {
       price: newProduct.price,
       category: newProduct.category,
       location: newProduct.location,
+      userId: {uid},
     };
 
     push(productsRef, newProductData);
