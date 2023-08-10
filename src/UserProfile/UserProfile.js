@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, get, child, set } from 'firebase/database';
+import { ToastContainer, toast } from 'react-toastify';
 import './UserProfile.css';
 
 import { useLocation } from 'react-router-dom';
@@ -12,6 +13,10 @@ import {
 import User from '../UserProduct/User';
 
 export default function UserProfile() {
+  const toastInfo = () => {
+    console.log('hi');
+    toast.info('Saved');
+  };
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -35,6 +40,7 @@ export default function UserProfile() {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    toastInfo();
     // User's DB reference
     try {
       const newData = {
@@ -44,7 +50,7 @@ export default function UserProfile() {
         // region: region,
         // country: country,
         Admin: false,
-        EmailAddress: email,
+        email: email,
         FirstName: firstName,
         LastName: lastName,
         pronoun: pronoun,
@@ -68,26 +74,37 @@ export default function UserProfile() {
   };
 
   const handleSubmitImage = (e) => {
-    event.preventDefault();
+    try {
+      e.preventDefault();
+      toastInfo();
+      const storage = getStorage();
+      const storageRef = refFromStorage(storage, `profileImages/${uid}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    const storage = getStorage();
-    const storageRef = refFromStorage(storage, `profileImages/${uid}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setUrl(downloadURL);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
-          set(child(dbref, 'Users/' + uid), { profileImage: downloadURL });
-          console.log('uploaded Image');
-        });
-      }
-    );
+            // Update the entire user object with the updated profileImage property
+            const updatedUser = {
+              ...user,
+              profileImage: downloadURL,
+            };
+
+            set(child(dbref, 'Users/' + uid), updatedUser);
+            console.log('uploaded Image');
+          });
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -111,7 +128,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     if (user) {
-      setEmail(user.EmailAddress);
+      setEmail(user.email);
       // setStreetAddress(user.Address);
       // setCity(user.city);
       // setPostalCode(user.postalCode);
