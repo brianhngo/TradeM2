@@ -20,6 +20,7 @@
     flex-direction: column;
     justify-content: center;
     transition: 0.3s;
+    animation: fadeInAnimation 4s ease;
 }
 
 .product-card:hover {
@@ -39,23 +40,29 @@
     color: #fff;
 }
 
-.edit-product-btn, .delete-product-btn {
-    margin-top: 8px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.edit-product-btn, .delete-product-btn, .submit-profile-image-btn, .add-product-btn {
+    position: relative;
+    text-transform: uppercase;
+    justify-content: center;
+    font-size: 15px;
+    margin-top: 20px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    transition: all .2s;
+    color: black;
+    background-color: white;
 }
 
-.edit-product-btn {
-    background-color: #ffc107;
-    color: #fff;
+.edit-product-btn:hover, .delete-product-btn:hover, .submit-profile-image-btn:hover, .add-product-btn:hover {
+    box-shadow: 0 5px 20px #a9a9b9;
+    transform: translateY(-5px);
 }
 
-.delete-product-btn {
-    background-color: #dc3545;
-    color: #fff;
+.edit-product-btn:active, .delete-product-btn:active, .submit-profile-image-btn:active, .add-product-btn:active {
+    box-shadow: 0 5px 20px #a9a9b9;
+    transform: translateY(-1px);
 }
+
 
 /* User.js */
 .body {
@@ -80,6 +87,7 @@
     align-items: center;
     text-align: center;
     transition: 0.3s;
+    animation: fadeInAnimation 4s ease;
 }
 
 .add-product-section:hover {
@@ -101,15 +109,6 @@
     border-radius: 4px;
 }
 
-.add-product-btn {
-    margin-top: 16px;
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 /* user profile card */
 
@@ -137,6 +136,7 @@
     align-items: center;
     text-align: center;
     transition: 0.3s;
+    animation: fadeInAnimation 4s ease;
 }
 
 .user-profile-image {
@@ -162,16 +162,6 @@
     font-size: 14px;
     font-weight: 300;
     text-transform: initial;
-}
-
-.submit-profile-image-btn {
-    margin-top: 8px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #28a745;
-    color: #fff;
 }
 
 .user-profile:hover {

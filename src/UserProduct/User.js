@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UserCard from './UserCardjs';
+import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css'
 
