@@ -73,29 +73,29 @@ export default function navbar() {
                 <Offcanvas.Body className="offcanvas-panel">
                   <Nav className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
                     <Nav.Link
-                      className="text-secondary fs-2 fw-light hover-effect my-3"
+                      className="btn text-secondary fs-2 fw-light hover-effect my-3"
                       href="/home">
                       Home
                     </Nav.Link>
                     <Nav.Link
-                      className="text-secondary fs-2 fw-light hover-effect my-3"
+                      className="btn text-secondary fs-2 fw-light hover-effect my-3"
                       href="/about">
                       About
                     </Nav.Link>
                     <Nav.Link
-                      className="text-secondary fs-2 fw-light hover-effect my-3"
+                      className="btn text-secondary fs-2 fw-light hover-effect my-3"
                       href="/map">
                       Map
                     </Nav.Link>
                     <Nav.Link
-                      className="text-secondary fs-2 fw-light hover-effect my-3"
+                      className="btn text-secondary fs-2 fw-light hover-effect my-3"
                       href="/products"
                     >
                       Products
                     </Nav.Link>
 
                     <Nav.Link
-                      className="text-primary fs-2 fw-light hover-effect my-3"
+                      className="btn text-primary fs-2 fw-light hover-effect my-3"
                       href="/login">
                       Login
                     </Nav.Link>
