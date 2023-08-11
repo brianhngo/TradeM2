@@ -1,44 +1,126 @@
 .userContainer {
-  width: 70%;
-  height: 70%;
-}
-
-.userText {
-  font-size: 24px;
-  color: white;
-}
-
-.profileContainer {
-  width: 100vw;
-  height: 100vh;
-  background-color: #0a1118;
-  align-items: center;
-  justify-content: center;
   display: flex;
-  position: fixed;
+  flex-direction: column;
 }
-.userProfilePic {
-  position: absolute;
-  max-width: '100px';
-  max-height: '100px';
-  top: 15%;
-  left: 20%;
+.modalProfileOverlay {
+  width: 100%;
+  height: 100%;
+  background-color: #0a1118;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.profileName {
-  position: absolute;
-  color: aliceblue;
-  top: 30%;
-  left: 47%;
-  font-size: 40px;
+
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
 }
-.userProfileDetails {
-  position: absolute;
-  color: aliceblue;
-  top: 40%;
-  left: 47%;
+
+.namesContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
-.userProfileDetails h6 {
-  font-size: 20px;
-  margin-top: 25px;
-  margin-bottom: 25px;
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.preferredMethod {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editButton,
+.saveButton {
+  padding: 8px 16px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.editButton:hover,
+.saveButton:hover {
+  background-color: #0056b3;
+}
+
+/* Right side  */
+.rightProfileContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  border-left: 1px solid #787575;
+}
+
+.itemsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.itemsList li {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.userinput-container {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.userinput-container-profile {
+  position: relative;
+  z-index: 100;
+  width: 500px;
+  height: 500px;
+  margin: 20px;
+  background: #21212c;
+  box-shadow: 0 5px 25px #a9a9b9;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: 0.3s;
+  animation: fadeInAnimation 4s ease;
+}
+
+.userinput-container-profile:hover {
+  opacity: 1;
+  transform: translateY(-20px);
 }
