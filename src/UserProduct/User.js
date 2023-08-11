@@ -178,7 +178,11 @@ import axios from 'axios';
         <input className="input-product-name" type="text" placeholder="Product Name" name="name" value={newProduct.name} onChange={handleInputChange} />
         <input className="input-product-description" type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
         <input className="input-product-price" type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />
-        <input className="input-product-category" type="text" placeholder="Category" name="category" value={newProduct.category} onChange={handleInputChange} />
+        <select className="input-product-category" name="category" value={newProduct.category} onChange={handleInputChange}>
+        <option value="Toy">Toy</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Clothing">Clothing</option>
+        </select>
         <input className="input-product-location" type="text" placeholder="Location" name="location" value={newProduct.location} onChange={handleInputChange} />
         {/* might need to link with user uid? */}
         <button className="add-product-btn" onClick={addProduct}>Add Product</button>
@@ -188,6 +192,8 @@ import axios from 'axios';
       </div>
 
       <ProductGrid products={products} deleteProduct={deleteProduct} />
+    </div>
+
     </div>
   );
 }
