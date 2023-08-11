@@ -199,7 +199,11 @@ export default function User({ uid }) {
         </div>
       </div>
 
-      <ProductGrid products={products} deleteProduct={deleteProduct} />
+      <ProductGrid
+        products={products}
+        deleteProduct={deleteProduct}
+        uid={uid}
+      />
     </div>
   );
 }

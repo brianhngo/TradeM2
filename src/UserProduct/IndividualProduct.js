@@ -5,7 +5,7 @@ import { getDatabase, ref, set } from 'firebase/database';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
 
-export default function IndividualProduct({ product, deleteProduct }) {
+export default function IndividualProduct({ product, deleteProduct, uid }) {
   const toastUpdate = () => {
     toast.info('Updated');
   };
@@ -19,6 +19,7 @@ export default function IndividualProduct({ product, deleteProduct }) {
     price: product.price,
     category: product.category,
     location: product.location,
+    userId: uid,
   });
 
   const handleInputChange = (event) => {
