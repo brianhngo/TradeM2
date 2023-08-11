@@ -7,6 +7,7 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import AllProducts from "../components/AllProducts";
 
 export default function Map() {
   const [productMarkers, setProductMarkers] = useState([]);
@@ -87,6 +88,10 @@ export default function Map() {
   };
 
   return (
+    <div className="all-container">
+      <div className="allProducts-Container">
+        < AllProducts/>
+      </div>
     <div className="mapContainer">
       <div className="address-container">
         <div className="input-container">
@@ -182,6 +187,7 @@ export default function Map() {
           ))}
         </MarkerClusterGroup>
       </MapContainer>
+    </div>
     </div>
   );
 }
