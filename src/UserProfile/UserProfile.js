@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, get, child, set } from 'firebase/database';
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 import './UserProfile.css';
 
 import { useLocation } from 'react-router-dom';
@@ -9,6 +12,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
+
 import User from '../UserProduct/User';
 
 export default function UserProfile() {
@@ -23,18 +27,25 @@ export default function UserProfile() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [region, setRegion] = useState('');
-  const [country, setCountry] = useState('');
+  // const [streetAddress, setStreetAddress] = useState('');
+  // const [city, setCity] = useState('');
+  // const [postalCode, setPostalCode] = useState('');
+  // const [region, setRegion] = useState('');
+  // const [country, setCountry] = useState('');
   const [username, setUsername] = useState('');
 
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState('');
 
+  // Toast notification
+  // Updates DB
+  const toastInfo = () => {
+    toast.info('Saved');
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
+    toastInfo();
     // User's DB reference
     try {
       const newData = {
@@ -44,7 +55,7 @@ export default function UserProfile() {
         // region: region,
         // country: country,
         Admin: false,
-        EmailAddress: email,
+        email: email,
         FirstName: firstName,
         LastName: lastName,
         pronoun: pronoun,
@@ -68,26 +79,37 @@ export default function UserProfile() {
   };
 
   const handleSubmitImage = (e) => {
-    event.preventDefault();
+    try {
+      e.preventDefault();
+      toastInfo();
+      const storage = getStorage();
+      const storageRef = refFromStorage(storage, `profileImages/${uid}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    const storage = getStorage();
-    const storageRef = refFromStorage(storage, `profileImages/${uid}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setUrl(downloadURL);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
-          set(child(dbref, 'Users/' + uid), { profileImage: downloadURL });
-          console.log('uploaded Image');
-        });
-      }
-    );
+            // Update the entire user object with the updated profileImage property
+            const updatedUser = {
+              ...user,
+              profileImage: downloadURL,
+            };
+
+            set(child(dbref, 'Users/' + uid), updatedUser);
+            console.log('uploaded Image');
+          });
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -107,11 +129,11 @@ export default function UserProfile() {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [uid]);
 
   useEffect(() => {
     if (user) {
-      setEmail(user.EmailAddress);
+      setEmail(user.email);
       // setStreetAddress(user.Address);
       // setCity(user.city);
       // setPostalCode(user.postalCode);
@@ -196,7 +218,6 @@ export default function UserProfile() {
                         <option value="Ze/Zir/Zirs">Ze/Zir/Zirs</option>
                       </select>
                     </div>
-
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input
@@ -218,7 +239,6 @@ export default function UserProfile() {
                         onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
-
                     {/* <div className="form-group">
                       <label htmlFor="address">Street Address</label>
                       <input
@@ -273,14 +293,13 @@ export default function UserProfile() {
                         onChange={(e) => setCountry(e.target.value)}
                       />
                     </div> */}
-
                     <div className="buttonContainer">
                       <button className="saveButton">Save</button>
                     </div>
                   </form>
                 </div>
               </div>
-              <User uid={uid}/>
+              <User uid={uid} />
             </div>
           ) : (
             <p className="user">No user data available.</p>
@@ -291,35 +310,4 @@ export default function UserProfile() {
       )}
     </>
   );
-}
-
-{
-  /* <>
-  {uid ? (
-    <div className="userContainer">
-      {loading ? (
-        <p>Loading...</p>
-      ) : user ? (
-        <div className="profileContainer">
-          <h4 className="profileName">
-            {user?.FirstName} {user?.LastName}
-          </h4>
-          <div className="userProfileDetails">
-            <div>
-              <img src={user?.ProfileImage} alt="Profile" />
-            </div>
-            <h6>Email: {user?.email}</h6>
-            <h6>Username: {user?.username}</h6>
-            <h6>Password: ******</h6>
-            <h6>Reset Password</h6>
-          </div>
-        </div>
-      ) : (
-        <p className="user">No user data available.</p>
-      )}
-    </div>
-  ) : (
-    <h3>Please create an account or log in to see the profile page</h3>
-  )}
-</>; */
 }

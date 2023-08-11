@@ -1,170 +1,185 @@
 /* ProductGrid.js */
 
 .product-grid {
-    background-color: #0a1118;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+  background-color: #0a1118;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .product-card {
-    border: 1px solid #726b6b;
-    background-color: #21212c;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 5px 10px #a9a9b9;
-    max-width: 300px;
-    position: relative;
-    margin: 10px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: 0.3s;
-    animation: fadeInAnimation 4s ease;
+  border: 1px solid #726b6b;
+  background-color: #21212c;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px #a9a9b9;
+  max-width: 300px;
+  position: relative;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.3s;
+  animation: fadeInAnimation 4s ease;
 }
 
 .product-card:hover {
-    opacity: 1;
-    transform: translateY(-20px);
+  opacity: 1;
+  transform: translateY(-20px);
 }
 
 .product-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 8px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
-.product-name, .product-description, .product-price, .product-category {
-    margin-top: 8px;
-    color: #fff;
+.product-name,
+.product-description,
+.product-price,
+.product-category {
+  margin-top: 8px;
+  color: #fff;
 }
 
-.edit-product-btn, .delete-product-btn, .submit-profile-image-btn, .add-product-btn {
-    position: relative;
-    text-transform: uppercase;
-    justify-content: center;
-    font-size: 15px;
-    margin-top: 20px;
-    padding: 5px 5px;
-    border-radius: 10px;
-    transition: all .2s;
-    color: black;
-    background-color: white;
+.edit-product-btn,
+.delete-product-btn,
+.submit-profile-image-btn,
+.add-product-btn {
+  position: relative;
+  text-transform: uppercase;
+  justify-content: center;
+  font-size: 15px;
+  margin-top: 20px;
+  padding: 5px 5px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  color: black;
+  background-color: white;
 }
 
-.edit-product-btn:hover, .delete-product-btn:hover, .submit-profile-image-btn:hover, .add-product-btn:hover {
-    box-shadow: 0 5px 20px #a9a9b9;
-    transform: translateY(-5px);
+.edit-product-btn:hover,
+.delete-product-btn:hover,
+.submit-profile-image-btn:hover,
+.add-product-btn:hover {
+  box-shadow: 0 5px 20px #a9a9b9;
+  transform: translateY(-5px);
 }
 
-.edit-product-btn:active, .delete-product-btn:active, .submit-profile-image-btn:active, .add-product-btn:active {
-    box-shadow: 0 5px 20px #a9a9b9;
-    transform: translateY(-1px);
+.edit-product-btn:active,
+.delete-product-btn:active,
+.submit-profile-image-btn:active,
+.add-product-btn:active {
+  box-shadow: 0 5px 20px #a9a9b9;
+  transform: translateY(-1px);
 }
-
 
 /* User.js */
-.body {
-    font-family: Arial, sans-serif;
-    background-color: #0a1118;
-    height: 100%;
+.bodyUser {
+  font-family: Arial, sans-serif;
+  background-color: #0a1118;
+  height: 100%;
 }
 
 .add-product-section {
-    position: relative;
-    background-color: #21212c;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px #a9a9b9;
-    margin-top: 20px;
-    width: 600px;
-    height: 400px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: 0.3s;
-    animation: fadeInAnimation 4s ease;
+  position: relative;
+  background-color: #21212c;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px #a9a9b9;
+  margin-top: 20px;
+  width: 600px;
+  height: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: 0.3s;
+  animation: fadeInAnimation 4s ease;
 }
 
 .add-product-section:hover {
-    opacity: 1;
-    transform: translateY(-20px);
+  opacity: 1;
+  transform: translateY(-20px);
 }
 
 .add-product-title {
-    font-weight: bold;
-    color: #ffffff;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-.input-product-image-url, .input-product-name, .input-product-description, .input-product-price, .input-product-category, .input-product-location {
-    display: block;
-    width: 100%;
-    padding: 8px 12px;
-    margin-top: 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
+.input-product-image-url,
+.input-product-name,
+.input-product-description,
+.input-product-price,
+.input-product-category,
+.input-product-location {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
 }
-
 
 /* user profile card */
 
 .profile-card-container {
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .user-profile {
-    position: relative;
-    z-index: 100;
-    width: 300px;
-    height: 400px;
-    margin: 20px;
-    background: #21212c;
-    box-shadow: 0 5px 25px #a9a9b9;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: 0.3s;
-    animation: fadeInAnimation 4s ease;
+  position: relative;
+  z-index: 100;
+  width: 300px;
+  height: 400px;
+  margin: 20px;
+  background: #21212c;
+  box-shadow: 0 5px 25px #a9a9b9;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: 0.3s;
+  animation: fadeInAnimation 4s ease;
 }
 
 .user-profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 10px solid #1b1b1b;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 10px solid #1b1b1b;
 }
 
 .user-name {
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 500;
-    font-size: 18px;
-    text-align: center;
-    margin: 20px 0 10px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  margin: 20px 0 10px;
 }
 
 .upload-profile-image-title {
-    color: #fff;
-    font-size: 14px;
-    font-weight: 300;
-    text-transform: initial;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: initial;
 }
 
 .user-profile:hover {
-    opacity: 1;
-    transform: translateY(-20px);
+  opacity: 1;
+  transform: translateY(-20px);
 }
