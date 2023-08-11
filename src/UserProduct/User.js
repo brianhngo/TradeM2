@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css';
-import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
+import {
+  getDatabase,
+  ref,
+  push,
+  remove,
+  onValue,
+  set,
+} from 'firebase/database';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
 
 export default function User() {
   const [newProduct, setNewProduct] = useState({
-    id: null,
     imageUrl: '',
     name: '',
     description: '',
@@ -14,90 +22,61 @@ export default function User() {
     category: '',
   });
 
+  // Adds Item
+  const toastAdd = () => {
+    toast.info('Added');
+  };
+
+  const toastDelete = () => {
+    toast.info('Deleted');
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewProduct((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const [user, setUser] = useState({
-    name: 'John Doe',
-    profileImageUrl:
-      'https://xsgames.co/randomusers/assets/avatars/male/27.jpg',
-  });
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-ToyTruck.jpg',
-      name: 'product 1',
-      description: 'product description',
-      price: '10',
-      category: 'category 1',
-    },
-    {
-      id: 2,
-      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Boxing.jpg',
-      name: 'product 2',
-      description: 'product description',
-      price: '15',
-      category: 'category 2',
-    },
-    {
-      id: 3,
-      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Cup.jpg',
-      name: 'product 3',
-      description: 'product description',
-      price: '20',
-      category: 'category 3',
-    },
-    {
-      id: 4,
-      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Rocker.jpg',
-      name: 'product 4',
-      description: 'product description',
-      price: '21',
-      category: 'category 4',
-    },
-    {
-      id: 5,
-      imageUrl: 'http://dummy-images.com/objects/dummy-900x900-Commodore64.jpg',
-      name: 'product 5',
-      description: 'product description',
-      price: '210',
-      category: 'category 5',
-    },
-  ]);
+  const [products, setProducts] = useState([]);
 
   const addProduct = () => {
-    if (
-      !newProduct.name ||
-      !newProduct.description ||
-      !newProduct.price ||
-      !newProduct.category
-    )
-      return;
+    try {
+      if (
+        !newProduct.name ||
+        !newProduct.description ||
+        !newProduct.price ||
+        !newProduct.category
+      )
+        return;
 
-    const database = getDatabase();
-    const productsRef = ref(database, 'Products');
+      const database = getDatabase();
+      const productsRef = ref(database, 'Products');
+      const newProductNode = push(productsRef);
+      const id = newProductNode.key;
+      const newProductData = {
+        productId: id,
+        imageUrl: newProduct.imageUrl,
+        name: newProduct.name,
+        description: newProduct.description,
+        price: newProduct.price,
+        category: newProduct.category,
+        location: newProduct.location,
+      };
 
-    const newProductData = {
-      imageUrl: newProduct.imageUrl,
-      name: newProduct.name,
-      description: newProduct.description,
-      price: newProduct.price,
-      category: newProduct.category,
-      location: newProduct.location,
-    };
+      set(newProductNode, newProductData).then(() => {
+        console.log('updated');
+      });
 
-    push(productsRef, newProductData);
-
-    setNewProduct({
-      id: null,
-      imageUrl: '',
-      name: '',
-      description: '',
-      price: '',
-      category: '',
-    });
+      toastAdd();
+      setNewProduct({
+        imageUrl: '',
+        name: '',
+        description: '',
+        price: '',
+        category: '',
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteProduct = (productId) => {
@@ -105,7 +84,10 @@ export default function User() {
     const productRef = ref(database, `Products/${productId}`); // 'products' is the name of your database node
 
     remove(productRef);
+    toastDelete();
   };
+
+  const editProduct = (productId) => {};
 
   useEffect(() => {
     const database = getDatabase();
@@ -125,8 +107,6 @@ export default function User() {
 
   return (
     <div className="body">
-      {/* <UserCard user={user} /> */}
-
       <div>
         <div className="add-product-section">
           <h4 className="add-product-title">Add New Product</h4>
@@ -178,7 +158,7 @@ export default function User() {
             value={newProduct.location}
             onChange={handleInputChange}
           />
-          {/* might need to link with user uid? */}
+
           <button className="add-product-btn" onClick={addProduct}>
             Add Product
           </button>

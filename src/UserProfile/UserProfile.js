@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, get, child, set } from 'firebase/database';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 import './UserProfile.css';
 
 import { useLocation } from 'react-router-dom';
@@ -13,10 +15,6 @@ import {
 import User from '../UserProduct/User';
 
 export default function UserProfile() {
-  const toastInfo = () => {
-    console.log('hi');
-    toast.info('Saved');
-  };
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -28,15 +26,21 @@ export default function UserProfile() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [region, setRegion] = useState('');
-  const [country, setCountry] = useState('');
+  // const [streetAddress, setStreetAddress] = useState('');
+  // const [city, setCity] = useState('');
+  // const [postalCode, setPostalCode] = useState('');
+  // const [region, setRegion] = useState('');
+  // const [country, setCountry] = useState('');
   const [username, setUsername] = useState('');
 
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState('');
+
+  // Toast notification
+  // Updates DB
+  const toastInfo = () => {
+    toast.info('Saved');
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -124,7 +128,7 @@ export default function UserProfile() {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [uid]);
 
   useEffect(() => {
     if (user) {
@@ -213,7 +217,6 @@ export default function UserProfile() {
                         <option value="Ze/Zir/Zirs">Ze/Zir/Zirs</option>
                       </select>
                     </div>
-
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input
@@ -235,7 +238,6 @@ export default function UserProfile() {
                         onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
-
                     {/* <div className="form-group">
                       <label htmlFor="address">Street Address</label>
                       <input
@@ -290,7 +292,6 @@ export default function UserProfile() {
                         onChange={(e) => setCountry(e.target.value)}
                       />
                     </div> */}
-
                     <div className="buttonContainer">
                       <button className="saveButton">Save</button>
                     </div>
