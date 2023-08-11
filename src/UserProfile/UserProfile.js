@@ -280,7 +280,7 @@ export default function UserProfile() {
                   </form>
                 </div>
               </div>
-              <User />
+              <User uid={uid}/>
             </div>
           ) : (
             <p className="user">No user data available.</p>

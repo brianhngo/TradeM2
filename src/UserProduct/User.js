@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css';
+
+import { getDatabase, ref, push, remove, onValue, orderByChild, query, equalTo } from 'firebase/database';
+
+export default function User({uid}) {
+
 import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
 import axios from 'axios';
-export default function User() {
+
+
   const [newProduct, setNewProduct] = useState({
     id: null,
     imageUrl: '',
@@ -116,7 +122,9 @@ export default function User() {
       description: newProduct.description,
       price: newProduct.price,
       category: newProduct.category,
+      userId: uid,
       location: `${coordinates.lat},${coordinates.lon}`,
+
     };
 
     push(productsRef, newProductData);
@@ -145,8 +153,7 @@ export default function User() {
 
   useEffect(() => {
     const database = getDatabase();
-    const productsRef = ref(database, 'Products'); // 'products' is the name of your database node
-
+    const productsRef = query(ref(database, 'Products'), orderByChild('userId'), equalTo(uid)); // 'products' is the name of your database node
     const unsubscribe = onValue(productsRef, (snapshot) => {
       const data = snapshot.val();
       const productsArray = data ? Object.values(data) : [];
