@@ -3,7 +3,7 @@ import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css';
 import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
-
+import axios from 'axios';
 export default function User() {
   const [newProduct, setNewProduct] = useState({
     id: null,
@@ -12,6 +12,9 @@ export default function User() {
     description: '',
     price: '',
     category: '',
+
+    location: '',
+
   });
 
   const handleInputChange = (event) => {
@@ -67,36 +70,69 @@ export default function User() {
     },
   ]);
 
-  const addProduct = () => {
+  const geocodeAddress = async (address) => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
+      );
+      if (response.data && response.data.length > 0) {
+        const { lat, lon } = response.data[0];
+        return { lat: parseFloat(lat), lon: parseFloat(lon) };
+      } else {
+        console.log("Address not found");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error geocoding address:", error);
+      return null;
+    }
+  };
+  const addProduct = async () => {
+
     if (
       !newProduct.name ||
       !newProduct.description ||
       !newProduct.price ||
-      !newProduct.category
+
+      !newProduct.category ||
+      !newProduct.location
     )
       return;
-
+  
+    const coordinates = await geocodeAddress(newProduct.location);
+  
+    if (!coordinates) {
+      console.log("Error geocoding address");
+      return;
+    }
+  
     const database = getDatabase();
-    const productsRef = ref(database, 'Products');
-
+    const productsRef = ref(database, "Products");
+  
+    
     const newProductData = {
       imageUrl: newProduct.imageUrl,
       name: newProduct.name,
       description: newProduct.description,
       price: newProduct.price,
       category: newProduct.category,
-      location: newProduct.location,
+      location: `${coordinates.lat},${coordinates.lon}`,
     };
 
     push(productsRef, newProductData);
 
+  
+
+
+
     setNewProduct({
       id: null,
-      imageUrl: '',
-      name: '',
-      description: '',
-      price: '',
-      category: '',
+      imageUrl: "",
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      location: "",
     });
   };
 
@@ -125,64 +161,23 @@ export default function User() {
 
   return (
     <div className="body">
+
+    <UserCard user={user} />
+    
+    <div>
+      <div className="add-product-section">
+        <h4 className="add-product-title">Add New Product</h4>
+        <input className="input-product-image-url" type="text" placeholder="Image URL" name="imageUrl" value={newProduct.imageUrl} onChange={handleInputChange} />
+        <input className="input-product-name" type="text" placeholder="Product Name" name="name" value={newProduct.name} onChange={handleInputChange} />
+        <input className="input-product-description" type="text" placeholder="Description" name="description" value={newProduct.description} onChange={handleInputChange} />
+        <input className="input-product-price" type="text" placeholder="Price" name="price" value={newProduct.price} onChange={handleInputChange} />
+        <input className="input-product-category" type="text" placeholder="Category" name="category" value={newProduct.category} onChange={handleInputChange} />
+        <input className="input-product-location" type="text" placeholder="Location" name="location" value={newProduct.location} onChange={handleInputChange} />
+        {/* might need to link with user uid? */}
+        <button className="add-product-btn" onClick={addProduct}>Add Product</button>
+
       {/* <UserCard user={user} /> */}
 
-      <div>
-        <div className="add-product-section">
-          <h4 className="add-product-title">Add New Product</h4>
-          <input
-            className="input-product-image-url"
-            type="text"
-            placeholder="Image URL"
-            name="imageUrl"
-            value={newProduct.imageUrl}
-            onChange={handleInputChange}
-          />
-          <input
-            className="input-product-name"
-            type="text"
-            placeholder="Product Name"
-            name="name"
-            value={newProduct.name}
-            onChange={handleInputChange}
-          />
-          <input
-            className="input-product-description"
-            type="text"
-            placeholder="Description"
-            name="description"
-            value={newProduct.description}
-            onChange={handleInputChange}
-          />
-          <input
-            className="input-product-price"
-            type="text"
-            placeholder="Price"
-            name="price"
-            value={newProduct.price}
-            onChange={handleInputChange}
-          />
-          <input
-            className="input-product-category"
-            type="text"
-            placeholder="Category"
-            name="category"
-            value={newProduct.category}
-            onChange={handleInputChange}
-          />
-          <input
-            className="input-product-location"
-            type="text"
-            placeholder="Location (e.g., 48.86, 2.3522)"
-            name="location"
-            value={newProduct.location}
-            onChange={handleInputChange}
-          />
-          {/* might need to link with user uid? */}
-          <button className="add-product-btn" onClick={addProduct}>
-            Add Product
-          </button>
-        </div>
       </div>
 
       <ProductGrid products={products} deleteProduct={deleteProduct} />
