@@ -8,11 +8,13 @@ import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import AllProducts from "../components/AllProducts";
+import haversine from 'haversine-distance';
 
 export default function Map() {
-  const [productMarkers, setProductMarkers] = useState([]);
+  const [allProductMarkers, setAllProductMarkers] = useState([]);
+  const [visibleProductMarkers, setVisibleProductMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
-  const [radius, setRadius] = useState(900);
+  const [radius, setRadius] = useState(9000);
   const [mapType, setMapType] = useState("normal");
   const [address, setAddress] = useState("");
   const mapRef = useRef();
@@ -56,10 +58,21 @@ export default function Map() {
             productDetails: product,
           };
         });
-        setProductMarkers(locations);
+        setAllProductMarkers(locations);
       }
     });
   }, []);
+  
+  useEffect(() => {
+    if (userLocation) {
+      const nearbyProducts = allProductMarkers.filter((marker) => {
+        const distance = haversine(userLocation, marker.geocode);
+        return distance <= radius;
+      });
+      setVisibleProductMarkers(nearbyProducts);
+    }
+  }, [userLocation, radius, allProductMarkers]);
+
 
   const customIcon = new Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
@@ -170,7 +183,7 @@ export default function Map() {
         )}
 
         <MarkerClusterGroup chunkedLoading>
-          {productMarkers.map((marker, idx) => (
+          {visibleProductMarkers.map((marker, idx) => (
             <Marker key={idx} position={marker.geocode} icon={customIcon}>
               <Popup>
                 <h2>{marker.productDetails.name}</h2>
