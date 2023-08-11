@@ -29,23 +29,23 @@ useEffect(() => {
 
   //category filter
   if (filter.category !== 'All') {
-    result = result.filter(product => product.Category === filter.category);
+    result = result.filter(product => product.category === filter.category);
   }
 
   //price filter
   if (filter.price !== 'All') {
     switch(filter.price) {
       case "50":
-        result = result.filter(product => product.Price < 50);
+        result = result.filter(product => product.price < 50);
         break;
       case "50-100":
-        result = result.filter(product => product.Price >= 50 && product.Price <= 100);
+        result = result.filter(product => product.price >= 50 && product.price <= 100);
         break;
       case "100-500":
-        result = result.filter(product => product.Price >= 100 && product.Price <= 500);
+        result = result.filter(product => product.price >= 100 && product.price <= 500);
         break;
       case "500-1000":
-        result = result.filter(product => product.Price >= 500 && product.Price <= 1000);
+        result = result.filter(product => product.price >= 500 && product.price <= 1000);
         break;
     }
   }
