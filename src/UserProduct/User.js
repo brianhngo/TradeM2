@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard.js';
 import ProductGrid from './ProductGrid';
 import './UserProduct.css';
-import { getDatabase, ref, push, remove, onValue } from 'firebase/database';
+import { getDatabase, ref, push, remove, onValue, orderByChild, query, equalTo } from 'firebase/database';
 
 export default function User({uid}) {
   const [newProduct, setNewProduct] = useState({
@@ -86,7 +86,7 @@ export default function User({uid}) {
       price: newProduct.price,
       category: newProduct.category,
       location: newProduct.location,
-      userId: {uid},
+      userId: uid,
     };
 
     push(productsRef, newProductData);
@@ -110,8 +110,7 @@ export default function User({uid}) {
 
   useEffect(() => {
     const database = getDatabase();
-    const productsRef = ref(database, 'Products'); // 'products' is the name of your database node
-
+    const productsRef = query(ref(database, 'Products'), orderByChild('userId'), equalTo(uid)); // 'products' is the name of your database node
     const unsubscribe = onValue(productsRef, (snapshot) => {
       const data = snapshot.val();
       const productsArray = data ? Object.values(data) : [];
