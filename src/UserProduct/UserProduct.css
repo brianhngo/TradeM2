@@ -100,7 +100,7 @@
     color: #ffffff;
 }
 
-.input-product-image-url, .input-product-name, .input-product-description, .input-product-price, .input-product-category {
+.input-product-image-url, .input-product-name, .input-product-description, .input-product-price, .input-product-category, .input-product-location {
     display: block;
     width: 100%;
     padding: 8px 12px;
