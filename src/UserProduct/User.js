@@ -186,6 +186,7 @@ export default function User() {
 
       <ProductGrid products={products} deleteProduct={deleteProduct} />
     </div>
+
     </div>
   );
 }
