@@ -12,6 +12,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
+
 import User from '../UserProduct/User';
 
 export default function UserProfile() {
@@ -298,7 +299,7 @@ export default function UserProfile() {
                   </form>
                 </div>
               </div>
-              <User uid={uid}/>
+              <User uid={uid} />
             </div>
           ) : (
             <p className="user">No user data available.</p>
@@ -309,35 +310,4 @@ export default function UserProfile() {
       )}
     </>
   );
-}
-
-{
-  /* <>
-  {uid ? (
-    <div className="userContainer">
-      {loading ? (
-        <p>Loading...</p>
-      ) : user ? (
-        <div className="profileContainer">
-          <h4 className="profileName">
-            {user?.FirstName} {user?.LastName}
-          </h4>
-          <div className="userProfileDetails">
-            <div>
-              <img src={user?.ProfileImage} alt="Profile" />
-            </div>
-            <h6>Email: {user?.email}</h6>
-            <h6>Username: {user?.username}</h6>
-            <h6>Password: ******</h6>
-            <h6>Reset Password</h6>
-          </div>
-        </div>
-      ) : (
-        <p className="user">No user data available.</p>
-      )}
-    </div>
-  ) : (
-    <h3>Please create an account or log in to see the profile page</h3>
-  )}
-</>; */
 }
