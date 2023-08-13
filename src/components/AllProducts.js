@@ -55,7 +55,7 @@ useEffect(() => {
 
   return (
     <div className="all-products-container">
-      <h2 className="products-header">All Products</h2>
+     
       {/* <h3 className="filter-header">Filter</h3> */}
         <div className="filter-section">
           <select name="category" onChange={e => setFilter(prev => ({ ...prev, category: e.target.value }))}> 

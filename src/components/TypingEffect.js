@@ -13,5 +13,5 @@ export default function TypingEffect({ text }) {
     }
   }, [currentIndex, text]);
 
-  return <p className="lead fs-3 text-white">{currentText}</p>;
+  return <p className="lead fs-3">{currentText}</p>;
 }
