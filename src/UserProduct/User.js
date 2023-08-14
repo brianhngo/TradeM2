@@ -176,14 +176,11 @@ export default function User({ uid }) {
             value={newProduct.price}
             onChange={handleInputChange}
           />
-          <input
-            className="input-product-category"
-            type="text"
-            placeholder="Category"
-            name="category"
-            value={newProduct.category}
-            onChange={handleInputChange}
-          />
+          <select className="input-product-category" name="category" value={newProduct.category} onChange={handleInputChange}>
+            <option value="Toy">Toy</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+          </select>
           <input
             className="input-product-location"
             type="text"
