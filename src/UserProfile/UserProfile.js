@@ -15,6 +15,10 @@ import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export default function UserProfile() {
+  const [showSettings, setShowSettings] = useState(false);
+  const toggleSettings = () => {
+    setShowSettings((prevShowSettings) => !prevShowSettings);
+  };
   const [authUser, setAuthUser] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +36,7 @@ export default function UserProfile() {
 
   // Toast notification
   const toastInfo = () => {
-    toast.info('Saved');
+    toast.info("Saved");
   };
 
   const submitHandler = (event) => {
@@ -51,9 +55,9 @@ export default function UserProfile() {
         id: uid,
         profileStatus: true,
       };
-      set(child(dbref, 'Users/' + uid), newData);
+      set(child(dbref, "Users/" + uid), newData);
 
-      console.log('button is clicked');
+      console.log("button is clicked");
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +78,7 @@ export default function UserProfile() {
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snapshot) => {},
         (error) => {
           console.log(error);
@@ -89,8 +93,8 @@ export default function UserProfile() {
               profileImage: downloadURL,
             };
 
-            set(child(dbref, 'Users/' + uid), updatedUser);
-            console.log('uploaded Image');
+            set(child(dbref, "Users/" + uid), updatedUser);
+            console.log("uploaded Image");
           });
         }
       );

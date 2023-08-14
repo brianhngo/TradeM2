@@ -55,10 +55,10 @@ useEffect(() => {
 
   return (
     <div className="all-products-container">
-      <h2 className="products-header">All Products</h2>
-      <h3 className="filter-header">Filter</h3>
+     
+      {/* <h3 className="filter-header">Filter</h3> */}
         <div className="filter-section">
-          <select name="category" onChange={e => setFilter(prev => ({ ...prev, category: e.target.value }))}>
+          <select name="category" onChange={e => setFilter(prev => ({ ...prev, category: e.target.value }))}> 
             <option value="All">All Categories</option>
             <option value="Electronics">Electronics</option>
             <option value="Toy">Toy</option>
@@ -71,15 +71,21 @@ useEffect(() => {
             <option value="100-500">100 to 500</option>
             <option value="500-1000">500 to 1000</option>
           </select>
+
+          
+
+
         </div>
           <ul className="product-list">
             {filteredProducts.map((product) => (
               <li className="product-item" key={product.id}>
                 <img className="product-img" src={product['imageUrl']} alt={product['ProductName']} />
+                <div className='product-details'>
                   <p>Category: {product['category']} </p>
                   <p>Name: {product['name']} </p>
                   <p>Description: {product['description']}</p>
-                  <p>Price: ${product['price']}</p>
+                  <p className="product-price">Price: ${product['price']}</p>
+                  </div>
                 </li>
               ))}
           </ul>
