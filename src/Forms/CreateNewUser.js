@@ -125,8 +125,8 @@ export default function CreateNewUser() {
           setPassword('');
           setPassword2('');
           // navigate(`/profile/${userCredential.user.uid}`);
-          // navigate('/profile');
-          navigate('/profile', { state: { uid: userCredential.user.uid } });
+          navigate('/profile');
+          // navigate('/profile', { state: { uid: userCredential.user.uid } });
         })
 
         .catch((error) => {

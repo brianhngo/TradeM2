@@ -4,7 +4,7 @@ import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import 'firebase/auth';
 import 'firebase/database';
-import 'firebase/storage'; 
+import 'firebase/storage';
 
 //firebase configuration
 const firebaseConfig = {
@@ -32,14 +32,3 @@ function writeUserData(userId, description) {
 export const auth = getAuth(app);
 
 export default db;
-
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// } else {
-//   firebase.app();
-// }
-
-// export const db = firebase.database();
-// export const auth = firebase.auth();
-// export const storage = firebase.storage();
-// export default firebase;
