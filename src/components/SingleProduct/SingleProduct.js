@@ -21,8 +21,19 @@ export default function SingleProduct() {
           setProduct(productData);
           console.log(productData);
           console.log(product);
+
+
+          // Once product data is set, fetch user data using product.userId
+          get(child(dbRef, `Users/${productData.userId}`)).then((userSnapshot) => {
+            if (userSnapshot.exists()) {
+              const userData = userSnapshot.val();
+              setUser(userData);
+            } else {
+              console.log('No user data available');
+            }
+          });
         } else {
-          console.log('No data available');
+          console.log('No product data available');
         }
       })
       .catch((error) => {
@@ -32,25 +43,7 @@ export default function SingleProduct() {
         setLoading(false);
       });
 
-      //why is product null here the set product should run and set the product
-     get(child(dbRef, `Users/${product.userId}`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        const userData = snapshot.val();
-        setUser(userData);
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-
-  }, []);
-
-
+  }, [id]); 
   if (loading) {
     return (
       <div>
@@ -72,25 +65,25 @@ export default function SingleProduct() {
       {loading === false ? (
         <div> 
         <div className="profilepic">
-        <Image src={user['Profile Image']} roundedCircle />
+        <Image src={user['profileImage']} roundedCircle />
         </div>
         <Carousel>
           <Carousel.Item>
-            <img src={product['Image']} />
+            <img src={product['imageUrl']} />
             <Carousel.Caption>
               <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={product['Image']} />
+            <img src={product['imageUrl']} />
             <Carousel.Caption>
               <h3>Second slide label</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={product['Image']} />
+            <img src={product['imageUrl']} />
             <Carousel.Caption>
               <h3>Third slide label</h3>
               <p>
@@ -100,13 +93,13 @@ export default function SingleProduct() {
           </Carousel.Item>
         </Carousel>
         <p className="itemDesc">
-          Name: {product['ProductName']}
+          Name: {product['name']}
         </p>
         <p className="itemDesc">
-          {product['Description']}
+          {product['description']}
         </p>
         <p className="itemDesc">
-          ${product['Price']}
+          ${product['price']}
         </p>
         </div>
       ) : (
