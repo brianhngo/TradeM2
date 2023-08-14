@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useMediaQuery } from "react-responsive";
 import LoginPage from "../Forms/LoginPage";
-import "./Styles.css";
+import '../../public/Styles.css';
 import { auth } from "../firebase";
 export default function navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
