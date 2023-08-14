@@ -2,13 +2,23 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  border: 5px solid #555;
+}
+.carouselImg {
+  width: 900px;
 }
 
 .profilepic {
-  margin: auto;
+  margin: 50px;
 }
 
 .itemDesc {
   margin: auto;
   text-align: center;
+  
+}
+
+.itemtext {
+  width: 600px;
+  margin: auto;
 }

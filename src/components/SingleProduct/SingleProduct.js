@@ -69,21 +69,21 @@ export default function SingleProduct() {
         </div>
         <Carousel>
           <Carousel.Item>
-            <img src={product['imageUrl']} />
+            <img className="carouselImg" src={product['imageUrl']} />
             <Carousel.Caption>
               <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={product['imageUrl']} />
+            <img className="carouselImg" src={product['imageUrl']} />
             <Carousel.Caption>
               <h3>Second slide label</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img src={product['imageUrl']} />
+            <img className="carouselImg" src={product['imageUrl']} />
             <Carousel.Caption>
               <h3>Third slide label</h3>
               <p>
@@ -92,6 +92,7 @@ export default function SingleProduct() {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
+        <div className='itemtext'> 
         <p className="itemDesc">
           Name: {product['name']}
         </p>
@@ -101,6 +102,8 @@ export default function SingleProduct() {
         <p className="itemDesc">
           ${product['price']}
         </p>
+        </div>
+        
         </div>
       ) : (
         <div> Loading </div>
