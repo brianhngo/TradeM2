@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import './AllProducts.css';
-
+import { Link } from 'react-router-dom';
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -74,6 +74,7 @@ useEffect(() => {
         </div>
           <ul className="product-list">
             {filteredProducts.map((product) => (
+              <Link to={`/singleproduct/${product.productId}`}>
               <li className="product-item" key={product.id}>
                 <img className="product-img" src={product['imageUrl']} alt={product['ProductName']} />
                   <p>Category: {product['category']} </p>
@@ -81,6 +82,7 @@ useEffect(() => {
                   <p>Description: {product['description']}</p>
                   <p>Price: ${product['price']}</p>
                 </li>
+                </Link>
               ))}
           </ul>
     </div>
