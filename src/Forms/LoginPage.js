@@ -7,7 +7,6 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth';
 import { auth } from '../firebase';
-import AuthDetails from './AuthDetails';
 
 import { Link } from 'react-router-dom';
 
@@ -68,7 +67,6 @@ export default function LoginPage() {
             </button>
           </div>
         </div>
-        <AuthDetails />
       </div>
     </div>
   );
