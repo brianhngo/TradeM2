@@ -4,8 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TypingEffect from "./TypingEffect";
 import "./Styles.css";
-import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css"; // Import carousel CSS
-import { Carousel } from "react-bootstrap-carousel"; // Import Carousel component
+
 export default function Home() {
   return (
     <div className={`bg-white min-vh-100 d-flex align-items-center justify-content-center`}>
