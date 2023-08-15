@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TypingEffect from "./TypingEffect";
-import "./Styles.css";
+import '../../public/Styles.css';
 
 export default function Home() {
   return (
