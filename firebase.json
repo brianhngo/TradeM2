@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "tradem-1d4bd",
     "public": "public",
     "ignore": [
       "firebase.json",
