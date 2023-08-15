@@ -3,6 +3,7 @@ import { getDatabase, ref, child, get } from 'firebase/database';
 import { Image, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../AllProducts.css';
+import './SingleProduct.css'
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function SingleProduct() {
