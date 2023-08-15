@@ -154,6 +154,7 @@ export default function UserProfile() {
           <div className="modalProfileOverlay">
             <div className="profile-card-container">
               <div className="user-profile">
+              <span className="gearIcon">&#9881;</span>
                 <img
                   src={url ? url : 'testimage2.png'}
                   alt="User profile"
