@@ -3,21 +3,20 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TypingEffect from "./TypingEffect";
-import "./Styles.css";
+import '../../public/Styles.css';
+
 export default function Home() {
-  
-
   return (
-    <div className="hero min-vh-100 d-flex align-items-center justify-content-center">
-
+    <div className={`bg-white min-vh-100 d-flex align-items-center justify-content-center`}>
+       
        
     
       <Container>
-        <Row className="justify-content-start">
+        <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
-            <div className="text-white fade-in">
+            <div className="text-black fade-in">
               <h1 className="display-3 ">
-                Welcome to{" "}
+                Welcome to {" "}
                 <span
                   className="display-2"
                   style={{ fontFamily: "Courier New, Courier, monospace" }}
@@ -25,7 +24,7 @@ export default function Home() {
                   TradeM
                 </span>
               </h1>
-              <TypingEffect text="Sell Locally, Thrive Globally: Your Gateway to Sustainable Living." />
+              <TypingEffect  text="Sell Locally, Thrive Globally: Your Gateway to Sustainable Living." />
             </div>
           </Col>
         </Row>

@@ -9,7 +9,7 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
   const toastUpdate = () => {
     toast.info('Updated');
   };
-  console.log(product.productId);
+
   const [editProduct, setEditProduct] = useState(false);
   const [productInfo, setProductInfo] = useState({
     productId: product.productId,
