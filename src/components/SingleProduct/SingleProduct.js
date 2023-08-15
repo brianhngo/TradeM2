@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { Image, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../../public/SingleProduct.css';
+import '../AllProducts.css';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function SingleProduct() {
