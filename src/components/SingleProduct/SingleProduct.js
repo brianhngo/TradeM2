@@ -69,43 +69,41 @@ export default function SingleProduct() {
   return (
     <div>
       {loading === false ? (
-        <div>
-          <div className="profilepic">
-            <Link to="/userproducts" state={{ uid: user.id }}>
-              <Image src={user['profileImage']} roundedCircle />
-            </Link>
-          </div>
-          <Carousel>
-            <Carousel.Item>
-              <img src={product['imageUrl']} />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img src={product['imageUrl']} />
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img src={product['imageUrl']} />
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-          <p className="itemDesc">Name: {product['name']}</p>
-          <p className="itemDesc">{product['description']}</p>
-          <p className="itemDesc">${product['price']}</p>
+
+        <div> 
+        <div className="profilecontainer">
+       <Link to="/userproducts" state={{ uid: user.id }}>
+        <Image className="profileimg"src={user['profileImage']} roundedCircle />
+           </Link>
+        </div>
+        <Carousel>
+          <Carousel.Item>
+            <img className="carouselImg" src={product['imageUrl']} />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img className="carouselImg" src={product['imageUrl']} />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img className="carouselImg" src={product['imageUrl']} />
+          </Carousel.Item>
+        </Carousel>
+        <div className='itemtext'> 
+        <div className='prodName'>
+        <p className="itemDesc">
+          {product['name']}
+        </p>
+        </div>
+        <div className='priceanddesc'> 
+        <p className="itemDesc">
+          Description: {product['description']}
+        </p>
+        <p className="itemDesc">
+          Price: ${product['price']}
+        </p>
+
+        </div>
+        </div>
+        
         </div>
       ) : (
         <div> Loading </div>
