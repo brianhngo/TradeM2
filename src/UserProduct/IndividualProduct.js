@@ -41,18 +41,19 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
     <div key={product.id} className="product-card">
       {editProduct !== product.productId ? (
         <>
-           <Link to={`/singleproduct/${product.productId}`}>
-          <img
-            className="product-image"
-            src={product.imageUrl}
-            alt={product.name}
-          />
-        
-          <h3 className="product-name">{product.name}</h3>
-          <p className="product-description">{product.description}</p>
-          <p className="product-price">{product.price}</p>
-          <p className="product-category">{product.category}</p>
+          <Link
+            className="product-Links"
+            to={`/singleproduct/${product.productId}`}>
+            <img
+              className="product-img"
+              src={product.imageUrl}
+              alt={product.name}
+            />
 
+            <h3 className="product-name">{product.name}</h3>
+            <p className="product-description">{product.description}</p>
+            <p className="product-price">${product.price}</p>
+            <p className="product-category">{product.category}</p>
           </Link>
           <button
             className="edit-product-btn"

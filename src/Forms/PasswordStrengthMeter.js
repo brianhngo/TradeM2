@@ -30,7 +30,7 @@ export default function PasswordStrengthMeter({ password }) {
   const funcProgressColor = () => {
     switch (testResult.score) {
       case 0:
-        return '#828282';
+        return '#white';
       case 1:
         return '#EA1111';
       case 2:

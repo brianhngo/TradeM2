@@ -45,10 +45,13 @@ export default function SignInForm() {
   return (
     <section className="loginBody">
       {errorStatus === true ? (
-        <p className="errorMessage">
-          {' '}
-          The crendentials you have submitted does not match. Please try again
-        </p>
+        <>
+          <p className="errorMessage">
+            {' '}
+            The crendentials you have submitted does not match.
+          </p>
+          <p className="errorMessage"> Please try again </p>
+        </>
       ) : null}
       <form onSubmit={submitHandler}>
         <input

@@ -1,10 +1,11 @@
 /* ProductGrid.js */
 
 .product-grid {
-  background-color: #0a1118;
+  background-color: transparent;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  text-decoration: none;
 }
 
 .product-card {
@@ -21,6 +22,8 @@
   justify-content: center;
   transition: 0.3s;
   animation: fadeInAnimation 4s ease;
+  text-decoration: none;
+  text-align: center;
 }
 
 .product-card:hover {
@@ -36,6 +39,12 @@
   object-fit: contain;
   border-radius: 8px;
 }
+.product-description {
+  font-weight: bold;
+}
+.product-category {
+  font-weight: bold;
+}
 
 .product-name,
 .product-description,
@@ -45,7 +54,7 @@
   color: black;
 }
 
-.showAddProduct-btn{
+.showAddProduct-btn {
   display: block;
   position: relative;
   justify-content: center;
@@ -207,4 +216,8 @@
 .user-profile:hover {
   opacity: 1;
   transform: translateY(-20px);
+}
+
+.product-Links {
+  text-decoration: none;
 }
