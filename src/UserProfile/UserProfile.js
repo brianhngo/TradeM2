@@ -142,7 +142,7 @@ export default function UserProfile() {
       setUrl(user?.profileImage || '');
     }
   }, [user]);
-
+//user profile change
   return (
     <>
       <div className="userContainer">
@@ -154,7 +154,7 @@ export default function UserProfile() {
           <div className="modalProfileOverlay">
             <div className="profile-card-container">
               <div className="user-profile">
-              <span className="gearIcon" onClick={toggleSettings}>&#9881;</span>
+              <span className="gearIcon" {/*this is changed*/}onClick={toggleSettings}>&#9881;</span> 
                 <img
                   src={url ? url : 'testimage2.png'}
                   alt="User profile"
