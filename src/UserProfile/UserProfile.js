@@ -36,7 +36,7 @@ export default function UserProfile() {
 
   // Toast notification
   const toastInfo = () => {
-    toast.info("Saved");
+    toast.info('Saved');
   };
 
   const submitHandler = (event) => {
@@ -55,9 +55,9 @@ export default function UserProfile() {
         id: uid,
         profileStatus: true,
       };
-      set(child(dbref, "Users/" + uid), newData);
+      set(child(dbref, 'Users/' + uid), newData);
 
-      console.log("button is clicked");
+      console.log('button is clicked');
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +78,7 @@ export default function UserProfile() {
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {},
         (error) => {
           console.log(error);
@@ -93,8 +93,8 @@ export default function UserProfile() {
               profileImage: downloadURL,
             };
 
-            set(child(dbref, "Users/" + uid), updatedUser);
-            console.log("uploaded Image");
+            set(child(dbref, 'Users/' + uid), updatedUser);
+            console.log('uploaded Image');
           });
         }
       );
@@ -142,7 +142,7 @@ export default function UserProfile() {
       setUrl(user?.profileImage || '');
     }
   }, [user]);
-
+  //user profile change
   return (
     <>
       <div className="userContainer">
@@ -154,7 +154,9 @@ export default function UserProfile() {
           <div className="modalProfileOverlay">
             <div className="profile-card-container">
               <div className="user-profile">
-              <span className="gearIcon" onClick={toggleSettings}>&#9881;</span>
+                <span className="gearIcon" onClick={toggleSettings}>
+                  &#9881;
+                </span>
                 <img
                   src={url ? url : 'testimage2.png'}
                   alt="User profile"
@@ -179,72 +181,72 @@ export default function UserProfile() {
             </div>
 
             {showSettings && (
-            <div className="userinput-container">
-              <div className="userinput-container-profile">
-                <h2>Profile Settings</h2>
-                <form onSubmit={submitHandler}>
-                  <div className="namesContainer">
-                    <div className="form-group">
-                      <label htmlFor="firstName">First Name</label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        placeholder="First Name"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                      />
+              <div className="userinput-container">
+                <div className="userinput-container-profile">
+                  <h2>Profile Settings</h2>
+                  <form onSubmit={submitHandler}>
+                    <div className="namesContainer">
+                      <div className="form-group">
+                        <label htmlFor="firstName">First Name</label>
+                        <input
+                          type="text"
+                          name="firstName"
+                          placeholder="First Name"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="lastName">Last Name</label>
+                        <input
+                          type="text"
+                          name="lastName"
+                          placeholder="Last Name"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                        />
+                      </div>
                     </div>
                     <div className="form-group">
-                      <label htmlFor="lastName">Last Name</label>
+                      <label htmlFor="pronouns">Pronoun</label>
+                      <select
+                        value={pronoun}
+                        onChange={(e) => setPronoun(e.target.value)}>
+                        <option value="None">None</option>
+                        <option value="He/Him/His">He/Him/His</option>
+                        <option value="She/Her/Hers">She/Her/Hers</option>
+                        <option value="They/Them/Their">They/Them/Their</option>
+                        <option value="Ze/Zir/Zirs">Ze/Zir/Zirs</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="email">Email</label>
                       <input
-                        type="text"
-                        name="lastName"
-                        placeholder="Last Name"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={email}
+                        readOnly
                       />
                     </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="pronouns">Pronoun</label>
-                    <select
-                      value={pronoun}
-                      onChange={(e) => setPronoun(e.target.value)}>
-                      <option value="None">None</option>
-                      <option value="He/Him/His">He/Him/His</option>
-                      <option value="She/Her/Hers">She/Her/Hers</option>
-                      <option value="They/Them/Their">They/Them/Their</option>
-                      <option value="Ze/Zir/Zirs">Ze/Zir/Zirs</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={email}
-                      readOnly
-                    />
-                  </div>
 
-                  <div className="form-group">
-                    <label htmlFor="address">Username</label>
-                    <input
-                      type="text"
-                      name="username"
-                      placeholder="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                  </div>
+                    <div className="form-group">
+                      <label htmlFor="address">Username</label>
+                      <input
+                        type="text"
+                        name="username"
+                        placeholder="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </div>
 
-                  <div className="buttonContainer">
-                    <button className="saveButton">Save</button>
-                  </div>
-                </form>
+                    <div className="buttonContainer">
+                      <button className="saveButton">Save</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </div>
             )}
             <User uid={uid} />
           </div>

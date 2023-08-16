@@ -1,18 +1,26 @@
-.user-profile{
+#App,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.user-profile {
   background-color: #ffffffce;
 }
 
-.upload-profile-image-title{
-  color:black;
+.upload-profile-image-title {
+  color: black;
   font-size: 20px;
 }
 
 .userContainer {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
-.submit-profile-image-btn{
+.submit-profile-image-btn {
   margin-top: 30px;
 }
 
@@ -148,7 +156,7 @@
 }
 
 .rotate {
-  transform: rotate(45deg); 
+  transform: rotate(45deg);
 }
 
 .gearIcon {
@@ -158,4 +166,3 @@
   right: 10px;
   font-size: 24px;
 }
-

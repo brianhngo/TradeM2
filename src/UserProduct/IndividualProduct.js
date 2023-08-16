@@ -42,13 +42,13 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
       {editProduct !== product.productId ? (
         <>
           <img
-            className="product-image"
+            className="product-img"
             src={product.imageUrl}
             alt={product.name}
           />
           <h3 className="product-name">{product.name}</h3>
           <p className="product-description">{product.description}</p>
-          <p className="product-price">{product.price}</p>
+          <p className="product-price">${product.price}</p>
           <p className="product-category">{product.category}</p>
           <button
             className="edit-product-btn"
