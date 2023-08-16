@@ -154,6 +154,7 @@ export default function UserProfile() {
           <div className="modalProfileOverlay">
             <div className="profile-card-container">
               <div className="user-profile">
+              <span className="gearIcon" onClick={toggleSettings}>&#9881;</span>
                 <img
                   src={url ? url : 'testimage2.png'}
                   alt="User profile"
@@ -177,6 +178,7 @@ export default function UserProfile() {
               </div>
             </div>
 
+            {showSettings && (
             <div className="userinput-container">
               <div className="userinput-container-profile">
                 <h2>Profile Settings</h2>
@@ -243,6 +245,7 @@ export default function UserProfile() {
                 </form>
               </div>
             </div>
+            )}
             <User uid={uid} />
           </div>
         )}
