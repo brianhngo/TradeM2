@@ -27,7 +27,7 @@ body {
 .modalProfileOverlay {
   width: 100%;
   height: 100%;
-  background-color: #0a1118;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,6 +147,7 @@ body {
 .userinput-container-profile:hover {
   opacity: 1;
   transform: translateY(-20px);
+  background-color: transparent;
 }
 
 .settings-button {

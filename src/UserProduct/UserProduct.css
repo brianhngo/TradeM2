@@ -1,7 +1,7 @@
 /* ProductGrid.js */
 
 .product-grid {
-  background-color: #0a1118;
+  background-color: transparent;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -38,6 +38,12 @@
   height: 100%;
   object-fit: contain;
   border-radius: 8px;
+}
+.product-description {
+  font-weight: bold;
+}
+.product-category {
+  font-weight: bold;
 }
 
 .product-name,
@@ -210,4 +216,8 @@
 .user-profile:hover {
   opacity: 1;
   transform: translateY(-20px);
+}
+
+.product-Links {
+  text-decoration: none;
 }

@@ -8,14 +8,15 @@ const ProductGrid = ({ products, deleteProduct, uid }) => {
     <div className="product-grid">
       {Array.isArray(products) &&
         products.map((product) => (
-          <Link to={`/singleproduct/${product.productId}`}>
-          <IndividualProduct
-            key={product.id}
-            product={product}
-            deleteProduct={deleteProduct}
-            uid={uid}
-          />
-          </Link>
+          <div key={product.id}>
+           
+              <IndividualProduct
+                product={product}
+                deleteProduct={deleteProduct}
+                uid={uid}
+              />
+           
+          </div>
         ))}
     </div>
   );
