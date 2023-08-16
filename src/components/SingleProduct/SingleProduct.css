@@ -2,13 +2,45 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: 0 5px 10px #a9a9b9;
+}
+.carouselImg {
+  width: 900px;
 }
 
-.profilepic {
-  margin: auto;
+.profilecontainer {
+  margin: 50px;
+}
+
+.profileimg {
+  transition: 0.3s;
+}
+.profileimg:hover{
+  transform: translateY(-20px);
 }
 
 .itemDesc {
   margin: auto;
   text-align: center;
+  color: white;
+  
+}
+
+.itemtext {
+  width: 600px;
+  margin: auto;
+}
+
+body {
+  background-color: #242526;
+
+}
+
+.prodName .itemDesc {
+  margin: 50px;
+  font-size: 40px;
+}
+
+.priceanddesc .itemDesc {
+  font-size: 20px;
 }

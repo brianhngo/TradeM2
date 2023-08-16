@@ -68,32 +68,32 @@ export default function navbar() {
                 <Offcanvas.Body className="offcanvas-panel">
                   <Nav className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
                     <Nav.Link
-                      className="btn text-secondary fs-2 hover-effect my-3"
+                      className="nav-link  fs-1 my-3 text-white"
                       href="/home"
                     >
                       Home
                     </Nav.Link>
                     <Nav.Link
-                      className="btn text-secondary fs-2  hover-effect my-3"
+                      className="nav-link fs-1 my-3 text-white"
                       href="/about"
                     >
                       About
                     </Nav.Link>
                     <Nav.Link
-                      className="btn text-secondary fs-2  hover-effect my-3"
+                      className="nav-link fs-1 my-3 text-white"
                       href="/map"
                     >
                       Map
                     </Nav.Link>
                     <Nav.Link
-                      className="btn text-secondary fs-2 hover-effect my-3"
+                      className="nav-link fs-1 my-3 text-white"
                       href="/products"
                     >
                       Products
                     </Nav.Link>
 
                     <Nav.Link
-                      className="btn text-primary fs-2 hover-effect my-3"
+                      className="nav-link fs-1 my-3 text-white"
                       href="/login"
                     >
                       Login
@@ -106,22 +106,22 @@ export default function navbar() {
             // Regular Navbar for medium and large screens
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="d-flex align-items-center justify-content-end">
-                <Nav.Link href="/home" className="fs-5 me-5 text-white">
+                <Nav.Link href="/home" className="nav-link fs-5 me-5 text-white">
                   Home
                 </Nav.Link>
-                <Nav.Link href="/about" className="fs-5 me-5 text-white">
+                <Nav.Link href="/about" className="nav-link fs-5 me-5 text-white">
                   About
                 </Nav.Link>
 
-                <Nav.Link className="fs-5 me-5 text-white" href="/products">
+                <Nav.Link className="nav-link fs-5 me-5 text-white" href="/products">
                   Products
                 </Nav.Link>
 
-                <Nav.Link href="/map" className="fs-5 me-5 text-white">
+                <Nav.Link href="/map" className="nav-link fs-5 me-5 text-white">
                   Map
                 </Nav.Link>
                 {user ? (
-                  <Nav.Link href="/profile" className="fs-5 me-5 text-white">
+                  <Nav.Link href="/profile" className="nav-link fs-5 me-5 text-white">
                     Profile
                   </Nav.Link>
                 ) : null}
@@ -131,14 +131,14 @@ export default function navbar() {
                   <>
                     <Nav.Link
                       href="/home"
-                      className="fs-5 me-5 text-white"
+                      className="nav-link fs-5 me-5 text-white"
                       onClick={handleLogout}
                     >
                       Logout
                     </Nav.Link>
                   </>
                 ) : (
-                  <Nav.Link href="/login" className="fs-5 me-5 text-white">
+                  <Nav.Link href="/login" className="nav-link fs-5 me-5 text-white">
                     Login
                   </Nav.Link>
                 )}
