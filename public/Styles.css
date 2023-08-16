@@ -25,10 +25,19 @@
   border-radius: 20%;
 }
 
+
+
 .nav-title {
   color: black;
 }
-
+.navbar {
+ 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; 
+}
 /* --------------------------------- HOME PAGE CSS --------------------------------------  */
 .home {
   height: 100vh;
@@ -39,9 +48,10 @@
 }
 
 #image-track {
+
   display: flex;
   gap: 4vmin;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(0%, -50%);
