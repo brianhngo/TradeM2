@@ -27,37 +27,41 @@ export default function ForgetPassword() {
   return (
     <div id="login-section" className="modalBackground">
       <div className="modalContainer">
-        <div className="title">
-          <h1> Forget your password? </h1>
-          <p> Please enter your email. </p>
-          <p>
-            If an email exists, a following confirmation email will be sent to
-            where you can change your password.
-          </p>
+        <div className="split-image">
+          <img src="forgetpassword.png" alt="Image" />
         </div>
-        <div className="bodyForum">
-          {status === true ? (
-            <p> Email Confirmation has been sent!</p>
-          ) : (
-            <section className="loginBody">
-              <form onSubmit={submitHandler}>
-                <label htmlFor="email"> Email* </label>
-                <input
-                  type="email"
-                  name="email"
-                  onChange={emailHandler}
-                  value={email}
-                  placeholder="Email"></input>
-                <button> Submit</button>
-              </form>
-            </section>
-          )}
-        </div>
-        <div className="footer">
-          <div className="footerLinks">
+        <div>
+          <div className="title">
+            <h1> Forget your password? </h1>
+            <p> Please enter your email. </p>
             <p>
-              <Link to="/login"> Back to Login </Link>
+              If an email exists, a following confirmation email will be sent to
+              where you can change your password.
             </p>
+          </div>
+          <div className="bodyForum">
+            {status === true ? (
+              <p> Email Confirmation has been sent!</p>
+            ) : (
+              <section className="loginBody">
+                <form onSubmit={submitHandler}>
+                  <input
+                    type="email"
+                    name="email"
+                    onChange={emailHandler}
+                    value={email}
+                    placeholder="Email"></input>
+                  <button> Submit</button>
+                </form>
+              </section>
+            )}
+          </div>
+          <div className="footer">
+            <div className="footerLinks">
+              <p>
+                <Link to="/login"> Back to Login </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

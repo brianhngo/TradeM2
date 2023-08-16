@@ -50,26 +50,6 @@ export default function CreateNewUser() {
   const [passwordLengthErrorStatus, setPasswordLengthErrorStatus] =
     useState(false);
 
-  // Do Not know if the bottom is needed. Will see when react landing page is set up.
-
-  // const resetStates = () => {
-  //   setEmail('');
-  //   setPassword('');
-  //   setPassword2('');
-  //   setPasswordErrorStatus(false);
-  //   setEmailExistError(false);
-  //   setPasswordLengthErrorStatus(false);
-  // };
-
-  // When the user leaves the page, resetting all the useStates to the initial State values
-  // useEffect ( () => {
-  //   window.addEventListener('beforeunload', resetStates);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', resetStates)
-  //   }
-  // },[])
-
   const emailHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -169,18 +149,16 @@ export default function CreateNewUser() {
         </p>
       ) : null}
       <form onSubmit={submitHandler}>
-        <label htmlFor="email"> Email* </label>
         <input
           type="email"
           name="email"
           onChange={emailHandler}
           value={email}
-          placeholder="Enter your email"
+          placeholder="Email*"
           className={
             emailExistError === true ? 'errorStatusBorder' : ''
           }></input>
 
-        <label htmlFor="password"> Password*</label>
         <div className="password-input-container">
           {/* // Has to be length >= 6 */}
           <input
@@ -188,7 +166,7 @@ export default function CreateNewUser() {
             name="password"
             onChange={passwordHandler}
             value={password}
-            placeholder="Enter your password"
+            placeholder="Password*"
             // If it doesnt match. Border goes red
             className={passwordErrorStatus === true ? 'errorStatusBorder' : ''}
             onFocus={onFocusPWReq}
@@ -218,7 +196,7 @@ export default function CreateNewUser() {
         <div className="passwordStrengthContainer">
           <PasswordStrengthMeter password={password} />
         </div>
-        <label htmlFor="password"> Confirm Password*</label>
+
         {/* // Has to be length >= 6 */}
         <div className="password-input-container">
           <input
@@ -226,7 +204,7 @@ export default function CreateNewUser() {
             name="password2"
             onChange={password2Handler}
             value={password2}
-            placeholder="Confirm Password"
+            placeholder="Confirm Password*"
             onFocus={onFocusPW2Req}
             onBlur={onBlurPW2Req}
             // If it doesnt match. Border goes red
