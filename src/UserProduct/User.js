@@ -18,6 +18,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
 
 export default function User({ uid }) {
+  const [showAddProduct, setShowAddProduct] = useState(false);
+  const toggleAddProduct = () => {
+    setShowAddProduct((prevShowAddProduct) => !prevShowAddProduct);
+  };
+
   const [newProduct, setNewProduct] = useState({
     imageUrl: '',
     name: '',
@@ -141,7 +146,8 @@ export default function User({ uid }) {
 
   return (
     <div className="body">
-      <div>
+      <button className="showAddProduct-btn" onClick={toggleAddProduct}>Add New Product</button>
+        {showAddProduct &&(
         <div className="add-product-section">
           <h4 className="add-product-title">Add New Product</h4>
           <input
@@ -194,7 +200,8 @@ export default function User({ uid }) {
             Add Product
           </button>
         </div>
-      </div>
+        )}
+     
 
       <ProductGrid
         products={products}
