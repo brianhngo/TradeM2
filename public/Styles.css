@@ -1,6 +1,7 @@
 /* --------------------------------- NAVIGATION PAGE CSS --------------------------------------  */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap');
 .offcanvas-panel {
-  background-color: #000000;
+  background-color: rgb(20, 19, 19);
 }
 
 .nav-title {
@@ -13,11 +14,27 @@
   text-align: center;
 }
 
-.btn:hover {
-  background: transparent;
-  width: 100%;
-  box-shadow: 0 0 5px #020139, 0 0 25px #020139, 0 0 50px #020139, 0 0 200px #020139;
+
+
+.nav-link{
+  font-family: 'Lato', sans-serif;
+  color: white;
+  
+
 }
+
+.nav-link:hover{
+  border: solid 1px white;
+ width:auto;
+ border-radius: 20%;
+}
+
+
+.nav-title {
+  color: black;
+}
+
+
 /* --------------------------------- HOME PAGE CSS --------------------------------------  */
 .home {
   height: 100vh;
@@ -36,7 +53,7 @@
   left: 50%;
   top: 50%;
   transform: translate(0%, -50%); 
-  user-select: none; /* -- Prevent image highlighting -- */
+  user-select: none; 
 }
 
 #image-track > .image {
@@ -79,9 +96,10 @@
   animation: fadeInAnimation 5s ease;
 }
 
-/* --------------------------- Nav Bar CSS -------------------------------------- */
 
-.nav-title {
-  color: black;
+
+
+.display-3{
+  font-family: 'Lato', sans-serif;
 }
 
