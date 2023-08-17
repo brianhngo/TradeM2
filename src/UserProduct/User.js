@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is corr
 
 export default function User({ uid }) {
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [bookmarkedArray, setBookmarkArray] = useState([]);
   const toggleAddProduct = () => {
     setShowAddProduct((prevShowAddProduct) => !prevShowAddProduct);
   };
@@ -149,12 +150,21 @@ export default function User({ uid }) {
       setProducts(productsArray);
     });
 
+    const booksmarkRef = query(ref(database, `Users/${uid}/Bookmarks/`));
+    const unsubscribeBookmark = onValue(booksmarkRef, (snapshot) => {
+      const data = snapshot.val();
+      const bookmarkArray = data ? Object.values(data) : [];
+      setBookmarkArray(Object.values(bookmarkArray));
+    });
+
     return () => {
       // Unsubscribe from the database listener when the component unmounts
       unsubscribe();
+      unsubscribeBookmark();
     };
-  });
-
+  }, []);
+  console.log(products);
+  console.log(bookmarkedArray);
   return (
     <div className="body">
       <button className="showAddProduct-btn" onClick={toggleAddProduct}>
@@ -220,11 +230,22 @@ export default function User({ uid }) {
         </div>
       )}
 
-      <ProductGrid
-        products={products}
-        deleteProduct={deleteProduct}
-        uid={uid}
-      />
+      <h2 id="listedProductsTitle"> BookedMarked Products</h2>
+      <div className="listedProductsBookmark">
+        <ProductGrid
+          products={products}
+          deleteProduct={deleteProduct}
+          uid={uid}
+        />
+      </div>
+      <h2 id="listedProductsTitle"> Products Listed By You</h2>
+      <div className="listedProducts">
+        <ProductGrid
+          products={products}
+          deleteProduct={deleteProduct}
+          uid={uid}
+        />
+      </div>
     </div>
   );
 }

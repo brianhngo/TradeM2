@@ -5,20 +5,57 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  AuthErrorCodes,
 } from 'firebase/auth';
+import db from '../firebase';
+import { ref, set } from 'firebase/database';
 import { auth } from '../firebase';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const handleGoogle = async (event) => {
     const provider = await new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
+        const reference = ref(db, `Users/${result.user.uid}`);
+        function writeUserData(id, email) {
+          set(reference, {
+            profileStatus: false,
+            id: id,
+            email: email,
+          });
+        }
+        writeUserData(result.user.uid, result.user.email);
+
+        navigate('/profile');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleFacebook = async (event) => {
     const provider = await new FacebookAuthProvider();
-    return signInWithPopup(auth, provider);
+    try {
+      const result = signInWithPopup(auth, provider);
+      if (result.user) {
+        const reference = ref(db, `Users/${result.user.uid}`);
+        function writeUserData(id, email) {
+          set(reference, {
+            profileStatus: false,
+            id: id,
+            email: email,
+          });
+        }
+        writeUserData(result.user.uid, result.user.email);
+        navigate('/profile');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

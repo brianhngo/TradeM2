@@ -6,6 +6,7 @@
   flex-wrap: wrap;
   gap: 16px;
   text-decoration: none;
+  justify-content: center;
 }
 
 .product-card {
