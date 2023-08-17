@@ -3,12 +3,14 @@ import "leaflet/dist/leaflet.css";
 import "./Map.css";
 import { getDatabase, ref, get } from "firebase/database";
 import axios from "axios";
-
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import AllProducts from "../components/AllProducts";
 import haversine from 'haversine-distance';
+import "leaflet-fullscreen";
+
+
 
 export default function Map() {
   const [allProductMarkers, setAllProductMarkers] = useState([]);
@@ -18,6 +20,22 @@ export default function Map() {
   const [mapType, setMapType] = useState("normal");
   const [address, setAddress] = useState("");
   const mapRef = useRef();
+
+
+  function FullscreenControl() {
+    const map = useMap(); 
+    useEffect(() => {
+      const fullscreenControl = new L.Control.Fullscreen();
+      map.addControl(fullscreenControl);
+
+      return () => {
+        map.removeControl(fullscreenControl);
+      };
+    }, [map]);
+
+    return null;
+  }
+
 
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
@@ -106,7 +124,16 @@ export default function Map() {
         < AllProducts/>
       </div>
     <div className="mapContainer">
-      <div className="address-container">
+  
+      <MapContainer
+        ref={mapRef}
+        center={userLocation || [48.8566, 2.3522]}
+        zoom={userLocation ? 13 : 7}
+      >
+
+     <FullscreenControl />
+     
+     <div className="address-container">
         <div className="input-container">
           <input
             type="text"
@@ -155,11 +182,6 @@ export default function Map() {
           </svg>
         </button>
       </div>
-      <MapContainer
-        ref={mapRef}
-        center={userLocation || [48.8566, 2.3522]}
-        zoom={userLocation ? 13 : 7}
-      >
         {mapType === "normal" ? (
           <TileLayer
             attribution="© OpenStreetMap"
@@ -198,7 +220,10 @@ export default function Map() {
               </Popup>
             </Marker>
           ))}
+        
         </MarkerClusterGroup>
+       
+     
       </MapContainer>
     </div>
     </div>

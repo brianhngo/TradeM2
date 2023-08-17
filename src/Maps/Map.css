@@ -24,11 +24,17 @@
 }
 
 .address-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    display: flex;
+    position: absolute;
+    top: 10px; /* Adjust the top position according to your design */
+    right: 10px; /* Adjust the left position according to your design */
+    z-index: 2000; /* Ensure the container is above the map */
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    width:auto
+  
 }
 
 .input-container {
@@ -39,10 +45,11 @@
 }
 
 .locateButton {
+  justify-content: center;
   background-color: black;
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 5px;
   border-radius: 5px;
   cursor: pointer;
   margin-left: 5px;

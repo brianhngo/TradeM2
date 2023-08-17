@@ -87,15 +87,17 @@ const AllProducts = () => {
       </div>
       <ul className="product-list">
         {filteredProducts.map((product) => (
-          <Link
+          
+            <li className="product-item" key={product.id}>
+              <Link
             className="product-link"
             to={`/singleproduct/${product.productId}`}>
-            <li className="product-item" key={product.id}>
               <img
                 className="product-img"
                 src={product['imageUrl']}
                 alt={product['ProductName']}
               />
+               </Link>
               <div className="product-details">
                 <p className="product-texts">
                   Category: {product['category']}{' '}
@@ -106,6 +108,7 @@ const AllProducts = () => {
                 </p>
                 <p className="product-price">Price: ${product['price']}</p>
               </div>
+             
               <svg
                 className="svgTest"
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +123,7 @@ const AllProducts = () => {
                 </g>
               </svg>
             </li>
-          </Link>
+         
         ))}
       </ul>
     </div>
