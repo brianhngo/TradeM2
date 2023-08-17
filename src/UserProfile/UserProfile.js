@@ -109,7 +109,6 @@ export default function UserProfile() {
       if (userData) {
         setUid(userData.uid);
 
-        console.log(uid);
         get(child(dbref, 'Users/' + uid))
           .then((snapshot) => {
             if (snapshot.exists()) {

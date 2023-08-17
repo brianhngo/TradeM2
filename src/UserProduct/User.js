@@ -41,6 +41,10 @@ export default function User({ uid }) {
     toast.info('Deleted');
   };
 
+  const toastWarning = () => {
+    toast.info('Please select an category option');
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewProduct((prevState) => ({ ...prevState, [name]: value }));
@@ -50,6 +54,11 @@ export default function User({ uid }) {
 
   const addProduct = async () => {
     try {
+      if (newProduct.category === 'None') {
+        console.log('hi');
+        toastWarning();
+        return;
+      }
       if (
         !newProduct.name ||
         !newProduct.description ||
@@ -88,11 +97,13 @@ export default function User({ uid }) {
 
       toastAdd();
       setNewProduct({
+        productId: id,
         imageUrl: '',
         name: '',
         description: '',
         price: '',
         category: '',
+        location: ``,
       });
     } catch (error) {
       console.error(error);
@@ -146,8 +157,10 @@ export default function User({ uid }) {
 
   return (
     <div className="body">
-      <button className="showAddProduct-btn" onClick={toggleAddProduct}>Add New Product</button>
-        {showAddProduct &&(
+      <button className="showAddProduct-btn" onClick={toggleAddProduct}>
+        Add New Product
+      </button>
+      {showAddProduct && (
         <div className="add-product-section">
           <h4 className="add-product-title">Add New Product</h4>
           <input
@@ -182,7 +195,12 @@ export default function User({ uid }) {
             value={newProduct.price}
             onChange={handleInputChange}
           />
-          <select className="input-product-category" name="category" value={newProduct.category} onChange={handleInputChange}>
+          <select
+            className="input-product-category"
+            name="category"
+            value={newProduct.category}
+            onChange={handleInputChange}>
+            <option value="None">Please Select a Category</option>
             <option value="Toy">Toy</option>
             <option value="Electronics">Electronics</option>
             <option value="Clothing">Clothing</option>
@@ -200,8 +218,7 @@ export default function User({ uid }) {
             Add Product
           </button>
         </div>
-        )}
-     
+      )}
 
       <ProductGrid
         products={products}

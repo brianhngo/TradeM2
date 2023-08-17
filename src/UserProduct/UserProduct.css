@@ -14,7 +14,10 @@
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 5px 10px #a9a9b9;
-  max-width: 300px;
+  max-width: 373px;
+  max-height: 350px;
+  height: 373px;
+  width: 350px;
   position: relative;
   margin: 10px auto;
   display: flex;
@@ -24,6 +27,46 @@
   animation: fadeInAnimation 4s ease;
   text-decoration: none;
   text-align: center;
+  overflow-y: auto;
+}
+
+.product-description-container {
+  height: 150px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.product-card {
+  max-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.product-img {
+  max-width: 140px;
+  max-height: 140px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+
+  height: auto;
+}
+
+.image-container {
+  max-width: 140px;
+  max-height: 140px;
+  margin-right: 10px;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .product-card:hover {
@@ -41,6 +84,7 @@
 }
 .product-description {
   font-weight: bold;
+  white-space: normal;
 }
 .product-category {
   font-weight: bold;
@@ -157,12 +201,27 @@
   margin-top: 8px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-
-  
 }
 
-input::placeholder {
-  color: black; /* Set a color that contrasts with the input text color */
+.input-product-image-url::placeholder {
+  color: black;
+}
+.input-product-name::placeholder {
+  color: black;
+}
+.input-product-description::placeholder {
+  color: black;
+}
+.input-product-price::placeholder {
+  color: black;
+}
+
+.input-product-category::placeholder {
+  color: black;
+}
+
+.input-product-location::placeholder {
+  color: black;
 }
 
 /* user profile card */
