@@ -13,9 +13,15 @@ import {
   query,
   equalTo,
 } from 'firebase/database';
+import {
+  ref as refFromStorage,
+  getStorage,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage'; 
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function User({ uid }) {
   const [showAddProduct, setShowAddProduct] = useState(false);
@@ -24,13 +30,16 @@ export default function User({ uid }) {
   };
 
   const [newProduct, setNewProduct] = useState({
-    imageUrl: '',
+    imageUrls: [],
     name: '',
     description: '',
     price: '',
     category: '',
     location: '',
   });
+
+  const [products, setProducts] = useState([]);
+  const [productImages, setProductImages] = useState([]);
 
   // Adds Item
   const toastAdd = () => {
@@ -50,9 +59,40 @@ export default function User({ uid }) {
     setNewProduct((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const [products, setProducts] = useState([]);
+  const handleImageChange = async (event) => {
+    if (event.target.files.length > 3) {
+      alert("You can only upload a maximum of 3 images.");
+      return;
+    }
+    setProductImages([...event.target.files]); 
+
+    for (let i = 0; i < event.target.files.length; i++) {
+      const file = event.target.files[i];
+      const storage = getStorage();
+      const storageRef = refFromStorage(storage, 'productImages/' + file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.error("Error uploading image:", error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log('File available at', downloadURL);
+          });
+        }
+      );
+    }
+  };
 
   const addProduct = async () => {
+    const uploadedImageUrls = [];
+    const storage = getStorage();
+
     try {
       if (newProduct.category === 'None') {
         console.log('hi');
@@ -76,26 +116,35 @@ export default function User({ uid }) {
         return;
       }
 
+      for (let i = 0; i < productImages.length; i++) {
+        const file = productImages[i];
+        const storageRef = refFromStorage(storage, 'products/' + file.name);
+        const uploadTask = await uploadBytesResumable(storageRef, file);
+        console.log(uploadTask);
+        const downloadURL = await getDownloadURL(storageRef);
+        uploadedImageUrls.push(downloadURL);
+      }
+
       const database = getDatabase();
       const productsRef = ref(database, 'Products');
       const newProductNode = push(productsRef);
       const id = newProductNode.key;
-      const newProductData = {
+
+      const productData = {
         productId: id,
-        imageUrl: newProduct.imageUrl,
+        imageUrl: uploadedImageUrls,
         name: newProduct.name,
         description: newProduct.description,
         price: newProduct.price,
         category: newProduct.category,
-        location: `${coordinates.lat},${coordinates.lon}`,
+        location: newProduct.location,
+        coordinates: coordinates,
         userId: uid,
       };
 
-      set(newProductNode, newProductData).then(() => {
-        console.log('updated');
-      });
-
+      await set(newProductNode, productData);
       toastAdd();
+
       setNewProduct({
         productId: id,
         imageUrl: '',
@@ -106,7 +155,7 @@ export default function User({ uid }) {
         location: ``,
       });
     } catch (error) {
-      console.error(error);
+      console.error('Error adding product', error);
     }
   };
 
@@ -162,14 +211,14 @@ export default function User({ uid }) {
       </button>
       {showAddProduct && (
         <div className="add-product-section">
-          <h4 className="add-product-title">Add New Product</h4>
+          <h2 className="product-image-guide">Upload upto 3 Image Files</h2>
           <input
-            className="input-product-image-url"
-            type="text"
-            placeholder="Image URL"
-            name="imageUrl"
-            value={newProduct.imageUrl}
-            onChange={handleInputChange}
+            className="input-product-images"
+            type="file"
+            accept="image/*"
+            multiple
+            name="productImages"
+            onChange={handleImageChange}
           />
           <input
             className="input-product-name"
@@ -178,6 +227,7 @@ export default function User({ uid }) {
             name="name"
             value={newProduct.name}
             onChange={handleInputChange}
+            maxLength="30"
           />
           <input
             className="input-product-description"
@@ -186,6 +236,7 @@ export default function User({ uid }) {
             name="description"
             value={newProduct.description}
             onChange={handleInputChange}
+            maxLength="150"
           />
           <input
             className="input-product-price"
@@ -194,6 +245,7 @@ export default function User({ uid }) {
             name="price"
             value={newProduct.price}
             onChange={handleInputChange}
+            maxLength="5"
           />
           <select
             className="input-product-category"
