@@ -7,6 +7,7 @@ import { getDatabase, ref, update, child, get } from 'firebase/database';
 
 export default function Bookmark({ productId }) {
   const [bookmarkStatus, setBookMarkStatus] = useState(false);
+
   const userData = auth.currentUser ? auth.currentUser : '';
   const bookMarkHandler = (event) => {
     event.preventDefault();
