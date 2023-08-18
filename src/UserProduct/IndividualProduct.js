@@ -13,7 +13,7 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
   const [editProduct, setEditProduct] = useState(false);
   const [productInfo, setProductInfo] = useState({
     productId: product.productId,
-    imageUrl: product.imageUrl,
+    imageUrl: product.imageUrl || [],
     name: product.name,
     description: product.description,
     price: product.price,
@@ -36,6 +36,45 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
       setEditProduct(false);
     });
   };
+
+  const handleImageChange = async (event) => {
+    if (event.target.files.length > 3) {
+      alert('You can only upload a maximum of 3 images.');
+      return;
+    }
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const storage = getStorage();
+      const storageRef = refFromStorage(storage, 'products/' + file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.error('Error uploading image:', error);
+        },
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log('File available at', downloadURL);
+            setProductInfo((prevState) => ({
+              ...prevState,
+              imageUrl: downloadURL,
+            }));
+          } catch (error) {
+            console.error('Error getting download URL:', error);
+          }
+        }
+      );
+    }
+  };
+
   return (
     <div key={product.id} className="product-card">
       {editProduct !== product.productId ? (
@@ -73,13 +112,17 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
         </>
       ) : (
         <div key={product.id} className="product-card">
+          <h2 className="product-image-edit-guide">
+            Upload upto 3 Image Files
+          </h2>
           <form onSubmit={onSaveHandler}>
             <input
-              className="input-product-image-url"
-              type="text"
-              defaultValue={product.imageUrl}
-              name="imageUrl"
-              onChange={handleInputChange}
+              className="input-product-edit-images"
+              type="file"
+              accept="image/*"
+              multiple
+              name="productImages"
+              onChange={handleImageChange}
             />
             <input
               className="input-product-name"
@@ -87,6 +130,15 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               defaultValue={product.name}
               name="name"
               onChange={handleInputChange}
+              maxLength="20"
+            />
+            <input
+              className="input-product-description"
+              type="text"
+              defaultValue={product.description}
+              name="description"
+              onChange={handleInputChange}
+              maxLength="150"
             />
             <input
               className="input-product-price"
@@ -94,6 +146,7 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               defaultValue={product.price}
               name="price"
               onChange={handleInputChange}
+              maxLength="5"
             />
             <input
               className="input-product-description"
