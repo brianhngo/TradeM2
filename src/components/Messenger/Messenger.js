@@ -27,8 +27,10 @@ export default function Messenger() {
       .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
     update(ref(dbRef, `Messages/${user.uid}-${sellerId}/`), {
-      userId: user.uid,
-      sellerId: sellerId,
+      participant: {
+        1: user.uid,
+        2: sellerId,
+      },
       [timestamp]: {
         message: message,
         sentBy: user.uid,
