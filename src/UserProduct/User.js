@@ -16,10 +16,13 @@ import {
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
+import BookmarkGrid from './BookmarkGrid';
 
 export default function User({ uid }) {
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [bookmarkedArray, setBookmarkArray] = useState([]);
+  const [bookmarkProductArray, setBookmarkProductArray] = useState([]);
+  const [filteredBookmarkProducts, setFilteredBookmarkProducts] = useState([]);
   const toggleAddProduct = () => {
     setShowAddProduct((prevShowAddProduct) => !prevShowAddProduct);
   };
@@ -35,15 +38,15 @@ export default function User({ uid }) {
 
   // Adds Item
   const toastAdd = () => {
-    toast.info('Added');
+    toast.success('Added');
   };
 
   const toastDelete = () => {
-    toast.info('Deleted');
+    toast.success('Deleted');
   };
 
   const toastWarning = () => {
-    toast.info('Please select an category option');
+    toast.warning('Please select an category option');
   };
 
   const handleInputChange = (event) => {
@@ -139,32 +142,40 @@ export default function User({ uid }) {
 
   useEffect(() => {
     const database = getDatabase();
+
     const productsRef = query(
       ref(database, 'Products'),
       orderByChild('userId'),
       equalTo(uid)
-    ); // 'products' is the name of your database node
+    );
     const unsubscribe = onValue(productsRef, (snapshot) => {
       const data = snapshot.val();
       const productsArray = data ? Object.values(data) : [];
       setProducts(productsArray);
     });
 
-    const booksmarkRef = query(ref(database, `Users/${uid}/Bookmarks/`));
-    const unsubscribeBookmark = onValue(booksmarkRef, (snapshot) => {
+    const bookmarkRef = query(ref(database, `Users/${uid}/Bookmarks/`));
+    const unsubscribeBookmark = onValue(bookmarkRef, (snapshot) => {
       const data = snapshot.val();
-      const bookmarkArray = data ? Object.values(data) : [];
-      setBookmarkArray(Object.values(bookmarkArray));
+      const bookmarkArray = data ? Object.keys(data) : [];
+      setBookmarkArray(bookmarkArray);
+    });
+
+    const productsRefDb = query(ref(database, `Products/`));
+    const unsubscribeProduct = onValue(productsRefDb, (snapshot) => {
+      const data = snapshot.val();
+      const productsArray = data ? Object.values(data) : [];
+
+      setBookmarkProductArray(productsArray);
     });
 
     return () => {
-      // Unsubscribe from the database listener when the component unmounts
       unsubscribe();
       unsubscribeBookmark();
+      unsubscribeProduct();
     };
   }, []);
-  console.log(products);
-  console.log(bookmarkedArray);
+
   return (
     <div className="body">
       <button className="showAddProduct-btn" onClick={toggleAddProduct}>
@@ -232,10 +243,13 @@ export default function User({ uid }) {
 
       <h2 id="listedProductsTitle"> BookedMarked Products</h2>
       <div className="listedProductsBookmark">
-        <ProductGrid
-          products={products}
-          deleteProduct={deleteProduct}
+        <BookmarkGrid
           uid={uid}
+          products={bookmarkProductArray.filter((element) => {
+            if (bookmarkedArray.includes(element.productId)) {
+              return element;
+            }
+          })}
         />
       </div>
       <h2 id="listedProductsTitle"> Products Listed By You</h2>

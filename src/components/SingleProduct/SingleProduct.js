@@ -3,11 +3,12 @@ import { getDatabase, ref, child, get } from 'firebase/database';
 import { Image, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../AllProducts.css';
-import './SingleProduct.css'
+import './SingleProduct.css';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function SingleProduct() {
   let { id } = useParams();
+
   //get product images and info from firebase
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
@@ -70,41 +71,36 @@ export default function SingleProduct() {
   return (
     <div>
       {loading === false ? (
-
-        <div> 
-        <div className="profilecontainer">
-       <Link to="/userproducts" state={{ uid: user.id }}>
-        <Image className="profileimg"src={user['profileImage']} roundedCircle />
-           </Link>
-        </div>
-        <Carousel>
-          <Carousel.Item>
-            <img className="carouselImg" src={product['imageUrl']} />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img className="carouselImg" src={product['imageUrl']} />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img className="carouselImg" src={product['imageUrl']} />
-          </Carousel.Item>
-        </Carousel>
-        <div className='itemtext'> 
-        <div className='prodName'>
-        <p className="itemDesc">
-          {product['name']}
-        </p>
-        </div>
-        <div className='priceanddesc'> 
-        <p className="itemDesc">
-          Description: {product['description']}
-        </p>
-        <p className="itemDesc">
-          Price: ${product['price']}
-        </p>
-
-        </div>
-        </div>
-        
+        <div>
+          <div className="profilecontainer">
+            <Link to="/userproducts" state={{ uid: user.id }}>
+              <Image
+                className="profileimg"
+                src={user['profileImage']}
+                roundedCircle
+              />
+            </Link>
+          </div>
+          <Carousel>
+            <Carousel.Item>
+              <img className="carouselImg" src={product['imageUrl']} />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img className="carouselImg" src={product['imageUrl']} />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img className="carouselImg" src={product['imageUrl']} />
+            </Carousel.Item>
+          </Carousel>
+          <div className="itemtext">
+            <div className="prodName">
+              <p className="itemDesc">{product['name']}</p>
+            </div>
+            <div className="priceanddesc">
+              <p className="itemDesc">Description: {product['description']}</p>
+              <p className="itemDesc">Price: ${product['price']}</p>
+            </div>
+          </div>
         </div>
       ) : (
         <div> Loading </div>

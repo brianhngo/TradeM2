@@ -3,11 +3,11 @@ import './UserProduct.css';
 import { getDatabase, ref, set } from 'firebase/database';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function IndividualProduct({ product, deleteProduct, uid }) {
   const toastUpdate = () => {
-    toast.info('Updated');
+    toast.success('Updated');
   };
 
   const [editProduct, setEditProduct] = useState(false);
@@ -33,7 +33,6 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
     const updateProductNode = ref(database, `Products/${product.productId}`);
     toastUpdate();
     set(updateProductNode, productInfo).then(() => {
-      console.log('updated');
       setEditProduct(false);
     });
   };
@@ -52,10 +51,11 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               />
               <div>
                 <h3 className="product-name">{product.name}</h3>
+                <p className="product-price">${product.price}</p>
                 <div className="product-description-container">
                   <p className="product-description">{product.description}</p>
                 </div>
-                <p className="product-price">${product.price}</p>
+
                 <p className="product-category">{product.category}</p>
               </div>
             </div>
@@ -89,19 +89,20 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               onChange={handleInputChange}
             />
             <input
-              className="input-product-description"
-              type="text"
-              defaultValue={product.description}
-              name="description"
-              onChange={handleInputChange}
-            />
-            <input
               className="input-product-price"
               type="text"
               defaultValue={product.price}
               name="price"
               onChange={handleInputChange}
             />
+            <input
+              className="input-product-description"
+              type="text"
+              defaultValue={product.description}
+              name="description"
+              onChange={handleInputChange}
+            />
+
             <input
               className="input-product-category"
               type="text"

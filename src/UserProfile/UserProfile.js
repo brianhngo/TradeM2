@@ -32,7 +32,7 @@ export default function UserProfile() {
   const [bookmark, setBookMark] = useState([]);
   // Toast notification
   const toastInfo = () => {
-    toast.info('Saved');
+    toast.success('Saved');
   };
 
   const submitHandler = (event) => {

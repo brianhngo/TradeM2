@@ -3,20 +3,24 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { auth } from '../firebase';
 
-import { getDatabase, ref, set, update, child, get } from 'firebase/database';
+import { getDatabase, ref, update, child, get } from 'firebase/database';
 
 export default function Bookmark({ productId }) {
   const [bookmarkStatus, setBookMarkStatus] = useState(false);
-  const userData = auth.currentUser;
+  const userData = auth.currentUser ? auth.currentUser : '';
   const bookMarkHandler = (event) => {
     event.preventDefault();
     setBookMarkStatus(!bookmarkStatus);
+    if (userData === '') {
+      toast.warning('Please Sign in or register to use this feature!');
+      return;
+    }
 
     if (!bookmarkStatus) {
-      toast.info('Bookmarked!');
+      toast.success('Bookmarked!');
       updateBookmarkDatabase(true);
     } else {
-      toast.info('Removed from Bookmarks');
+      toast.success('Removed from Bookmarks');
       updateBookmarkDatabase(false);
     }
   };
@@ -29,8 +33,8 @@ export default function Bookmark({ productId }) {
 
         if (addToBookmark) {
           // if we are adding to the database
-          set(bookmarksRef, {
-            booked: productId,
+          update(bookmarksRef, {
+            [productId]: true,
           });
         } else {
           // if status is false remove the bookmarked item from our DB
@@ -44,7 +48,10 @@ export default function Bookmark({ productId }) {
 
   useEffect(() => {
     const dbRef = ref(getDatabase());
-    const bookmarksRef = child(dbRef, `Users/${userData.uid}/Bookmarks/`);
+    const bookmarksRef = child(
+      dbRef,
+      `Users/${userData.uid}/Bookmarks/${productId}`
+    );
     get(bookmarksRef).then((snapshot) => {
       if (snapshot.exists()) {
         setBookMarkStatus(true);
