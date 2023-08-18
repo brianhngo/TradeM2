@@ -20,6 +20,7 @@ export default function Map() {
   const [mapType, setMapType] = useState("normal");
   const [address, setAddress] = useState("");
   const mapRef = useRef();
+  const [highlightedProductLocation, setHighlightedProductLocation] = useState(null);
 
 
   function FullscreenControl() {
@@ -83,6 +84,7 @@ export default function Map() {
   
   useEffect(() => {
     if (userLocation) {
+     
       const nearbyProducts = allProductMarkers.filter((marker) => {
         const distance = haversine(userLocation, marker.geocode);
         return distance <= radius;
@@ -118,10 +120,29 @@ export default function Map() {
     setMapType(mapType === "normal" ? "satellite" : "normal");
   };
 
+  const updateMapLocation = (location) => {
+    if (mapRef.current) {
+      setHighlightedProductLocation(location);
+      const updatedVisibleMarkers = visibleProductMarkers.map(marker => {
+        if (
+          marker.productDetails.location === location.join(',') 
+        ) {
+          return {
+            ...marker,
+            isVisible: true,
+          };
+        }
+        return marker;
+      });
+      setVisibleProductMarkers(updatedVisibleMarkers);
+      mapRef.current.flyTo(location, 13); // Fly to the selected location
+    }
+  };
   return (
     <div className="all-container">
       <div className="allProducts-Container">
-        < AllProducts/>
+      <AllProducts updateMapLocation={updateMapLocation} />
+
       </div>
     <div className="mapContainer">
   
@@ -196,17 +217,21 @@ export default function Map() {
         {userLocation && (
           <>
             <Circle center={userLocation} radius={radius} />
-            {/* <Marker position={userLocation} icon={customIcon}>
-              <Popup>
-                <h2>Your Location</h2>
-              </Popup>
-            </Marker> */}
+           
           </>
+        )}
+
+{highlightedProductLocation && (
+          <Marker position={highlightedProductLocation} icon={customIcon}>
+           
+          </Marker>
         )}
 
         <MarkerClusterGroup chunkedLoading>
           {visibleProductMarkers.map((marker, idx) => (
-            <Marker key={idx} position={marker.geocode} icon={customIcon}>
+            <Marker key={idx} position={marker.geocode} icon={customIcon}  eventHandlers={{
+              click: () => updateMapLocation(marker.geocode, marker.productDetails),
+            }} >
               <Popup>
                 <h2>{marker.productDetails.name}</h2>
                 <img
