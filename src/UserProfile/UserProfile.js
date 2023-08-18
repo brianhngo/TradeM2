@@ -10,7 +10,6 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import User from '../UserProduct/User';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -19,11 +18,8 @@ export default function UserProfile() {
   const toggleSettings = () => {
     setShowSettings((prevShowSettings) => !prevShowSettings);
   };
-  const [authUser, setAuthUser] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const location = useLocation();
   const [uid, setUid] = useState('');
   const dbref = ref(getDatabase());
   const [email, setEmail] = useState('');
@@ -33,10 +29,10 @@ export default function UserProfile() {
   const [username, setUsername] = useState('');
   const [image, setImage] = useState('');
   const [url, setUrl] = useState('');
-
+  const [bookmark, setBookMark] = useState([]);
   // Toast notification
   const toastInfo = () => {
-    toast.info('Saved');
+    toast.success('Saved');
   };
 
   const submitHandler = (event) => {
@@ -54,6 +50,7 @@ export default function UserProfile() {
         userName: username,
         id: uid,
         profileStatus: true,
+        bookmark: bookmark,
       };
       set(child(dbref, 'Users/' + uid), newData);
 
@@ -121,6 +118,13 @@ export default function UserProfile() {
           })
           .finally(() => {
             setLoading(false);
+            setEmail(user.email);
+            setFirstName(user.FirstName);
+            setLastName(user.LastName);
+            setUsername(user.userName);
+            setPronoun(user.pronoun || 'None');
+            setUrl(user.profileImage || '');
+            setBookMark(user?.bookmark || []);
           });
       }
     });
@@ -128,17 +132,18 @@ export default function UserProfile() {
     return () => {
       unsubscribe(); // Cleanup function to remove the listener
     };
-  }, [user]);
+  }, [uid]);
 
   // Getting the users information Updates when user hits Save
   useEffect(() => {
     if (user) {
-      setEmail(user?.email);
-      setFirstName(user?.FirstName);
-      setLastName(user?.LastName);
-      setUsername(user?.userName);
-      setPronoun(user?.pronoun || 'None');
-      setUrl(user?.profileImage || '');
+      setEmail(user.email);
+      setFirstName(user.FirstName);
+      setLastName(user.LastName);
+      setUsername(user.userName);
+      setPronoun(user.pronoun || 'None');
+      setUrl(user.profileImage || '');
+      setBookMark(user?.bookmark || []);
     }
   }, [user]);
   //user profile change
@@ -162,6 +167,10 @@ export default function UserProfile() {
                   className="user-profile-image"
                 />
                 <h2 className="user-name">{firstName}</h2>
+                <p className="user-name">
+                  {' '}
+                  {pronoun !== 'None' ? pronoun : null}
+                </p>
                 <h4 className="upload-profile-image-title">
                   Upload Profile Image
                 </h4>

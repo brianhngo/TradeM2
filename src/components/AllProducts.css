@@ -82,7 +82,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   height: 350px;
-
+  position: relative;
   align-items: center;
   text-decoration: none;
   overflow-y: auto;
@@ -124,5 +124,40 @@
 }
 
 .svgTest {
+  display: inline-block;
+}
+
+.BookedMarked {
+  display: inline-block;
+  fill: blue;
+  color: yellow;
+}
+
+.bookMarkContainer {
   position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#listedProductsTitle {
+  color: white;
+  font-size: 32px;
+  text-align: center;
+  text-decoration: underline;
+  position: sticky;
+}
+
+.listedProductsBookmark {
+  height: 500px;
+  width: 2000px;
+  overflow-y: auto;
+  justify-self: center;
+}
+
+.listedProducts {
+  margin-top: 25px;
+  height: 500px;
+  width: 2000px;
+  overflow-y: auto;
+  justify-content: center;
 }

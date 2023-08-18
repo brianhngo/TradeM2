@@ -3,11 +3,11 @@ import './UserProduct.css';
 import { getDatabase, ref, set } from 'firebase/database';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function IndividualProduct({ product, deleteProduct, uid }) {
   const toastUpdate = () => {
-    toast.info('Updated');
+    toast.success('Updated');
   };
 
   const [editProduct, setEditProduct] = useState(false);
@@ -33,40 +33,45 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
     const updateProductNode = ref(database, `Products/${product.productId}`);
     toastUpdate();
     set(updateProductNode, productInfo).then(() => {
-      console.log('updated');
       setEditProduct(false);
     });
   };
 
   const handleImageChange = async (event) => {
     if (event.target.files.length > 3) {
-      alert("You can only upload a maximum of 3 images.");
+      alert('You can only upload a maximum of 3 images.');
       return;
     }
 
     if (event.target.files.length > 0) {
-    const file = event.target.files[0];
-    const storage = getStorage();
-    const storageRef = refFromStorage(storage, 'products/' + file.name);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      const file = event.target.files[0];
+      const storage = getStorage();
+      const storageRef = refFromStorage(storage, 'products/' + file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on('state_changed',
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-    },
-    (error) => {
-      console.error("Error uploading image:", error);
-    },
-    async () => {
-      try{
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.error('Error uploading image:', error);
+        },
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             console.log('File available at', downloadURL);
-            setProductInfo((prevState) => ({ ...prevState, imageUrl: downloadURL }));
-      } catch (error) {
-      console.error("Error getting download URL:", error);
-      }}
-    );
+            setProductInfo((prevState) => ({
+              ...prevState,
+              imageUrl: downloadURL,
+            }));
+          } catch (error) {
+            console.error('Error getting download URL:', error);
+          }
+        }
+      );
     }
   };
 
@@ -85,10 +90,11 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               />
               <div>
                 <h3 className="product-name">{product.name}</h3>
+                <p className="product-price">${product.price}</p>
                 <div className="product-description-container">
                   <p className="product-description">{product.description}</p>
                 </div>
-                <p className="product-price">${product.price}</p>
+
                 <p className="product-category">{product.category}</p>
               </div>
             </div>
@@ -106,7 +112,9 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
         </>
       ) : (
         <div key={product.id} className="product-card">
-          <h2 className="product-image-edit-guide">Upload upto 3 Image Files</h2>
+          <h2 className="product-image-edit-guide">
+            Upload upto 3 Image Files
+          </h2>
           <form onSubmit={onSaveHandler}>
             <input
               className="input-product-edit-images"
@@ -114,7 +122,7 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               accept="image/*"
               multiple
               name="productImages"
-              onChange={handleImageChange} 
+              onChange={handleImageChange}
             />
             <input
               className="input-product-name"
@@ -140,6 +148,14 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               onChange={handleInputChange}
               maxLength="5"
             />
+            <input
+              className="input-product-description"
+              type="text"
+              defaultValue={product.description}
+              name="description"
+              onChange={handleInputChange}
+            />
+
             <input
               className="input-product-category"
               type="text"
