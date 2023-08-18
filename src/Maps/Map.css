@@ -44,6 +44,9 @@
   width: 50%;
 }
 
+.input-container input::placeholder {
+  color: black;
+}
 .locateButton {
   justify-content: center;
   background-color: black;

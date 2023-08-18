@@ -18,13 +18,17 @@ import {
   getStorage,
   uploadBytesResumable,
   getDownloadURL,
-} from 'firebase/storage'; 
+} from 'firebase/storage';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
+import BookmarkGrid from './BookmarkGrid';
 
 export default function User({ uid }) {
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [bookmarkedArray, setBookmarkArray] = useState([]);
+  const [bookmarkProductArray, setBookmarkProductArray] = useState([]);
+  const [filteredBookmarkProducts, setFilteredBookmarkProducts] = useState([]);
   const toggleAddProduct = () => {
     setShowAddProduct((prevShowAddProduct) => !prevShowAddProduct);
   };
@@ -43,15 +47,15 @@ export default function User({ uid }) {
 
   // Adds Item
   const toastAdd = () => {
-    toast.info('Added');
+    toast.success('Added');
   };
 
   const toastDelete = () => {
-    toast.info('Deleted');
+    toast.success('Deleted');
   };
 
   const toastWarning = () => {
-    toast.info('Please select an category option');
+    toast.warning('Please select an category option');
   };
 
   const handleInputChange = (event) => {
@@ -61,10 +65,10 @@ export default function User({ uid }) {
 
   const handleImageChange = async (event) => {
     if (event.target.files.length > 3) {
-      alert("You can only upload a maximum of 3 images.");
+      alert('You can only upload a maximum of 3 images.');
       return;
     }
-    setProductImages([...event.target.files]); 
+    setProductImages([...event.target.files]);
 
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
@@ -72,13 +76,15 @@ export default function User({ uid }) {
       const storageRef = refFromStorage(storage, 'productImages/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on('state_changed',
+      uploadTask.on(
+        'state_changed',
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
         },
         (error) => {
-          console.error("Error uploading image:", error);
+          console.error('Error uploading image:', error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -187,22 +193,39 @@ export default function User({ uid }) {
 
   useEffect(() => {
     const database = getDatabase();
+
     const productsRef = query(
       ref(database, 'Products'),
       orderByChild('userId'),
       equalTo(uid)
-    ); // 'products' is the name of your database node
+    );
     const unsubscribe = onValue(productsRef, (snapshot) => {
       const data = snapshot.val();
       const productsArray = data ? Object.values(data) : [];
       setProducts(productsArray);
     });
 
+    const bookmarkRef = query(ref(database, `Users/${uid}/Bookmarks/`));
+    const unsubscribeBookmark = onValue(bookmarkRef, (snapshot) => {
+      const data = snapshot.val();
+      const bookmarkArray = data ? Object.keys(data) : [];
+      setBookmarkArray(bookmarkArray);
+    });
+
+    const productsRefDb = query(ref(database, `Products/`));
+    const unsubscribeProduct = onValue(productsRefDb, (snapshot) => {
+      const data = snapshot.val();
+      const productsArray = data ? Object.values(data) : [];
+
+      setBookmarkProductArray(productsArray);
+    });
+
     return () => {
-      // Unsubscribe from the database listener when the component unmounts
       unsubscribe();
+      unsubscribeBookmark();
+      unsubscribeProduct();
     };
-  });
+  }, []);
 
   return (
     <div className="body">
@@ -272,11 +295,25 @@ export default function User({ uid }) {
         </div>
       )}
 
-      <ProductGrid
-        products={products}
-        deleteProduct={deleteProduct}
-        uid={uid}
-      />
+      <h2 id="listedProductsTitle"> BookedMarked Products</h2>
+      <div className="listedProductsBookmark">
+        <BookmarkGrid
+          uid={uid}
+          products={bookmarkProductArray.filter((element) => {
+            if (bookmarkedArray.includes(element.productId)) {
+              return element;
+            }
+          })}
+        />
+      </div>
+      <h2 id="listedProductsTitle"> Products Listed By You</h2>
+      <div className="listedProducts">
+        <ProductGrid
+          products={products}
+          deleteProduct={deleteProduct}
+          uid={uid}
+        />
+      </div>
     </div>
   );
 }
