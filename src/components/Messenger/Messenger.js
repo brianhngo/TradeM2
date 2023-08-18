@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, update } from 'firebase/database';
+import { getDatabase, ref, set, onChildAdded } from 'firebase/database';
 
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -14,7 +14,8 @@ export default function Messenger() {
     const timestamp = Date.now();
     const messageInput = document.getElementById('message-input');
     const message = messageInput.value;
-
+    console.log(message);
+    console.log(user.uid);
     messageInput.value = '';
 
     //auto scroll to the bottom
@@ -22,9 +23,9 @@ export default function Messenger() {
       .getElementById('messages')
       .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-    update(ref(dbRef, 'Messages/' + timestamp), {
-      userName,
-      message,
+    set(ref(dbRef, `Messages/${user.uid}`), {
+      userId: user.uid,
+      message: message,
     });
   }
 
@@ -45,8 +46,8 @@ export default function Messenger() {
   }, []);
 
   // when a child node is added, it will take a snapshot of the message db and add message
-
-  ref(dbRef, 'Messages/').on('child_added', function (snapshot) {
+  const messagesRef = ref(dbRef, 'Messages/');
+  onChildAdded(messagesRef, function (snapshot) {
     const messages = snapshot.val();
     const message = `<li class=${
       user.uid === messages.userName ? 'sent' : 'receive'
