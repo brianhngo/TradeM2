@@ -101,6 +101,9 @@ export default function SingleProduct() {
               <p className="itemDesc">Price: ${product['price']}</p>
             </div>
           </div>
+          <Link to="/chat" state={{ username: product.userId }}>
+            <button>Chat</button>
+          </Link>
         </div>
       ) : (
         <div> Loading </div>

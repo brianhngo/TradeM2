@@ -1,32 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, set, onChildAdded } from 'firebase/database';
-
+import { getDatabase, ref, set, onChildAdded, update } from 'firebase/database';
+import { useLocation, useParams } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-
 export default function Messenger() {
   const [user, setUser] = useState([]);
+  //   const { state } = useLocation();
+  //   const sellerId = state.username ? state.username : null;
+  const location = useLocation();
+  const sellerId = location.state.sellerId;
+  const buyerId = user.uid;
+  //
 
+  console.log(sellerId);
   const dbRef = getDatabase();
+
+  //   function sendMessage(e) {
+  //     e.preventDefault();
+  //     const timestamp = Date.now();
+  //     const messageInput = document.getElementById('message-input');
+  //     const message = messageInput.value;
+  //     console.log(message);
+  //     console.log(user.uid);
+  //     messageInput.value = '';
+
+  //     //auto scroll to the bottom
+  //     document
+  //       .getElementById('messages')
+  //       .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+
+  //     update(ref(dbRef, `Messages/1/`), {
+  //       userId: user.uid,
+  //       sellerId: sellerId,
+  //       message: {
+  //         messageID:
+  //         message: message,
+  //         timestamp: timestamp,
+  //         sentBy: user.uid,
+  //       },
+  //     });
+  //   }
 
   function sendMessage(e) {
     e.preventDefault();
-    const timestamp = Date.now();
-    const messageInput = document.getElementById('message-input');
-    const message = messageInput.value;
-    console.log(message);
-    console.log(user.uid);
-    messageInput.value = '';
-
-    //auto scroll to the bottom
-    document
-      .getElementById('messages')
-      .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-
-    set(ref(dbRef, `Messages/${user.uid}`), {
-      userId: user.uid,
-      message: message,
-    });
+    if (authUser && newMessage.trim() !== '') {
+      const userId = authUser.uid;
+      const chatRef = ref(
+        getDatabase(),
+        'Chats/' + sellerId + '/' + buyerId + '/messages'
+      );
+      const newMessageRef = push(chatRef);
+      set(newMessageRef, {
+        userId: userId,
+        content: newMessage,
+        timestamp: new Date().toISOString(),
+      });
+      setNewMessage(''); //clear input for message for new chat
+    }
   }
 
   useEffect(() => {
@@ -68,12 +98,23 @@ export default function Messenger() {
         {
           //form to send message
         }
-        <form id="message-form">
+        {/* <form id="message-form">
           <input id="message-input" type="text" />
           <button
             id="message-btn"
             type="submit"
             onClick={(e) => sendMessage(e)}>
+            Send
+          </button>
+        </form> */}
+        <form id="message-form" onSubmit={(e) => sendMessage(e)}>
+          <input
+            id="message-input"
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button id="message-btn" type="submit">
             Send
           </button>
         </form>
