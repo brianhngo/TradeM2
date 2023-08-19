@@ -52,15 +52,7 @@
   text-align: center;
 }
 
-.product-img {
-  max-width: 140px;
-  max-height: 140px;
-  width: auto;
-  object-fit: contain;
-  border-radius: 8px;
 
-  height: auto;
-}
 
 .image-container {
   max-width: 140px;

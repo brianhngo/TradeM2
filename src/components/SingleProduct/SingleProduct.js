@@ -9,7 +9,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 export default function SingleProduct() {
   let { id } = useParams();
 
-  //get product images and info from firebase
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -17,7 +16,6 @@ export default function SingleProduct() {
 
   const onClickHandler = (event) => {
     event.preventDefault();
-
     navigate(`/profile/${product.userId}`);
   };
 
@@ -30,7 +28,6 @@ export default function SingleProduct() {
           const productData = snapshot.val();
           setProduct(productData);
 
-          // Once product data is set, fetch user data using product.userId
           get(child(dbRef, `Users/${productData.userId}`)).then(
             (userSnapshot) => {
               if (userSnapshot.exists()) {
@@ -52,62 +49,50 @@ export default function SingleProduct() {
         setLoading(false);
       });
   }, [id]);
+
   if (loading) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <p>Loading...</p>;
   }
 
   if (!product || !user) {
-    return (
-      <div>
-        <p>No data available</p>
-      </div>
-    );
+    return <p>No data available</p>;
   }
 
   return (
-    <div>
-      {loading === false ? (
-        <div>
-          <div className="profilecontainer">
-            <Link to="/userproducts" state={{ uid: user.id }}>
-              <Image
-                className="profileimg"
-                src={user['profileImage']}
-                roundedCircle
-              />
-            </Link>
+    <div className="singleProductContainer">
+      <div className="profileContainer">
+        <Link to="/userproducts" state={{ uid: user.id }}>
+          <div className="profileImgContainer">
+            <Image className="profileImg" src={user['profileImage']} roundedCircle />
           </div>
+        </Link>
+        <p className="email">{user['email']}</p>
+      </div>
+      <div className="carouselAndDetailsContainer">
+        <div className="carouselContainer">
           <Carousel>
             <Carousel.Item>
-              <img className="carouselImg" src={product['imageUrl']} />
+              <img className="carouselImg" src={product['imageUrl']} alt="Product" />
             </Carousel.Item>
             <Carousel.Item>
-              <img className="carouselImg" src={product['imageUrl']} />
+              <img className="carouselImg" src={product['imageUrl']} alt="Product" />
             </Carousel.Item>
             <Carousel.Item>
-              <img className="carouselImg" src={product['imageUrl']} />
+              <img className="carouselImg" src={product['imageUrl']} alt="Product" />
             </Carousel.Item>
           </Carousel>
-          <div className="itemtext">
-            <div className="prodName">
-              <p className="itemDesc">{product['name']}</p>
-            </div>
-            <div className="priceanddesc">
-              <p className="itemDesc">Description: {product['description']}</p>
-              <p className="itemDesc">Price: ${product['price']}</p>
-            </div>
+        </div>
+        <div className="itemDetails">
+          <div className="productInfo">
+            <p className="singleProductTitle">{product['name']}</p>
+            <p className="productDescription">Description: {product['description']}</p>
+            <p className="productPrice">Price: ${product['price']}</p>
           </div>
           <Link to="/chat" state={{ username: product.userId }}>
             <button>Chat</button>
           </Link>
         </div>
-      ) : (
-        <div> Loading </div>
-      )}
+      </div>
     </div>
   );
 }
