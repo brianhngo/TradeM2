@@ -19,16 +19,15 @@
 .leaflet-container {
   width: 100%;
   height: 100%;
-  max-height: 80vh;
-  max-width: 80vh;
+ 
 }
 
 .address-container {
     display: flex;
     position: absolute;
-    top: 10px; /* Adjust the top position according to your design */
-    right: 10px; /* Adjust the left position according to your design */
-    z-index: 2000; /* Ensure the container is above the map */
+    top: 10px; 
+    right: 10px; 
+    z-index: 2000; 
     background-color: transparent;
     padding: 10px;
     border-radius: 5px;
