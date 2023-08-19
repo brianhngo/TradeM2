@@ -11,6 +11,7 @@ import AllProducts from './components/AllProducts';
 import SingleProduct from './components/SingleProduct/SingleProduct';
 import UserProducts from './components/UserProducts';
 import Messenger from './components/Messenger/Messenger';
+import ChatList from './components/Messenger/ChatList';
 function App() {
   return (
     <Routes>
@@ -21,6 +22,7 @@ function App() {
       <Route path="/map" element={<Maps />} />
       <Route path="/signup" element={<SignUpModal />} />
       <Route path="/forgetPassword" element={<ForgetPassword />} />
+      <Route path="/chatlist" element={<ChatList />} />
       <Route path="/chat" element={<Messenger />} />
       <Route path="/products" element={<AllProducts />} />
       <Route path="/singleproduct/:id" element={<SingleProduct />} />
