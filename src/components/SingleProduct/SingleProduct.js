@@ -63,7 +63,11 @@ export default function SingleProduct() {
       <div className="profileContainer">
         <Link to="/userproducts" state={{ uid: user.id }}>
           <div className="profileImgContainer">
-            <Image className="profileImg" src={user['profileImage']} roundedCircle />
+            <Image
+              className="profileImg"
+              src={user['profileImage']}
+              roundedCircle
+            />
           </div>
         </Link>
         <p className="email">{user['email']}</p>
@@ -72,25 +76,36 @@ export default function SingleProduct() {
         <div className="carouselContainer">
           <Carousel>
             <Carousel.Item>
-              <img className="carouselImg" src={product['imageUrl']} alt="Product" />
+              <img
+                className="carouselImg"
+                src={product['imageUrl']}
+                alt="Product"
+              />
             </Carousel.Item>
             <Carousel.Item>
-              <img className="carouselImg" src={product['imageUrl']} alt="Product" />
+              <img
+                className="carouselImg"
+                src={product['imageUrl']}
+                alt="Product"
+              />
             </Carousel.Item>
             <Carousel.Item>
-              <img className="carouselImg" src={product['imageUrl']} alt="Product" />
+              <img
+                className="carouselImg"
+                src={product['imageUrl']}
+                alt="Product"
+              />
             </Carousel.Item>
           </Carousel>
         </div>
         <div className="itemDetails">
           <div className="productInfo">
             <p className="singleProductTitle">{product['name']}</p>
-            <p className="productDescription">Description: {product['description']}</p>
+            <p className="productDescription">
+              Description: {product['description']}
+            </p>
             <p className="productPrice">Price: ${product['price']}</p>
           </div>
-          <Link to="/chat" state={{ username: product.userId }}>
-            <button>Chat</button>
-          </Link>
         </div>
       </div>
     </div>

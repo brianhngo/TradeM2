@@ -1,69 +1,80 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, set, onChildAdded, update } from 'firebase/database';
+import { getDatabase, ref, onChildAdded, update, get } from 'firebase/database';
 import { useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import './Messenger.css';
 
 export default function Messenger() {
-  const [user, setUser] = useState([]);
   const { state } = useLocation();
-  const sellerId = state.username ? state.username : null;
-  console.log(sellerId);
-  const dbRef = getDatabase();
+  const userId = state.userId; // Logged in usersID
+  const otherId = state.otherId; // Other persons in chat //
+  const [allMessages, setAllMessages] = useState([]);
 
+  console.log(allMessages);
+  const db = getDatabase();
+
+  // Send Message handler
   function sendMessage(e) {
     e.preventDefault();
     const timestamp = Date.now();
     const messageInput = document.getElementById('message-input');
     const message = messageInput.value;
-    console.log(message);
-    console.log(user.uid);
+
     messageInput.value = '';
 
     //auto scroll to the bottom
     document
-      .getElementById('messages')
+      .getElementById('messageListContainer')
       .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-    update(ref(dbRef, `Messages/${user.uid}-${sellerId}/`), {
-      participant: {
-        1: user.uid,
-        2: sellerId,
-      },
-      [timestamp]: {
-        message: message,
-        sentBy: user.uid,
-      },
+    update(ref(db, `Messages2/${userId}/${timestamp}`), {
+      message: message,
+      sentBy: userId,
+      receiveBy: otherId,
+    });
+
+    update(ref(db, `Messages2/${otherId}/${timestamp}`), {
+      message: message,
+      sentBy: userId,
+      receiveBy: otherId,
     });
   }
 
+  // mounted an AddListener. Anytime a child node is added to Messages2$/${userId}, it will add
+  // the new child onto useState []
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (userData) => {
-      try {
-        if (userData) {
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+    const messagesRef = ref(db, `Messages2/${userId}`);
+    const messageListener = onChildAdded(messagesRef, (snapshot) => {
+      const newMessage = snapshot.val();
+      setAllMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
     return () => {
-      unsubscribe();
+      messageListener();
     };
   }, []);
 
-  // when a child node is added, it will take a snapshot of the message db and add message
-  const messagesRef = ref(dbRef, `Messages/${user.uid}-${sellerId}/`);
-  onChildAdded(messagesRef, function (snapshot) {
-    const messages = snapshot.val();
-    const message = `<li class=${
-      user.uid === messages.userName ? 'sent' : 'receive'
-    }><span>${messages.userName}: </span>${messages.message}</li>`;
-
-    document.getElementById('messages').innerHTML += message;
-  });
+  // When the page loads, get all the messages from the user(logged in). Filter it out since
+  // It contains all messages (including multiple messages with different users)
+  useEffect(() => {
+    const messageRef = ref(db, `Messages2/${userId}`);
+    get(messageRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const messageData = Object.values(data).filter((element) => {
+          if (
+            (element.sentBy === userId || element.sentBy === otherId) &&
+            (element.receiveBy === otherId || element.receiveBy === userId)
+          ) {
+            // if element.sentBy && element.receiveBy matches ID return
+            return element;
+          }
+        });
+        setAllMessages(messageData);
+      }
+    });
+  }, []);
 
   return (
     <div>
@@ -72,7 +83,20 @@ export default function Messenger() {
         {
           //messages will display here
         }
-        <ul id="messages"></ul>
+        <ul id="messageListContainer">
+          {allMessages.map((element, index) => {
+            return (
+              <div
+                className={
+                  element.sentBy === userId ? 'userMessage' : 'otherMessage'
+                }
+                key={index}>
+                <li> {element.message} </li>
+                <li> {element.sentBy === userId ? userId : otherId} </li>
+              </div>
+            );
+          })}
+        </ul>
 
         {
           //form to send message

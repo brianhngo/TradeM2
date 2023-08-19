@@ -29,9 +29,11 @@ export default function ChatList() {
   console.log(user.uid);
   return (
     <>
-      <h1> List of all your messages </h1>
+      <div className="messengerBody">
+        <h1> List of all your messages </h1>
 
-      <MessengerGrid userId={user.uid} />
+        <MessengerGrid userId={user.uid} />
+      </div>
     </>
   );
 }
