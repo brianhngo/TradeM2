@@ -27,8 +27,8 @@
 
 .product-item {
   background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  box-shadow: 0 5px 10px #a9a9b9;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -88,13 +88,7 @@
 
 }
 
-#listedProductsTitle {
-  color: white;
-  font-size: 32px;
-  text-align: center;
-  text-decoration: underline;
-  position: sticky;
-}
+
 
 .listedProductsBookmark {
   height: 500px;
