@@ -64,13 +64,15 @@
 .product-price {
   font-size: 16px;
   font-weight: bold;
-  margin-top: 5px;
-  text-align: left; /* Left-align the price */
+  margin-top: 3px;
+  text-align: left;
 }
 
 .product-price {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .locate-product {
