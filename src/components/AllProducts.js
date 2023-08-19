@@ -140,13 +140,13 @@ const AllProducts = ({ updateMapLocation }) => {
           alt={product.ProductName}
         />
         </Link>
+        <p className="product-name">{product.name}</p> 
       </div>
-    
+      <p className="product-price">${product.price}</p>
     <div className="product-details">
-      <p className="product-texts">Category: {product.category} </p>
-      <p className="product-texts">Name: {product.name} </p>
+    
       <p className="product-texts">Description: {product.description}</p>
-      <p className="product-price">Price: ${product.price}</p>
+     
     </div>
   </div>
 ))}
