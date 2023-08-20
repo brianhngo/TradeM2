@@ -3,13 +3,22 @@ import { getDatabase, ref, child, get, set } from 'firebase/database';
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import MessengerGrid from './MessengerGrid';
+import CreateNewMessage from '../Messenger/CreateNewMessage';
 
 export default function ChatList() {
-  // I need to useEffect to get the ID of the user. Then Once i get the ID i will pass it down to MessengerGrid
-  //MessengerGrid will search in the database if the user exist. If it does it will extract an array and map
-  // If it doesnt a useEffect will create a new database
-
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [user, setUser] = useState([]);
+  const openPopup = () => {
+    if (user.uid) {
+      setIsPopupOpen(true);
+    } else {
+      toast.warning('Please login or create an account to use this feature');
+    }
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (userData) => {
@@ -26,12 +35,18 @@ export default function ChatList() {
       unsubscribe();
     };
   });
-  console.log(user.uid);
+
   return (
     <>
       <div className="messengerBody">
         <h1> List of all your messages </h1>
-
+        <button onClick={openPopup}> Send Message! </button>
+        <CreateNewMessage
+          userId={user.uid}
+          otherId={null}
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+        />
         <MessengerGrid userId={user.uid} />
       </div>
     </>

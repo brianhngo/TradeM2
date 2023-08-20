@@ -5,10 +5,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../AllProducts.css';
 import './SingleProduct.css';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-
+import CreateNewMessage from '../Messenger/CreateNewMessage';
+import { auth } from '../../firebase';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function SingleProduct() {
-  let { id } = useParams();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const userId = auth.currentUser.uid;
+  const openPopup = () => {
+    if (userId) {
+      setIsPopupOpen(true);
+    } else {
+      toast.warning('Please login or create an account to use this feature');
+    }
+  };
 
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+  let { id } = useParams();
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -106,6 +121,12 @@ export default function SingleProduct() {
             </p>
             <p className="productPrice">Price: ${product['price']}</p>
           </div>
+          <button onClick={openPopup}> Send Message! </button>
+          <CreateNewMessage
+            otherId={product.userId}
+            isOpen={isPopupOpen}
+            onClose={closePopup}
+          />
         </div>
       </div>
     </div>
