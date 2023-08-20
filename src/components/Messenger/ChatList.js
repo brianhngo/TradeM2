@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, child, get, set } from 'firebase/database';
+
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import MessengerGrid from './MessengerGrid';

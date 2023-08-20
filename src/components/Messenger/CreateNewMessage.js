@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { auth } from '../../firebase';
+
 const customStyles = {
   content: {
     top: '50%',
@@ -11,8 +11,14 @@ const customStyles = {
 
 import { get, getDatabase, ref, update } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
+  const [user, setUser] = useState('');
+
   const [email, setEmail] = useState('');
   const [messageContext, setMessageContext] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
@@ -38,54 +44,88 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
     const timestamp = Date.now();
 
     if (otherId !== null) {
-      // Creating new message from single product
-      console.log('cake');
-      update(ref(db, `Messages2/${userId}/${timestamp}`), {
-        message: messageContext,
-        sentBy: userId,
-        receiveBy: otherId,
-      });
+      get(ref(db, 'Users')).then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = Object.values(snapshot.val());
 
-      update(ref(db, `Messages2/${otherId}/${timestamp}`), {
-        message: messageContext,
-        sentBy: userId,
-        receiveBy: otherId,
-      });
+          // Creating new message from single product
 
-      navigate('/chat', {
-        state: {
-          userId: userId,
-          otherId: otherId,
-        },
+          // gets users email
+          const filteredUserData = data.filter((element) => {
+            if (element.id === user.uid) {
+              return element;
+            }
+          });
+          console.log(filteredUserData);
+          update(ref(db, `Messages2/${user.uid}/${timestamp}`), {
+            message: messageContext,
+            sentBy: user.uid,
+            receiveBy: otherId,
+            otherEmail: email,
+            userEmail: filteredUserData[0].email,
+          });
+
+          update(ref(db, `Messages2/${otherId}/${timestamp}`), {
+            message: messageContext,
+            sentBy: user.uid,
+            receiveBy: otherId,
+            otherEmail: email,
+            userEmail: filteredUserData[0].email,
+          });
+
+          navigate('/chat', {
+            state: {
+              userId: user.uid,
+              otherId: otherId,
+            },
+          });
+        }
       });
     } else {
-      console.log('cookie');
       // otherId does not equal null. Creating new message from Chatlist
       get(ref(db, 'Users')).then((snapshot) => {
         if (snapshot.exists()) {
           const data = Object.values(snapshot.val());
+
+          // get ID from user inputting email
           const filteredData = data.filter((element) => {
             if (element.email === email) {
               return element;
             }
           });
-          console.log(filteredData);
+
+          if (filteredData.length < 1) {
+            toast.warning('The Email you have inputted does not exist');
+            return;
+          }
+
+          // gets user Email
+          const filteredUserData = data.filter((element) => {
+            if (element.id === userId) {
+              return element;
+            }
+          });
+
           update(ref(db, `Messages2/${userId}/${timestamp}`), {
             message: messageContext,
             sentBy: userId,
-            receiveBy: otherId,
+            receiveBy: filteredData[0].id,
+            otherEmail: email,
+            userEmail: filteredUserData[0].email,
           });
 
-          update(ref(db, `Messages2/${filteredData.id}/${timestamp}`), {
+          update(ref(db, `Messages2/${filteredData[0].id}/${timestamp}`), {
             message: messageContext,
             sentBy: userId,
-            receiveBy: otherId,
+            userEmail: filteredUserData[0].email,
+            receiveBy: filteredData[0].id,
+            otherEmail: email,
           });
 
           navigate('/chat', {
             state: {
               userId: userId,
-              otherId: filteredData.id,
+              otherId: filteredData[0].id,
             },
           });
         }
@@ -97,6 +137,17 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
     event.preventDefault();
     onClose();
   };
+
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
+    return () => {
+      listen();
+    };
+  }, []);
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>

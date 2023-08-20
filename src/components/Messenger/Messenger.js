@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onChildAdded, update, get } from 'firebase/database';
 import { useLocation } from 'react-router-dom';
-import { auth } from '../../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+
 import './Messenger.css';
 
 export default function Messenger() {
@@ -92,7 +91,12 @@ export default function Messenger() {
                 }
                 key={index}>
                 <li> {element.message} </li>
-                <li> {element.sentBy === userId ? userId : otherId} </li>
+                <li>
+                  {' '}
+                  {userId === element.sentBy
+                    ? element.otherEmail
+                    : element.userEmail}{' '}
+                </li>
               </div>
             );
           })}

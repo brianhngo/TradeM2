@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  getDatabase,
-  ref,
-  set,
-  onChildAdded,
-  update,
-  get,
-} from 'firebase/database';
+import { getDatabase, ref, get } from 'firebase/database';
 import { Link } from 'react-router-dom';
-import { auth } from '../../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+
 import './Messenger.css';
 
 export default function MessengerGrid({ userId }) {
@@ -19,6 +11,35 @@ export default function MessengerGrid({ userId }) {
   const [isLoadingProp, setIsLoadingProp] = useState(true);
   console.log(messageList);
   console.log(userId);
+
+  const getUniqueIds = (array) => {
+    const reverseArray = array.reverse();
+    const uniqueIdSet = new Set();
+    for (const obj of reverseArray) {
+      if (obj.sentBy !== userId) {
+        uniqueIdSet.add(obj.sentBy);
+      }
+
+      if (obj.receiveBy !== userId) {
+        uniqueIdSet.add(obj.receiveBy);
+      }
+    }
+    const uniqueId = Array.from(uniqueIdSet);
+    let obj = {};
+    for (let element of reverseArray) {
+      if (uniqueId.includes(element.sentBy)) {
+        if (!obj[element.sentBy]) {
+          obj[element.sentBy] = element;
+        }
+      } else if (uniqueId.includes(element.receiveBy)) {
+        if (!obj[element.receiveBy]) {
+          obj[element.receiveBy] = element;
+        }
+      }
+    }
+
+    return Object.values(obj);
+  };
 
   useEffect(() => {
     // Since userId is async, I need to have the page rerender when userId loads
@@ -36,18 +57,11 @@ export default function MessengerGrid({ userId }) {
           if (snapshot.exists()) {
             // If the data exist in firebase, extract and set our state
             const data = snapshot.val();
-            console.log('data', data);
-            console.log('hello');
-            const messageData = Object.values(data);
-            console.log('messageData', messageData);
 
-            setMessageList(messageData);
-          } else {
-            // If it doesnt exist, create a temporary holder in the db
-            // update(ref(dbRef, `Messages2/${userId}`), {
-            //   [userId]: true,
-            // });
-            console.log('hi');
+            const messageData = Object.values(data);
+            const uniqueIds = getUniqueIds(messageData);
+
+            setMessageList(uniqueIds);
           }
         })
         .catch((error) => {
@@ -90,8 +104,8 @@ export default function MessengerGrid({ userId }) {
               <div className="participant">
                 <p>
                   {userId === element.sentBy
-                    ? element.receiveBy
-                    : element.sentBy}
+                    ? element.otherEmail
+                    : element.userEmail}
                 </p>
               </div>
               <div className="last-message">
