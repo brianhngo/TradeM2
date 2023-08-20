@@ -8,6 +8,7 @@ const customStyles = {
     transform: 'translate(-50%,-50%)',
   },
 };
+import './CreateNewMessage.css';
 
 import { get, getDatabase, ref, update } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
@@ -151,26 +152,36 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>
-      <button onClick={exitHandler}> X </button>
-      <h1> Create New Message </h1>
-      {errorStatus === true ? (
-        <p className="errorMessage"> The following textbox cannot be blank</p>
-      ) : null}
-      <form onSubmit={buttonHandler}>
-        <input
-          type="email"
-          placeholder="Email of user you wish to contact"
-          name="email"
-          value={email}
-          onChange={emailHandler}></input>
-        <input
-          name="message"
-          type="text"
-          placeholder="Enter your message here!"
-          value={messageContext}
-          onChange={messageHandler}></input>
-        <button onClick={buttonHandler}> Submit </button>
-      </form>
+      <div className="popup">
+        <button className="exit-button" onClick={exitHandler}>
+          X
+        </button>
+        <h1 className="popup-title">Create New Message</h1>
+        {errorStatus === true ? (
+          <p className="error-message">The following textbox cannot be blank</p>
+        ) : null}
+        <form onSubmit={buttonHandler}>
+          <input
+            className="email-input"
+            type="email"
+            placeholder="Email of user you wish to contact"
+            name="email"
+            value={email}
+            onChange={emailHandler}
+          />
+          <input
+            className="message-input"
+            name="message"
+            type="text"
+            placeholder="Enter your message here!"
+            value={messageContext}
+            onChange={messageHandler}
+          />
+          <button className="submit-button" onClick={buttonHandler}>
+            Submit
+          </button>
+        </form>
+      </div>
     </Modal>
   );
 }

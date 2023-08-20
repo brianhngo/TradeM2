@@ -1,0 +1,60 @@
+/* MessengerList.css */
+
+.popup {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.exit-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.popup-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-bottom: 10px;
+}
+
+.email-input,
+.message-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.email-input::placeholder,
+.message-input::placeholder {
+  color: black;
+}

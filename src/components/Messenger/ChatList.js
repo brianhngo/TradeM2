@@ -38,9 +38,11 @@ export default function ChatList() {
 
   return (
     <>
-      <div className="messengerBody">
-        <h1> List of all your messages </h1>
-        <button onClick={openPopup}> Send Message! </button>
+      <div className="messengerContainer">
+        <h1 className="chatTitle"> List of all your messages </h1>
+        <button className="sendMessageButton" onClick={openPopup}>
+          Send Message!
+        </button>
         <CreateNewMessage
           userId={user.uid}
           otherId={null}

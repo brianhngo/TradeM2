@@ -76,8 +76,8 @@ export default function Messenger() {
   }, []);
 
   return (
-    <div>
-      <h2>Chat</h2>
+    <div className="chatContainer">
+      <h2 className="chatTitle">Chat</h2>
       <div id="chat">
         {
           //messages will display here
@@ -91,12 +91,12 @@ export default function Messenger() {
                 }
                 key={index}>
                 <li> {element.message} </li>
-                <li>
-                  {' '}
+
+                <span className="messageUser">
                   {userId === element.sentBy
-                    ? element.otherEmail
-                    : element.userEmail}{' '}
-                </li>
+                    ? element.userEmail
+                    : element.otherEmail}
+                </span>
               </div>
             );
           })}

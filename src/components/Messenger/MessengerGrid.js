@@ -72,7 +72,7 @@ export default function MessengerGrid({ userId }) {
 
   return (
     <div className="messageListContainer">
-      <div class="search-container">
+      {/* <div class="search-container"> Want todo search bar
         <form>
           <input type="text" placeholder="Search.." name="search" />
           <button type="submit">
@@ -88,7 +88,7 @@ export default function MessengerGrid({ userId }) {
             </svg>
           </button>
         </form>
-      </div>
+      </div> */}
 
       {messageList.map((element, index) => {
         return (
@@ -103,13 +103,15 @@ export default function MessengerGrid({ userId }) {
             <div className="messages">
               <div className="participant">
                 <p>
+                  {' '}
+                  From :
                   {userId === element.sentBy
                     ? element.otherEmail
                     : element.userEmail}
                 </p>
               </div>
               <div className="last-message">
-                <p> {element.message}</p>
+                <p> Message : {element.message}</p>
               </div>
             </div>
           </Link>
