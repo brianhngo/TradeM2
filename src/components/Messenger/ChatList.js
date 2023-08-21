@@ -4,7 +4,7 @@ import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import MessengerGrid from './MessengerGrid';
 import CreateNewMessage from '../Messenger/CreateNewMessage';
-
+import './CreateNewMessage.css'
 export default function ChatList() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [user, setUser] = useState([]);
@@ -39,7 +39,7 @@ export default function ChatList() {
   return (
     <>
       <div className="messengerContainer">
-        <h1 className="chatTitle"> List of all your messages </h1>
+        <h1 className="chatTitle"> Chat History </h1>
         <button className="sendMessageButton" onClick={openPopup}>
           Send Message!
         </button>
