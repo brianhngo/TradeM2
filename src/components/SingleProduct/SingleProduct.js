@@ -94,21 +94,21 @@ export default function SingleProduct() {
             <Carousel.Item>
               <img
                 className="carouselImg"
-                src={product['imageUrl']}
+                src={product['imageUrl'][0]}
                 alt="Product"
               />
             </Carousel.Item>
             <Carousel.Item>
               <img
                 className="carouselImg"
-                src={product['imageUrl']}
+                src={product['imageUrl'][1]}
                 alt="Product"
               />
             </Carousel.Item>
             <Carousel.Item>
               <img
                 className="carouselImg"
-                src={product['imageUrl']}
+                src={product['imageUrl'][2]}
                 alt="Product"
               />
             </Carousel.Item>

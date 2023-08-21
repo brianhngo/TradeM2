@@ -108,3 +108,98 @@
   background-color: black;
   color: white;
 }
+
+
+
+
+
+
+/* UserProducts.js */
+
+.userProductsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.upProfileContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.upProfileImgContainer {
+  margin-right: 20px;
+  border: 5px solid black;
+  border-radius: 50%;
+  padding: 10px;
+  transition: background-color 0.3s; 
+}
+
+
+.upProfileImg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.upEmail {
+  font-size: 18px;
+}
+
+.upCarouselAndDetailsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.upProduct-item {
+  width: calc(33.33% - 20px);
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  transition: box-shadow 0.3s ease; 
+}
+.upProduct-item:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3); 
+}
+
+.upProduct-img {
+  max-width: 100%;
+  height: 300px;
+  width: 400px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.upItemDetails {
+  text-align: left;
+}
+
+.upProductInfo {
+  padding: 10px;
+}
+
+.upSingleProductTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.upProductDescription {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.upProductPrice {
+  font-size: 16px;
+  color: #ff6600;
+  margin-bottom: 5px;
+}
+
+.upProduct-category {
+  font-size: 14px;
+  color: #666;
+}
