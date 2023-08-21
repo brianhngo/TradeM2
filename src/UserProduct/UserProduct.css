@@ -52,8 +52,6 @@
   text-align: center;
 }
 
-
-
 .image-container {
   max-width: 140px;
   max-height: 140px;
@@ -92,27 +90,25 @@
 }
 
 .showAddProduct-btn {
-  display: block;
-  position: relative;
-  justify-content: center;
-  text-transform: uppercase;
-  font-size: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px 10px;
-  border-radius: 20px;
-  transition: all 0.2s;
+  border: 3px solid black;
+  border-radius: 50%;
+  padding: 10px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  font-size: 24px;
   color: black;
-  background-color: white;
-  animation: fadeInAnimation 4s ease;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px; /* Add some space between the button and other content */
 }
 
 .showAddProduct-btn:hover {
-  box-shadow: 0 5px 20px #a9a9b9;
-  transform: translateY(-5px);
+  background-color: black;
+  color: white; /* Change text color on hover */
 }
+
 
 .edit-product-btn,
 .delete-product-btn,
@@ -208,7 +204,7 @@
 .input-product-images::placeholder {
   color: black;
 }
-.input-product-edit-images::placeholder{
+.input-product-edit-images::placeholder {
   color: black;
 }
 .input-product-name::placeholder {
@@ -232,7 +228,7 @@
 /* user profile card */
 
 .profile-card-container {
-  color: #ffffff;
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -246,7 +242,7 @@
   width: 300px;
   height: 400px;
   margin: 20px;
-  background: #21212c;
+  background: transparent;
   box-shadow: 0 5px 25px #a9a9b9;
   border-radius: 15px;
   display: flex;
@@ -266,8 +262,18 @@
   border: 10px solid #1b1b1b;
 }
 
+.user-profile-image {
+  border: 5px solid black;
+  border-radius: 50%;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+.user-profile-image:hover {
+  background-color: black;
+}
+
 .user-name {
-  color: #fff;
+  color: #0a1118;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 500;
@@ -276,18 +282,22 @@
   margin: 20px 0 10px;
 }
 
-.upload-profile-image-title {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 300;
-  text-transform: initial;
-}
-
-.user-profile:hover {
-  opacity: 1;
-  transform: translateY(-20px);
-}
-
 .product-Links {
   text-decoration: none;
+}
+
+.sections-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.bookmarked-products-section {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.products-listed-section {
+  flex: 1;
+  margin-left: 10px;
 }
