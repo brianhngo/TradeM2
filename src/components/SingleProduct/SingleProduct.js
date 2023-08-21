@@ -126,6 +126,7 @@ export default function SingleProduct() {
             otherId={product.userId}
             isOpen={isPopupOpen}
             onClose={closePopup}
+            emailGiven={user['email']}
           />
         </div>
       </div>

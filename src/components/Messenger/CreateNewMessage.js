@@ -17,12 +17,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase';
 
-export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
+export default function CreateNewMessage({
+  isOpen,
+  onClose,
+  otherId,
+  userId,
+  emailGiven,
+}) {
   const [user, setUser] = useState('');
-
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(emailGiven ? emailGiven : '');
   const [messageContext, setMessageContext] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
+  const [errorStatus2, setErrorStatus2] = useState(false);
 
   const db = getDatabase();
 
@@ -40,6 +46,11 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
     event.preventDefault();
     if (email.length < 1 || messageContext.length < 1) {
       setErrorStatus(true);
+      return;
+    }
+
+    if (user.reloadUserInfo.email === email) {
+      setErrorStatus2(true);
       return;
     }
     const timestamp = Date.now();
@@ -73,7 +84,8 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
             otherEmail: email,
             userEmail: filteredUserData[0].email,
           });
-
+          setErrorStatus(false);
+          setErrorStatus2(false);
           navigate('/chat', {
             state: {
               userId: user.uid,
@@ -122,6 +134,8 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
             receiveBy: filteredData[0].id,
             otherEmail: email,
           });
+          setErrorStatus(false);
+          setErrorStatus2(false);
 
           navigate('/chat', {
             state: {
@@ -160,15 +174,32 @@ export default function CreateNewMessage({ isOpen, onClose, otherId, userId }) {
         {errorStatus === true ? (
           <p className="error-message">The following textbox cannot be blank</p>
         ) : null}
+        {errorStatus2 === true ? (
+          <p className="error-message">
+            {' '}
+            You cannot send a message to yourself
+          </p>
+        ) : null}
         <form onSubmit={buttonHandler}>
-          <input
-            className="email-input"
-            type="email"
-            placeholder="Email of user you wish to contact"
-            name="email"
-            value={email}
-            onChange={emailHandler}
-          />
+          {emailGiven ? (
+            <input
+              className="email-input"
+              type="email"
+              placeholder="Email of user you wish to contact"
+              name="email"
+              value={email}
+              readOnly
+            />
+          ) : (
+            <input
+              className="email-input"
+              type="email"
+              placeholder="Email of user you wish to contact"
+              name="email"
+              value={email}
+              onChange={emailHandler}
+            />
+          )}
           <input
             className="message-input"
             name="message"

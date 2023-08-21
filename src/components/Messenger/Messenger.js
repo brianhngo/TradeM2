@@ -74,7 +74,7 @@ export default function Messenger() {
       }
     });
   }, []);
-
+  console.log(userId);
   return (
     <div className="chatContainer">
       <h2 className="chatTitle">Chat</h2>
@@ -92,11 +92,11 @@ export default function Messenger() {
                 key={index}>
                 <li> {element.message} </li>
 
-                <span className="messageUser">
-                  {userId === element.sentBy
-                    ? element.userEmail
-                    : element.otherEmail}
-                </span>
+                {userId === element.receiveBy ? (
+                  <span className="messageUser"> {element.userEmail} </span>
+                ) : (
+                  <span className="messageUser"> {element.userEmail}</span>
+                )}
               </div>
             );
           })}
