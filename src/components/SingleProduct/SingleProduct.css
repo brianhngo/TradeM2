@@ -92,7 +92,28 @@
 }
 
 
+.thumbnailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
 
+.thumbnailImg {
+  width: 55px;
+  height: 55px;
+  margin-bottom: 10px;
+  border: 1px solid #c0bfbf;
+  transition: border 0.3s ease;
+}
+
+.thumbnailImg:hover {
+  border: 1px solid #333;
+}
+
+.thumbnailImg.active {
+  border: 2px solid blueviolet;
+}
 
 .indivitualProductSendMessage {
   background-color: transparent;
