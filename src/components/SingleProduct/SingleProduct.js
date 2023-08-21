@@ -90,29 +90,35 @@ export default function SingleProduct() {
       </div>
       <div className="carouselAndDetailsContainer">
         <div className="carouselContainer">
-          <Carousel>
+        <Carousel>
+          {product['imageUrl'][0] && (
             <Carousel.Item>
               <img
                 className="carouselImg"
                 src={product['imageUrl'][0]}
-                alt="Product"
+                alt="Product 1"
               />
             </Carousel.Item>
+          )}
+          {product['imageUrl'][1] && (
             <Carousel.Item>
               <img
                 className="carouselImg"
                 src={product['imageUrl'][1]}
-                alt="Product"
+                alt="Product 2"
               />
             </Carousel.Item>
+          )}
+          {product['imageUrl'][2] && (
             <Carousel.Item>
               <img
                 className="carouselImg"
                 src={product['imageUrl'][2]}
-                alt="Product"
+                alt="Product 3"
               />
             </Carousel.Item>
-          </Carousel>
+          )}
+        </Carousel>
         </div>
         <div className="itemDetails">
           <div className="productInfo">
