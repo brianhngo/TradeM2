@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { getDatabase, ref, get, child } from 'firebase/database';
-import './SingleProduct/SingleProduct.css';
-import IndividualProduct from '../UserProduct/IndividualProduct';
+import React, { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { getDatabase, ref, get, child } from "firebase/database";
+import "./SingleProduct/SingleProduct.css";
+import IndividualProduct from "../UserProduct/IndividualProduct";
+import { Image, Carousel } from "react-bootstrap";
 export default function ProductsByUser() {
   let { state } = useLocation();
 
@@ -13,7 +14,7 @@ export default function ProductsByUser() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const dbRef = ref(getDatabase());
-    console.log('userId:', userId);
+    // console.log('userId:', userId);
 
     // Fetch user details
     get(child(dbRef, `Users/${userId}`))
@@ -23,7 +24,7 @@ export default function ProductsByUser() {
           setUser(userData);
 
           // Fetch all products listed by the user
-          get(child(dbRef, 'Products'))
+          get(child(dbRef, "Products"))
             .then((productsSnapshot) => {
               if (productsSnapshot.exists()) {
                 const allProducts = productsSnapshot.val();
@@ -39,7 +40,7 @@ export default function ProductsByUser() {
               setLoading(false);
             });
         } else {
-          console.log('No user data available');
+          console.log("No user data available");
           setLoading(false);
         }
       })
@@ -65,39 +66,48 @@ export default function ProductsByUser() {
     );
   }
   return (
-    <>
-      <img src={user.profileImage} roundedCircle />
-      <h3 className="text-center"> {user.userName}</h3>
+    <div className="userProductsContainer">
+      <div className="upProfileContainer">
+        <div className="upProfileImgContainer">
+          <img
+            className="upProfileImg"
+            src={user.profileImage}
+            alt={user.userName}
+          />
+         
+        </div>
+        <p className="upEmail"> {user.email}</p>
+      </div>
 
-      <div className="product-list">
+      <div className="upCarouselAndDetailsContainer">
         {userProducts.map((product) => (
-          
-          <div key={product.productId} className="product-item">
-           <Link to={`/singleproduct/${product.productId}`}>  <img
-              className="product-img"
-              src={product.imageUrl}
-              alt={product.name}
-            /> </Link>
-          
-            <div className="product-details text-black">
-              <h3 className="product-name text-black">{product.name}</h3>
-              <p className="product-description text-black">
-                {product.description}
-              </p>
-              <p className="product-price">{`$ ${product.price}`}</p>
-              <p className="product-category text-black">{product.category}</p>
-            </div>
-            <IndividualProduct
+          <div key={product.productId} className="upProduct-item">
+            <Link to={`/singleproduct/${product.productId}`}>
+              <img
+                className="upProduct-img"
+                src={product.imageUrl}
+                alt={product.name}
+              />
+            </Link>
+            {/* Just in Case:  */}
+            {/* <IndividualProduct
             key={product.productId}
             product={product}
             uid={userId} 
 
-          />
-          </div>
+          /> */}
 
-          
+            <div className="upItemDetails">
+              <div clacsName="upProductInfo">
+                <p className="upSingleProductTitle">{product.name}</p>
+                <p className="upProductDescription">{product.description}</p>
+                <p className="upProductPrice">{`$ ${product.price}`}</p>
+                <p className="upProduct-category">{product.category}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
