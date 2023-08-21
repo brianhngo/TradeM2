@@ -75,7 +75,6 @@ export default function User({ uid }) {
       const file = files[i];
       const storage = getStorage();
       const storageRef = refFromStorage(storage, 'productImages/' + file.name);
-      const storageRef = refFromStorage(storage, 'productImages/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
