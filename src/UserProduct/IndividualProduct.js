@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import './UserProduct.css';
 import { getDatabase, ref, set } from 'firebase/database';
+import {
+  ref as refFromStorage,
+  getStorage,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,13 +44,16 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
   };
 
   const handleImageChange = async (event) => {
-    if (event.target.files.length > 3) {
+    const files = event.target.files;
+    if (files.length > 3) {
       alert('You can only upload a maximum of 3 images.');
       return;
     }
 
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
+    let uploadedImageUrls = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const storage = getStorage();
       const storageRef = refFromStorage(storage, 'products/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -62,11 +71,13 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
         async () => {
           try {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            console.log('File available at', downloadURL);
-            setProductInfo((prevState) => ({
-              ...prevState,
-              imageUrl: downloadURL,
-            }));
+            uploadedImageUrls.push(downloadURL);
+            if (uploadedImageUrls.length === files.length) {
+              setProductInfo((prevState) => ({
+                ...prevState,
+                imageUrl: uploadedImageUrls,
+              }));
+            }
           } catch (error) {
             console.error('Error getting download URL:', error);
           }
@@ -94,7 +105,6 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
                 <div className="product-description-container">
                   <p className="product-description">{product.description}</p>
                 </div>
-
                 <p className="product-category">{product.category}</p>
               </div>
             </div>
@@ -112,9 +122,7 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
         </>
       ) : (
         <div key={product.id} className="product-card">
-          <h2 className="product-image-edit-guide">
-            Upload upto 3 Image Files
-          </h2>
+          <h2 className="product-image-edit-guide">Upload upto 3 Image Files</h2>
           <form onSubmit={onSaveHandler}>
             <input
               className="input-product-edit-images"
@@ -155,7 +163,6 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               name="description"
               onChange={handleInputChange}
             />
-
             <input
               className="input-product-category"
               type="text"

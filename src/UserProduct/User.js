@@ -29,6 +29,7 @@ export default function User({ uid }) {
   const [bookmarkedArray, setBookmarkArray] = useState([]);
   const [bookmarkProductArray, setBookmarkProductArray] = useState([]);
   const [filteredBookmarkProducts, setFilteredBookmarkProducts] = useState([]);
+
   const toggleAddProduct = () => {
     setShowAddProduct((prevShowAddProduct) => !prevShowAddProduct);
   };
@@ -45,7 +46,6 @@ export default function User({ uid }) {
   const [products, setProducts] = useState([]);
   const [productImages, setProductImages] = useState([]);
 
-  // Adds Item
   const toastAdd = () => {
     toast.success('Added');
   };
@@ -68,37 +68,49 @@ export default function User({ uid }) {
       toast.warning('You can only upload a max of 3 images');
       return;
     }
-    setProductImages([...event.target.files]);
+
+    let uploadedImageUrls = [];
 
     for (let i = 0; i < event.target.files.length; i++) {
-      const file = event.target.files[i];
+      const file = files[i];
       const storage = getStorage();
+      const storageRef = refFromStorage(storage, 'productImages/' + file.name);
       const storageRef = refFromStorage(storage, 'productImages/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
         'state_changed',
+        'state_changed',
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
+          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
           console.error('Error uploading image:', error);
+          console.error('Error uploading image:', error);
         },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             console.log('File available at', downloadURL);
-            //
-            updateDatabaseWithNewURL(downloadURL);
-          });
+            uploadedImageUrls.push(downloadURL);
+
+            if (uploadedImageUrls.length === files.length) {
+              setProductImages(uploadedImageUrls);
+            }
+
+          } catch (error) {
+            console.error('Error getting download URL:', error);
+          }
         }
-      );
+      )
     }
   };
 
   const addProduct = async () => {
-    const uploadedImageUrls = [];
+    const uploadedImageUrls = [...productImages];
     const storage = getStorage();
 
     try {
@@ -124,15 +136,6 @@ export default function User({ uid }) {
         return;
       }
 
-      for (let i = 0; i < productImages.length; i++) {
-        const file = productImages[i];
-        const storageRef = refFromStorage(storage, 'products/' + file.name);
-        const uploadTask = await uploadBytesResumable(storageRef, file);
-        console.log(uploadTask);
-        const downloadURL = await getDownloadURL(storageRef);
-        uploadedImageUrls.push(downloadURL);
-      }
-
       const database = getDatabase();
       const productsRef = ref(database, 'Products');
       const newProductNode = push(productsRef);
@@ -155,12 +158,12 @@ export default function User({ uid }) {
 
       setNewProduct({
         productId: id,
-        imageUrl: '',
-        name: '',
-        description: '',
-        price: '',
-        category: '',
-        location: ``,
+        imageUrl: "",
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        location: "",
       });
     } catch (error) {
       console.error('Error adding product', error);
@@ -169,8 +172,7 @@ export default function User({ uid }) {
 
   const deleteProduct = (productId) => {
     const database = getDatabase();
-    const productRef = ref(database, `Products/${productId}`); // 'products' is the name of your database node
-
+    const productRef = ref(database, `Products/${productId}`);
     remove(productRef);
     toastDelete();
   };
@@ -218,7 +220,6 @@ export default function User({ uid }) {
     const unsubscribeProduct = onValue(productsRefDb, (snapshot) => {
       const data = snapshot.val();
       const productsArray = data ? Object.values(data) : [];
-
       setBookmarkProductArray(productsArray);
     });
 
@@ -232,15 +233,9 @@ export default function User({ uid }) {
   return (
     <div className="body">
       <button className="showAddProduct-btn" onClick={toggleAddProduct}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
-          fill="currentColor"
-          class="bi bi-plus-circle"
-          viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
         </svg>
       </button>
       {showAddProduct && (
@@ -299,13 +294,11 @@ export default function User({ uid }) {
             value={newProduct.location}
             onChange={handleInputChange}
           />
-
           <button className="add-product-btn" onClick={addProduct}>
             Add Product
           </button>
         </div>
       )}
-
       <div className="sections-container">
         <div className="bookmarked-products-section">
           <h2 id="listedProductsTitle">Bookmarked Products</h2>
@@ -318,7 +311,6 @@ export default function User({ uid }) {
             })}
           />
         </div>
-
         <div className="products-listed-section">
           <h2 id="listedProductsTitle">Products Listed By You</h2>
           <ProductGrid
