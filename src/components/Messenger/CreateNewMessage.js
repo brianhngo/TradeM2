@@ -4,8 +4,13 @@ import Modal from 'react-modal';
 const customStyles = {
   content: {
     top: '50%',
-    left: '70%',
+    left: '50%',
     transform: 'translate(-50%,-50%)',
+    width: '80%',
+    maxWidth: '500px',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Change the alpha value to adjust transparency
+    border: 'none', // Remove the border if desired
+
   },
 };
 import './CreateNewMessage.css';

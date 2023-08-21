@@ -121,7 +121,7 @@ export default function SingleProduct() {
             </p>
             <p className="productPrice">Price: ${product['price']}</p>
           </div>
-          <button onClick={openPopup}> Send Message! </button>
+          <button className='indivitualProductSendMessage'onClick={openPopup}> Send Message! </button>
           <CreateNewMessage
             otherId={product.userId}
             isOpen={isPopupOpen}
