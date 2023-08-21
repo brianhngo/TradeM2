@@ -12,10 +12,9 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: stretch; 
-  gap: 10px; 
+  align-items: stretch;
+  gap: 10px;
 }
-
 
 #chat {
   width: 80%;
@@ -39,7 +38,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
   margin: 10px;
   margin-top: 20px;
 }
@@ -91,7 +90,6 @@
   font-family: 'Times New Roman', Times, serif;
 }
 
-
 .userMessage,
 .otherMessage {
   background-color: #f7f7f7;
@@ -105,7 +103,7 @@
 
 .userMessage {
   align-self: flex-end;
-  background-color: #007bff;
+  background-color: lightblue;
   color: white;
 }
 
@@ -159,7 +157,7 @@
   background-color: rgba(0, 0, 0, 0.575);
   border-radius: 10px;
   font-family: 'Times New Roman', Times, serif;
-  text-decoration:none;
+  text-decoration: none;
 }
 
 .participant-text {
@@ -174,7 +172,6 @@
 }
 
 .last-message-text {
-  
   font-size: 14px;
   color: #666;
 }
@@ -194,4 +191,30 @@
   justify-content: center;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+#loadingTitleScreen {
+  text-align: center;
+}
+
+.backLinkContainer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.backLinkContainer a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  color: #333;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.backLinkContainer a:hover {
+  background-color: #ddd;
 }

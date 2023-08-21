@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import ProductGrid from "./ProductGrid";
-import "./UserProduct.css";
+import React, { useState, useEffect } from 'react';
+
+import ProductGrid from './ProductGrid';
+import './UserProduct.css';
 import {
   getDatabase,
   ref,
@@ -11,17 +12,17 @@ import {
   orderByChild,
   query,
   equalTo,
-} from "firebase/database";
+} from 'firebase/database';
 import {
   ref as refFromStorage,
   getStorage,
   uploadBytesResumable,
   getDownloadURL,
-} from "firebase/storage";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import BookmarkGrid from "./BookmarkGrid";
+} from 'firebase/storage';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Make sure this import is correct
+import BookmarkGrid from './BookmarkGrid';
 
 export default function User({ uid }) {
   const [showAddProduct, setShowAddProduct] = useState(false);
@@ -35,26 +36,26 @@ export default function User({ uid }) {
 
   const [newProduct, setNewProduct] = useState({
     imageUrls: [],
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    location: "",
+    name: '',
+    description: '',
+    price: '',
+    category: '',
+    location: '',
   });
 
   const [products, setProducts] = useState([]);
   const [productImages, setProductImages] = useState([]);
 
   const toastAdd = () => {
-    toast.success("Added");
+    toast.success('Added');
   };
 
   const toastDelete = () => {
-    toast.success("Deleted");
+    toast.success('Deleted');
   };
 
   const toastWarning = () => {
-    toast.warning("Please select a category option");
+    toast.warning('Please select an category option');
   };
 
   const handleInputChange = (event) => {
@@ -63,9 +64,8 @@ export default function User({ uid }) {
   };
 
   const handleImageChange = async (event) => {
-    const files = event.target.files;
-    if (files.length > 3) {
-      alert('You can only upload a maximum of 3 images.');
+    if (event.target.files.length > 3) {
+      toast.warning('You can only upload a max of 3 images');
       return;
     }
 
@@ -75,16 +75,20 @@ export default function User({ uid }) {
       const file = files[i];
       const storage = getStorage();
       const storageRef = refFromStorage(storage, 'productImages/' + file.name);
+      const storageRef = refFromStorage(storage, 'productImages/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
+        'state_changed',
         'state_changed',
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
+          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
+          console.error('Error uploading image:', error);
           console.error('Error uploading image:', error);
         },
         async () => {
@@ -110,8 +114,8 @@ export default function User({ uid }) {
     const storage = getStorage();
 
     try {
-      if (newProduct.category === "None") {
-        console.log("hi");
+      if (newProduct.category === 'None') {
+        console.log('hi');
         toastWarning();
         return;
       }
@@ -128,12 +132,12 @@ export default function User({ uid }) {
       const coordinates = await geocodeAddress(newProduct.location);
 
       if (!coordinates) {
-        console.log("Error geocoding address");
+        console.log('Error geocoding address');
         return;
       }
 
       const database = getDatabase();
-      const productsRef = ref(database, "Products");
+      const productsRef = ref(database, 'Products');
       const newProductNode = push(productsRef);
       const id = newProductNode.key;
 
@@ -162,7 +166,7 @@ export default function User({ uid }) {
         location: "",
       });
     } catch (error) {
-      console.error("Error adding product", error);
+      console.error('Error adding product', error);
     }
   };
 
@@ -182,11 +186,11 @@ export default function User({ uid }) {
         const { lat, lon } = response.data[0];
         return { lat: parseFloat(lat), lon: parseFloat(lon) };
       } else {
-        console.log("Address not found");
+        console.log('Address not found');
         return null;
       }
     } catch (error) {
-      console.error("Error geocoding address:", error);
+      console.error('Error geocoding address:', error);
       return null;
     }
   };
@@ -195,8 +199,8 @@ export default function User({ uid }) {
     const database = getDatabase();
 
     const productsRef = query(
-      ref(database, "Products"),
-      orderByChild("userId"),
+      ref(database, 'Products'),
+      orderByChild('userId'),
       equalTo(uid)
     );
     const unsubscribe = onValue(productsRef, (snapshot) => {
@@ -276,8 +280,7 @@ export default function User({ uid }) {
             className="input-product-category"
             name="category"
             value={newProduct.category}
-            onChange={handleInputChange}
-          >
+            onChange={handleInputChange}>
             <option value="None">Please Select a Category</option>
             <option value="Toy">Toy</option>
             <option value="Electronics">Electronics</option>

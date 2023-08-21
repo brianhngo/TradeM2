@@ -11,7 +11,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function SingleProduct() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const userId = auth.currentUser.uid;
+  const userId = auth?.currentUser?.uid;
+
   const openPopup = () => {
     if (userId) {
       setIsPopupOpen(true);
@@ -93,21 +94,21 @@ export default function SingleProduct() {
             <Carousel.Item>
               <img
                 className="carouselImg"
-                src={product['imageUrl']}
+                src={product['imageUrl'][0]}
                 alt="Product"
               />
             </Carousel.Item>
             <Carousel.Item>
               <img
                 className="carouselImg"
-                src={product['imageUrl']}
+                src={product['imageUrl'][1]}
                 alt="Product"
               />
             </Carousel.Item>
             <Carousel.Item>
               <img
                 className="carouselImg"
-                src={product['imageUrl']}
+                src={product['imageUrl'][2]}
                 alt="Product"
               />
             </Carousel.Item>
@@ -121,7 +122,10 @@ export default function SingleProduct() {
             </p>
             <p className="productPrice">Price: ${product['price']}</p>
           </div>
-          <button className='indivitualProductSendMessage'onClick={openPopup}> Send Message! </button>
+          <button className="indivitualProductSendMessage" onClick={openPopup}>
+            {' '}
+            Send Message!{' '}
+          </button>
           <CreateNewMessage
             otherId={product.userId}
             isOpen={isPopupOpen}
