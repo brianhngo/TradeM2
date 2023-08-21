@@ -130,15 +130,15 @@ export default function navbar() {
                   {user ? (
                     <>
                       <Nav.Link
+                        href="/chatlist"
+                        className="nav-link fs-5 me-5 text-white">
+                        Chat
+                      </Nav.Link>
+                      <Nav.Link
                         href="/home"
                         className="nav-link fs-5 me-5 text-white"
                         onClick={handleLogout}>
                         Logout
-                      </Nav.Link>
-                      <Nav.Link
-                        href="/chatlist"
-                        className="nav-link fs-5 me-5 text-white">
-                        ChatList
                       </Nav.Link>
                     </>
                   ) : (
