@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { getDatabase, ref, get, child } from 'firebase/database';
-import './AllProducts.css';
-import SingleProduct from './SingleProduct/SingleProduct';
+import './SingleProduct/SingleProduct.css';
+import IndividualProduct from '../UserProduct/IndividualProduct';
 export default function ProductsByUser() {
   let { state } = useLocation();
 
@@ -71,6 +71,7 @@ export default function ProductsByUser() {
 
       <div className="product-list">
         {userProducts.map((product) => (
+          
           <div key={product.productId} className="product-item">
            <Link to={`/singleproduct/${product.productId}`}>  <img
               className="product-img"
@@ -86,7 +87,15 @@ export default function ProductsByUser() {
               <p className="product-price">{`$ ${product.price}`}</p>
               <p className="product-category text-black">{product.category}</p>
             </div>
+            <IndividualProduct
+            key={product.productId}
+            product={product}
+            uid={userId} 
+
+          />
           </div>
+
+          
         ))}
       </div>
     </>

@@ -1,30 +1,52 @@
-import React, { useState, useEffect, useRef } from "react";
-import "leaflet/dist/leaflet.css";
-import "./Map.css";
-import { getDatabase, ref, get } from "firebase/database";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from 'react';
+import 'leaflet/dist/leaflet.css';
+import './Map.css';
+import { getDatabase, ref, get } from 'firebase/database';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
-import { Icon } from "leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import AllProducts from "../components/AllProducts";
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
+import { Icon } from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import AllProducts from '../components/AllProducts';
 import haversine from 'haversine-distance';
+import "leaflet-fullscreen";
+
+
 
 export default function Map() {
   const [allProductMarkers, setAllProductMarkers] = useState([]);
   const [visibleProductMarkers, setVisibleProductMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [radius, setRadius] = useState(9000);
-  const [mapType, setMapType] = useState("normal");
-  const [address, setAddress] = useState("");
+  const [mapType, setMapType] = useState('normal');
+  const [address, setAddress] = useState('');
   const mapRef = useRef();
+  const [highlightedProductLocation, setHighlightedProductLocation] = useState(null);
+
+
+  function FullscreenControl() {
+    const map = useMap(); 
+    useEffect(() => {
+      const fullscreenControl = new L.Control.Fullscreen();
+      map.addControl(fullscreenControl);
+
+      return () => {
+        map.removeControl(fullscreenControl);
+      };
+    }, [map]);
+
+    return null;
+  }
+
 
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
   };
 
   const locateAddress = async () => {
-    console.log("Locating address:", address);
+    toast.info('Locating your Address!');
     try {
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
@@ -37,22 +59,22 @@ export default function Map() {
           map.setView([parseFloat(lat), parseFloat(lon)], 13);
         }
       } else {
-        console.log("Address not found");
+        toast.error('Address not found. Please renter your Address');
       }
     } catch (error) {
-      console.error("Error geocoding address:", error);
+      console.error('Error geocoding address:', error);
     }
   };
 
   useEffect(() => {
     const db = getDatabase();
-    const productsRef = ref(db, "Products");
+    const productsRef = ref(db, 'Products');
     get(productsRef).then((snapshot) => {
       if (snapshot.exists()) {
         const productsData = snapshot.val();
         const productsList = Object.values(productsData);
         const locations = productsList.map((product) => {
-          const [lat, lng] = product.location.split(",");
+          const [lat, lng] = product.location.split(',');
           return {
             geocode: [+lat, +lng],
             productDetails: product,
@@ -62,9 +84,10 @@ export default function Map() {
       }
     });
   }, []);
-  
+
   useEffect(() => {
     if (userLocation) {
+     
       const nearbyProducts = allProductMarkers.filter((marker) => {
         const distance = haversine(userLocation, marker.geocode);
         return distance <= radius;
@@ -73,9 +96,8 @@ export default function Map() {
     }
   }, [userLocation, radius, allProductMarkers]);
 
-
   const customIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
+    iconUrl: 'https://cdn-icons-png.flaticon.com/128/684/684908.png',
     iconSize: [38, 38],
   });
 
@@ -89,24 +111,59 @@ export default function Map() {
           const map = mapRef.current;
           map.setView([latitude, longitude], 13);
         }
+        toast.success('Locations found!');
       },
       (error) => {
-        console.error("Error getting user location:", error);
+        toast.error('Please allow geolocation services');
+        console.error('Error getting user location:', error);
       }
     );
   };
 
   const toggleMapType = () => {
-    setMapType(mapType === "normal" ? "satellite" : "normal");
+    setMapType(mapType === 'normal' ? 'satellite' : 'normal');
+    if (mapType === 'satellite') {
+      toast.info('Satellite View of Map');
+    } else {
+      toast.info('Normal View');
+    }
   };
 
+  const updateMapLocation = (location) => {
+    if (mapRef.current) {
+      setHighlightedProductLocation(location);
+      const updatedVisibleMarkers = visibleProductMarkers.map(marker => {
+        if (
+          marker.productDetails.location === location.join(',') 
+        ) {
+          return {
+            ...marker,
+            isVisible: true,
+          };
+        }
+        return marker;
+      });
+      setVisibleProductMarkers(updatedVisibleMarkers);
+      mapRef.current.flyTo(location, 13); // Fly to the selected location
+    }
+  };
   return (
     <div className="all-container">
       <div className="allProducts-Container">
-        < AllProducts/>
+      <AllProducts updateMapLocation={updateMapLocation} />
+
       </div>
     <div className="mapContainer">
-      <div className="address-container">
+  
+      <MapContainer
+        ref={mapRef}
+        center={userLocation || [48.8566, 2.3522]}
+        zoom={userLocation ? 13 : 7}
+      >
+
+     <FullscreenControl />
+     
+     <div className="address-container">
         <div className="input-container">
           <input
             type="text"
@@ -155,11 +212,6 @@ export default function Map() {
           </svg>
         </button>
       </div>
-      <MapContainer
-        ref={mapRef}
-        center={userLocation || [48.8566, 2.3522]}
-        zoom={userLocation ? 13 : 7}
-      >
         {mapType === "normal" ? (
           <TileLayer
             attribution="© OpenStreetMap"
@@ -174,17 +226,21 @@ export default function Map() {
         {userLocation && (
           <>
             <Circle center={userLocation} radius={radius} />
-            {/* <Marker position={userLocation} icon={customIcon}>
-              <Popup>
-                <h2>Your Location</h2>
-              </Popup>
-            </Marker> */}
+           
           </>
+        )}
+
+{highlightedProductLocation && (
+          <Marker position={highlightedProductLocation} icon={customIcon}>
+           
+          </Marker>
         )}
 
         <MarkerClusterGroup chunkedLoading>
           {visibleProductMarkers.map((marker, idx) => (
-            <Marker key={idx} position={marker.geocode} icon={customIcon}>
+            <Marker key={idx} position={marker.geocode} icon={customIcon}  eventHandlers={{
+              click: () => updateMapLocation(marker.geocode, marker.productDetails),
+            }} >
               <Popup>
                 <h2>{marker.productDetails.name}</h2>
                 <img
@@ -198,7 +254,10 @@ export default function Map() {
               </Popup>
             </Marker>
           ))}
+        
         </MarkerClusterGroup>
+       
+     
       </MapContainer>
     </div>
     </div>

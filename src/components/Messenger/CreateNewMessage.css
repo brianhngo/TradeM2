@@ -1,0 +1,99 @@
+/* MessengerList.css */
+
+.popup {
+  background-color: black;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%; 
+  max-width: 800px;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.exit-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+}
+
+
+.exit-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.popup-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-bottom: 10px;
+}
+
+.email-input,
+.message-input {
+  display: block;
+  width: 100%;
+  padding: 15px; 
+  margin-bottom: 20px; 
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1); 
+  color: white; 
+}
+
+.submit-button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.email-input::placeholder,
+.message-input::placeholder {
+  color: rgba(255, 255, 255, 0.7); 
+}
+
+
+
+
+.sendMessageButton {
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sendMessageButton:hover {
+  background-color: black;
+  color: white;
+}
+

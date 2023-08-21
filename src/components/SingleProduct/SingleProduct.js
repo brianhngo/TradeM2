@@ -3,12 +3,27 @@ import { getDatabase, ref, child, get } from 'firebase/database';
 import { Image, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../AllProducts.css';
-import './SingleProduct.css'
+import './SingleProduct.css';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-
+import CreateNewMessage from '../Messenger/CreateNewMessage';
+import { auth } from '../../firebase';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function SingleProduct() {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const userId = auth.currentUser.uid;
+  const openPopup = () => {
+    if (userId) {
+      setIsPopupOpen(true);
+    } else {
+      toast.warning('Please login or create an account to use this feature');
+    }
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
   let { id } = useParams();
-  //get product images and info from firebase
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -16,7 +31,6 @@ export default function SingleProduct() {
 
   const onClickHandler = (event) => {
     event.preventDefault();
-
     navigate(`/profile/${product.userId}`);
   };
 
@@ -29,7 +43,6 @@ export default function SingleProduct() {
           const productData = snapshot.val();
           setProduct(productData);
 
-          // Once product data is set, fetch user data using product.userId
           get(child(dbRef, `Users/${productData.userId}`)).then(
             (userSnapshot) => {
               if (userSnapshot.exists()) {
@@ -51,64 +64,72 @@ export default function SingleProduct() {
         setLoading(false);
       });
   }, [id]);
+
   if (loading) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <p>Loading...</p>;
   }
 
   if (!product || !user) {
-    return (
-      <div>
-        <p>No data available</p>
-      </div>
-    );
+    return <p>No data available</p>;
   }
 
   return (
-    <div>
-      {loading === false ? (
-
-        <div> 
-        <div className="profilecontainer">
-       <Link to="/userproducts" state={{ uid: user.id }}>
-        <Image className="profileimg"src={user['profileImage']} roundedCircle />
-           </Link>
+    <div className="singleProductContainer">
+      <div className="profileContainer">
+        <Link to="/userproducts" state={{ uid: user.id }}>
+          <div className="profileImgContainer">
+            <Image
+              className="profileImg"
+              src={user['profileImage']}
+              roundedCircle
+            />
+          </div>
+        </Link>
+        <p className="email">{user['email']}</p>
+      </div>
+      <div className="carouselAndDetailsContainer">
+        <div className="carouselContainer">
+          <Carousel>
+            <Carousel.Item>
+              <img
+                className="carouselImg"
+                src={product['imageUrl']}
+                alt="Product"
+              />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="carouselImg"
+                src={product['imageUrl']}
+                alt="Product"
+              />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="carouselImg"
+                src={product['imageUrl']}
+                alt="Product"
+              />
+            </Carousel.Item>
+          </Carousel>
         </div>
-        <Carousel>
-          <Carousel.Item>
-            <img className="carouselImg" src={product['imageUrl']} />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img className="carouselImg" src={product['imageUrl']} />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img className="carouselImg" src={product['imageUrl']} />
-          </Carousel.Item>
-        </Carousel>
-        <div className='itemtext'> 
-        <div className='prodName'>
-        <p className="itemDesc">
-          {product['name']}
-        </p>
+        <div className="itemDetails">
+          <div className="productInfo">
+            <p className="singleProductTitle">{product['name']}</p>
+            <p className="productDescription">
+              Description: {product['description']}
+            </p>
+            <p className="productPrice">Price: ${product['price']}</p>
+          </div>
+          <button className='indivitualProductSendMessage'onClick={openPopup}> Send Message! </button>
+          <CreateNewMessage
+            otherId={product.userId}
+            isOpen={isPopupOpen}
+            onClose={closePopup}
+            emailGiven={user['email']}
+          />
         </div>
-        <div className='priceanddesc'> 
-        <p className="itemDesc">
-          Description: {product['description']}
-        </p>
-        <p className="itemDesc">
-          Price: ${product['price']}
-        </p>
-
-        </div>
-        </div>
-        
-        </div>
-      ) : (
-        <div> Loading </div>
-      )}
+      </div>
     </div>
   );
 }
