@@ -4,18 +4,17 @@
   padding: 0;
 }
 
-  .messageListContainer {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
-  max-height: 400px;
+.messageListContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 500px;
   overflow-y: auto;
   display: flex;
-  }
-  
+  flex-direction: column;
+  align-items: stretch; 
+  gap: 10px; 
+}
 
 
 #chat {
@@ -36,7 +35,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 300px;
+  max-height: 800px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -141,12 +140,11 @@
 
 .messages {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  padding: 10px;
   border-bottom: 1px solid #ddd;
-  padding: 10px 0;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-
 }
 
 .messages:hover {
@@ -154,16 +152,14 @@
 }
 
 .participant {
-  flex-grow: 1;
   display: flex;
   align-items: center;
   color: white;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.575);
   border-radius: 10px;
-  margin-bottom: 10px; 
   font-family: 'Times New Roman', Times, serif;
-
+  text-decoration:none;
 }
 
 .participant-text {
@@ -172,8 +168,9 @@
 }
 
 .last-message {
-  flex-grow: 2;
   padding: 10px;
+  flex-grow: 1;
+  color: black;
 }
 
 .last-message-text {

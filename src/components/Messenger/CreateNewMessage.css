@@ -80,3 +80,20 @@
 }
 
 
+
+
+.sendMessageButton {
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sendMessageButton:hover {
+  background-color: black;
+  color: white;
+}
+
