@@ -4,6 +4,15 @@ import './AllProducts.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Bookmark from './Bookmark'; // Make sure you have the correct path to your Bookmark component
+import toyIcon from '../../public/toys.png';
+import electronicsIcon from '../../public/electronics.png';
+import clothingIcon from '../../public/clothing.png';
+
+const ICONS = {
+  Toy: toyIcon,
+  Electronics: electronicsIcon,
+  Clothing: clothingIcon
+};
 
 const AllProducts = ({ updateMapLocation }) => {
   const [products, setProducts] = useState([]);
@@ -12,6 +21,10 @@ const AllProducts = ({ updateMapLocation }) => {
     category: 'All',
     price: 'All',
   });
+
+  const handleIconClick = (category) => {
+    setFilter((prev) => ({ ...prev, category }));
+  };
 
   useEffect(() => {
     const dbRef = ref(getDatabase());
@@ -96,17 +109,18 @@ const AllProducts = ({ updateMapLocation }) => {
   return (
     <div className="all-products-container">
       <div className="filter-section">
-        <select
-          name="category"
-          onChange={(e) =>
-            setFilter((prev) => ({ ...prev, category: e.target.value }))
-          }>
-          {/* Options here */}
-          <option value="All">All Categories</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Toy">Toy</option>
-          <option value="Clothing">Clothing</option>
-        </select>
+        <div className="icon-container">
+          {Object.entries(ICONS).map(([category, iconPath]) => (
+            <img
+            key={category}
+            src={iconPath}
+            alt={category}
+            className={`filter-icon ${filter.category === category ? 'active' : ''}`}
+            onClick={() => handleIconClick(category)}
+            />
+          ))}
+        </div>
+        <div className="price-filter-container">
         <select
           name="price"
           onChange={(e) =>
@@ -119,6 +133,7 @@ const AllProducts = ({ updateMapLocation }) => {
           <option value="100-500">100 to 500</option>
           <option value="500-1000">500 to 1000</option>
         </select>
+      </div>
       </div>
       <div className="product-list">
         {filteredProducts.map((product) => (

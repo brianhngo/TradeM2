@@ -12,6 +12,11 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function SingleProduct() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const userId = auth?.currentUser?.uid;
+  const [imgIndex, setImgIndex] = useState(0);
+  
+  const handleThumbnailClick = (index) => {
+    setImgIndex(index);
+  }
 
   const openPopup = () => {
     if (userId) {
@@ -89,35 +94,24 @@ export default function SingleProduct() {
         <p className="email">{user['email']}</p>
       </div>
       <div className="carouselAndDetailsContainer">
+      <div className="thumbnailsContainer">
+        {product.imageUrl.map((url, idx) => (
+          <img 
+            key={idx}
+            className={`thumbnailImg ${imgIndex === idx ? 'active' : ''}`}
+            src={url}
+            alt={`Thumbnail ${idx + 1}`}
+            onClick={() => handleThumbnailClick(idx)}
+          />
+        ))}
+        </div>
         <div className="carouselContainer">
-        <Carousel>
-          {product['imageUrl'][0] && (
-            <Carousel.Item>
-              <img
-                className="carouselImg"
-                src={product['imageUrl'][0]}
-                alt="Product 1"
-              />
-            </Carousel.Item>
-          )}
-          {product['imageUrl'][1] && (
-            <Carousel.Item>
-              <img
-                className="carouselImg"
-                src={product['imageUrl'][1]}
-                alt="Product 2"
-              />
-            </Carousel.Item>
-          )}
-          {product['imageUrl'][2] && (
-            <Carousel.Item>
-              <img
-                className="carouselImg"
-                src={product['imageUrl'][2]}
-                alt="Product 3"
-              />
-            </Carousel.Item>
-          )}
+        <Carousel activeIndex={imgIndex} onSelect={setImgIndex}>
+          {product.imageUrl.map((url, idx) => (
+          <Carousel.Item key={idx}>
+          <img className="carouselImg" src={url} alt={`Product ${idx + 1}`} />
+          </Carousel.Item>
+          ))}
         </Carousel>
         </div>
         <div className="itemDetails">
