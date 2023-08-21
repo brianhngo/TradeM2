@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onChildAdded, update, get } from 'firebase/database';
 import { useLocation } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 import './Messenger.css';
 
 export default function Messenger() {
@@ -78,6 +78,9 @@ export default function Messenger() {
   return (
     <div className="chatContainer">
       <h2 className="chatTitle">Chat</h2>
+      <div className="backLinkContainer">
+        <Link to="/chatlist">Return to Chats</Link>
+      </div>
       <div id="chat">
         {
           //messages will display here
