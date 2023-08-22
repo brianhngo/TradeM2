@@ -7,11 +7,21 @@ import Bookmark from './Bookmark'; // Make sure you have the correct path to you
 import toyIcon from '../../public/toys.png';
 import electronicsIcon from '../../public/electronics.png';
 import clothingIcon from '../../public/clothing.png';
+import sportIcon from '../../public/sport.png';
+import jewelryIcon from '../../public/jewelry.png';
+import furnitureIcon from '../../public/furniture.png';
+import miscIcon from '../../public/misc_icon.png';
+import everythingIcon from '../../public/everything.png';
 
 const ICONS = {
+  All: everythingIcon,
   Toy: toyIcon,
   Electronics: electronicsIcon,
-  Clothing: clothingIcon
+  Clothing: clothingIcon,
+  Sporting: sportIcon,
+  Furniture: furnitureIcon,
+  Jewelry: jewelryIcon,
+  Misc: miscIcon
 };
 
 const AllProducts = ({ updateMapLocation }) => {

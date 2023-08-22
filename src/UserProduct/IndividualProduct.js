@@ -163,13 +163,19 @@ export default function IndividualProduct({ product, deleteProduct, uid }) {
               name="description"
               onChange={handleInputChange}
             />
-            <input
-              className="input-product-category"
-              type="text"
-              defaultValue={product.category}
-              name="category"
-              onChange={handleInputChange}
-            />
+            <select
+            className="input-product-category"
+            name="category"
+            onChange={handleInputChange}>
+            <option value="None">Please Select a Category</option>
+            <option value="Toy">Toy</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Sporting">Sporting</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Jewelry">Jewelry</option>
+            <option value="Misc">Misc</option>
+          </select>
             <input
               className="input-product-location"
               type="text"

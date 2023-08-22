@@ -109,14 +109,14 @@ export default function navbar() {
                   About
                 </Nav.Link>
 
-                <Nav.Link
+                {/* <Nav.Link
                   className="nav-link fs-5 me-5 text-white"
                   href="/products">
                   Products
-                </Nav.Link>
+                </Nav.Link> */}
 
-                <Nav.Link href="/map" className="nav-link fs-5 me-5 text-white">
-                  Map
+                <Nav.Link href="/allproducts" className="nav-link fs-5 me-5 text-white">
+                  Products
                 </Nav.Link>
                 {user ? (
                   <Nav.Link

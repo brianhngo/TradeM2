@@ -41,16 +41,21 @@
 
 .carouselAndDetailsContainer {
   display: flex;
-  margin-top: 10%;
+  margin-top: 5%;
 }
+
 .carouselContainer {
   flex: 1;
   max-width: 50%;
+  width: 470px;
+  height: 470px;
   margin-right: 20px;
 }
+
 .carouselImg {
-  max-width: 100%;
-  height: auto;
+  width: 450px;
+  height: 450px;
+  object-fit: contain;
 }
 
 .itemDetails {
@@ -58,7 +63,6 @@
   text-align: left;
   padding-left: 20px;
 }
-
 
 .productInfo {
   text-align: left;
@@ -82,7 +86,6 @@
   font-size: 20px;
 }
 
-
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: black; 
@@ -90,7 +93,6 @@
   border-radius: 50%; 
   opacity: 0.8; 
 }
-
 
 .thumbnailsContainer {
   display: flex;
@@ -133,8 +135,6 @@
 
 
 
-
-
 /* UserProducts.js */
 
 .userProductsContainer {
@@ -157,7 +157,6 @@
   padding: 10px;
   transition: background-color 0.3s; 
 }
-
 
 .upProfileImg {
   width: 80px;
