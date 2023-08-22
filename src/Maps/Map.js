@@ -73,31 +73,50 @@ export default function Map() {
   useEffect(() => {
     const db = getDatabase();
     const productsRef = ref(db, 'Products');
-    get(productsRef).then((snapshot) => {
+
+    get(productsRef).then(async (snapshot) => {
       if (snapshot.exists()) {
         const productsData = snapshot.val();
         const productsList = Object.values(productsData);
-        const locations = productsList.map((product) => {
-          const [lat, lng] = product.location.split(',');
-          return {
-            geocode: [+lat, +lng],
-            productDetails: product,
-          };
-        });
+
+        const locations = await Promise.all(
+          productsList.map(async (product) => {
+            const [lat, lng] = product.location.split(',');
+            const address = `${lat},${lng}`;
+
+            try {
+              const response = await axios.get(
+                `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
+              );
+              console.log(response);
+              if (response.data.length > 0) {
+                const latAddress = parseFloat(response.data[0].lat);
+                const lngAddress = parseFloat(response.data[0].lon);
+                return {
+                  geocode: [latAddress, lngAddress],
+                  productDetails: product,
+                };
+              }
+            } catch (error) {
+              console.error('Error fetching geolocation:', error);
+            }
+          })
+        );
+
         setAllProductMarkers(locations);
       }
     });
   }, []);
 
-  useEffect(() => {
-    if (userLocation) {
-      const nearbyProducts = allProductMarkers.filter((marker) => {
-        const distance = haversine(userLocation, marker.geocode);
-        return distance <= radius;
-      });
-      setVisibleProductMarkers(nearbyProducts);
-    }
-  }, [userLocation, radius, allProductMarkers]);
+  // useEffect(() => {
+  //   if (userLocation) {
+  //     const nearbyProducts = allProductMarkers.filter((marker) => {
+  //       const distance = haversine(userLocation, marker.geocode);
+  //       return distance <= radius;
+  //     });
+  //     setVisibleProductMarkers(nearbyProducts);
+  //   }
+  // }, [userLocation, radius, allProductMarkers]);
 
   const customIcon = new Icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/128/684/684908.png',
@@ -145,7 +164,7 @@ export default function Map() {
         return marker;
       });
       setVisibleProductMarkers(updatedVisibleMarkers);
-      mapRef.current.flyTo(location, 13); // Fly to the selected location
+      mapRef.current.flyTo(location, 13);
     }
   };
   return (
@@ -230,15 +249,8 @@ export default function Map() {
           )}
 
           <MarkerClusterGroup chunkedLoading>
-            {visibleProductMarkers.map((marker, idx) => (
-              <Marker
-                key={idx}
-                position={marker.geocode}
-                icon={customIcon}
-                eventHandlers={{
-                  click: () =>
-                    updateMapLocation(marker.geocode, marker.productDetails),
-                }}>
+            {allProductMarkers.map((marker, idx) => (
+              <Marker key={idx} position={marker.geocode} icon={customIcon}>
                 <Popup>
                   <h2>{marker.productDetails.name}</h2>
                   <img
