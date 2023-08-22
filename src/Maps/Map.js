@@ -88,7 +88,6 @@ export default function Map() {
               const response = await axios.get(
                 `https://nominatim.openstreetmap.org/search?q=${address}&format=json`
               );
-              console.log(response);
               if (response.data.length > 0) {
                 const latAddress = parseFloat(response.data[0].lat);
                 const lngAddress = parseFloat(response.data[0].lon);
@@ -252,15 +251,11 @@ export default function Map() {
             {allProductMarkers.map((marker, idx) => (
               <Marker key={idx} position={marker.geocode} icon={customIcon}>
                 <Popup>
-                  <h2>{marker.productDetails.name}</h2>
-                  <img
-                    src={marker.productDetails.imageUrl}
-                    alt={marker.productDetails.name}
-                    width="100"
-                  />
-                  <p>Category: {marker.productDetails.category}</p>
-                  <p>{marker.productDetails.description}</p>
-                  <p>Price: ${marker.productDetails.price}</p>
+                  <h2>{marker.name}</h2>
+                  <img src={marker.imageUrl} alt={marker.name} width="100" />
+                  <p>Category: {marker.category}</p>
+                  <p>{marker.description}</p>
+                  <p>Price: ${marker.price}</p>
                 </Popup>
               </Marker>
             ))}
