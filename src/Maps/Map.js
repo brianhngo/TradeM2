@@ -247,19 +247,20 @@ export default function Map() {
               icon={customIcon}></Marker>
           )}
 
-          <MarkerClusterGroup chunkedLoading>
-            {allProductMarkers.map((marker, idx) => (
-              <Marker key={idx} position={marker.geocode} icon={customIcon}>
-                <Popup>
-                  <h2>{marker.name}</h2>
-                  <img src={marker.imageUrl} alt={marker.name} width="100" />
-                  <p>Category: {marker.category}</p>
-                  <p>{marker.description}</p>
-                  <p>Price: ${marker.price}</p>
-                </Popup>
-              </Marker>
-            ))}
-          </MarkerClusterGroup>
+<MarkerClusterGroup chunkedLoading>
+  {allProductMarkers.map((marker, idx) => (
+    <Marker key={idx} position={marker.geocode} icon={customIcon}>
+      <Popup>
+        <h2>{marker.productDetails.name}</h2>
+        <img src={marker.productDetails.imageUrl} alt={marker.productDetails.name} width="100" />
+        <p>Category: {marker.productDetails.category}</p>
+        <p>{marker.productDetails.description}</p>
+        <p>Price: ${marker.productDetails.price}</p>
+      </Popup>
+    </Marker>
+  ))}
+</MarkerClusterGroup>
+
         </MapContainer>
       </div>
     </div>
