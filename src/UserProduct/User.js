@@ -72,22 +72,19 @@ export default function User({ uid }) {
     let uploadedImageUrls = [];
 
     for (let i = 0; i < event.target.files.length; i++) {
-      const file = files[i];
+      const file = event.target.files[i];
       const storage = getStorage();
       const storageRef = refFromStorage(storage, 'productImages/' + file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
         'state_changed',
-        'state_changed',
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
-          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
-          console.error('Error uploading image:', error);
           console.error('Error uploading image:', error);
         },
         async () => {
@@ -96,7 +93,7 @@ export default function User({ uid }) {
             console.log('File available at', downloadURL);
             uploadedImageUrls.push(downloadURL);
 
-            if (uploadedImageUrls.length === files.length) {
+            if (uploadedImageUrls.length === event.target.files.length) {
               setProductImages(uploadedImageUrls);
             }
 
@@ -284,6 +281,10 @@ export default function User({ uid }) {
             <option value="Toy">Toy</option>
             <option value="Electronics">Electronics</option>
             <option value="Clothing">Clothing</option>
+            <option value="Sporting">Sporting</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Jewelry">Jewelry</option>
+            <option value="Misc">Misc</option>
           </select>
           <input
             className="input-product-location"
