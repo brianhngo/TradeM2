@@ -106,7 +106,7 @@ export default function UserProfile() {
       if (userData) {
         setUid(userData.uid);
 
-        get(child(dbref, 'Users/' + uid))
+        get(child(dbref, 'Users/' + userData.uid))
           .then((snapshot) => {
             if (snapshot.exists()) {
               setUser(snapshot.val());
