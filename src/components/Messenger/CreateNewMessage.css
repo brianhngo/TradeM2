@@ -6,7 +6,7 @@
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 90%; 
+  width: 90%;
   max-width: 800px;
   margin: 0 auto;
   position: absolute;
@@ -29,11 +29,9 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-
 .exit-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
-
 
 .popup-title {
   font-size: 24px;
@@ -51,12 +49,12 @@
 .message-input {
   display: block;
   width: 100%;
-  padding: 15px; 
-  margin-bottom: 20px; 
+  padding: 15px;
+  margin-bottom: 20px;
   border: none;
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.1); 
-  color: white; 
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .submit-button {
@@ -76,19 +74,18 @@
 
 .email-input::placeholder,
 .message-input::placeholder {
-  color: rgba(255, 255, 255, 0.7); 
+  color: rgba(255, 255, 255, 0.7);
 }
-
-
-
 
 .sendMessageButton {
   background-color: transparent;
   color: black;
   border: 1px solid black;
-
+  display: inline-block;
   padding: 10px 20px;
   cursor: pointer;
+  width: 120px;
+  height: 75px;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -97,3 +94,9 @@
   color: white;
 }
 
+.messengerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

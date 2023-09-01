@@ -5,7 +5,7 @@ import { getDatabase, ref, get } from 'firebase/database';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Link } from 'react-router-dom';
 import {
   MapContainer,
   TileLayer,
@@ -166,6 +166,7 @@ export default function Map() {
       mapRef.current.flyTo(location, 13);
     }
   };
+
   return (
     <div className="all-container">
       <div className="allProducts-Container">
@@ -247,20 +248,28 @@ export default function Map() {
               icon={customIcon}></Marker>
           )}
 
-<MarkerClusterGroup chunkedLoading>
-  {allProductMarkers.map((marker, idx) => (
-    <Marker key={idx} position={marker.geocode} icon={customIcon}>
-      <Popup>
-        <h2>{marker.productDetails.name}</h2>
-        <img src={marker.productDetails.imageUrl} alt={marker.productDetails.name} width="100" />
-        <p>Category: {marker.productDetails.category}</p>
-        <p>{marker.productDetails.description}</p>
-        <p>Price: ${marker.productDetails.price}</p>
-      </Popup>
-    </Marker>
-  ))}
-</MarkerClusterGroup>
-
+          <MarkerClusterGroup chunkedLoading>
+            {allProductMarkers.map((marker, idx) => (
+              <Marker key={idx} position={marker.geocode} icon={customIcon}>
+                <Popup>
+                  <h2>{marker.productDetails.name}</h2>
+                  <img
+                    src={marker.productDetails.imageUrl}
+                    alt={marker.productDetails.name}
+                    width="100"
+                  />
+                  <p>Category: {marker.productDetails.category}</p>
+                  <p>{marker.productDetails.description}</p>
+                  <p>Price: ${marker.productDetails.price}</p>
+                  <Link
+                    className="product-link"
+                    to={`/singleproduct/${marker.productDetails.productId}`}>
+                    Link to this Product
+                  </Link>
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
         </MapContainer>
       </div>
     </div>

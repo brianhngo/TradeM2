@@ -8,6 +8,8 @@ export default function Messenger() {
   const { state } = useLocation();
   const userId = state.userId; // Logged in usersID
   const otherId = state.otherId; // Other persons in chat //
+  const otherEmail = state.otherEmail;
+  const userEmail = state.userEmail;
   const [allMessages, setAllMessages] = useState([]);
 
   console.log(allMessages);
@@ -31,12 +33,16 @@ export default function Messenger() {
       message: message,
       sentBy: userId,
       receiveBy: otherId,
+      userEmail: userEmail,
+      otherEmail: otherEmail,
     });
 
     update(ref(db, `Messages2/${otherId}/${timestamp}`), {
       message: message,
       sentBy: userId,
       receiveBy: otherId,
+      userEmail: userEmail,
+      otherEmail: otherEmail,
     });
   }
 
@@ -95,7 +101,7 @@ export default function Messenger() {
                 key={index}>
                 <li> {element.message} </li>
 
-                {userId === element.receiveBy ? (
+                {userId === element.sentBy ? (
                   <span className="messageUser"> {element.userEmail} </span>
                 ) : (
                   <span className="messageUser"> {element.userEmail}</span>

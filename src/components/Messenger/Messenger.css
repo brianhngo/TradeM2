@@ -7,13 +7,15 @@
 .messageListContainer {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   max-height: 500px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  max-width: 600px;
+  justify-content: center;
 }
 
 #chat {
@@ -38,7 +40,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   margin: 10px;
   margin-top: 20px;
 }
@@ -174,6 +176,7 @@
 .last-message-text {
   font-size: 14px;
   color: #666;
+  text-decoration: none;
 }
 
 .userMessage:hover,
@@ -217,4 +220,9 @@
 
 .backLinkContainer a:hover {
   background-color: #ddd;
+}
+
+.last-message-container {
+  text-decoration: none;
+  width: 600px;
 }

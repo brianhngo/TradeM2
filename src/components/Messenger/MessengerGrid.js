@@ -26,19 +26,22 @@ export default function MessengerGrid({ userId }) {
       }
     }
     const uniqueId = Array.from(uniqueIdSet);
+    console.log('uniqueID', uniqueId);
+    console.log(reverseArray);
     let obj = {};
     for (let element of reverseArray) {
+      console.log(element);
       if (uniqueId.includes(element.sentBy)) {
         if (!obj[element.sentBy]) {
           obj[element.sentBy] = element;
         }
-      } else if (uniqueId.includes(element.receiveBy)) {
+      } else {
         if (!obj[element.receiveBy]) {
           obj[element.receiveBy] = element;
         }
       }
     }
-
+    console.log('obj', obj);
     return Object.values(obj);
   };
 
@@ -80,6 +83,7 @@ export default function MessengerGrid({ userId }) {
         <>
           {messageList.map((element, index) => (
             <Link
+              className="last-message-container"
               key={index}
               to="/chat"
               state={{
@@ -88,6 +92,14 @@ export default function MessengerGrid({ userId }) {
                   userId === element.sentBy
                     ? element.receiveBy
                     : element.sentBy,
+                userEmail:
+                  userId === element.sentBy
+                    ? element.userEmail
+                    : element.otherEmail,
+                otherEmail:
+                  userId === element.sentBy
+                    ? element.otherEmail
+                    : element.userEmail,
               }}>
               <div className="messages">
                 <div className="participant">
@@ -100,7 +112,7 @@ export default function MessengerGrid({ userId }) {
                   </p>
                 </div>
                 <div className="last-message">
-                  <p> Message : {element.message}</p>
+                  <p>Last Message : {element.message}</p>
                 </div>
               </div>
             </Link>
