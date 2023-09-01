@@ -10,7 +10,6 @@ const customStyles = {
     maxWidth: '500px',
     backgroundColor: 'rgba(0, 0, 0, 0.8)', // Change the alpha value to adjust transparency
     border: 'none', // Remove the border if desired
-
   },
 };
 import './CreateNewMessage.css';
@@ -95,6 +94,8 @@ export default function CreateNewMessage({
             state: {
               userId: user.uid,
               otherId: otherId,
+              userEmail: filteredUserData[0].email,
+              otherEmail: email,
             },
           });
         }
@@ -146,6 +147,8 @@ export default function CreateNewMessage({
             state: {
               userId: userId,
               otherId: filteredData[0].id,
+              otherEmail: email,
+              userEmail: filteredUserData[0].email,
             },
           });
         }
