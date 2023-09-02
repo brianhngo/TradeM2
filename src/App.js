@@ -12,6 +12,7 @@ import SingleProduct from './components/SingleProduct/SingleProduct';
 import UserProducts from './components/UserProducts';
 import Messenger from './components/Messenger/Messenger';
 import ChatList from './components/Messenger/ChatList';
+import ProductContainer from './Maps/ProductContainer';
 function App() {
   return (
     <Routes>
@@ -19,7 +20,7 @@ function App() {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/userproducts" element={<UserProducts />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/allproducts" element={<Maps />} />
+      <Route path="/allproducts" element={<ProductContainer />} />
       <Route path="/signup" element={<SignUpModal />} />
       <Route path="/forgetPassword" element={<ForgetPassword />} />
       <Route path="/chatlist" element={<ChatList />} />
