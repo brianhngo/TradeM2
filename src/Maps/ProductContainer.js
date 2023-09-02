@@ -33,7 +33,7 @@ function ProductContainer() {
   const mapRef = useRef();
   const [highlightedProductLocation, setHighlightedProductLocation] =
     useState(null);
-
+  const [loading, setLoading] = useState(true);
   const handleIconClick = (category) => {
     setFilter((prev) => ({ ...prev, category }));
   };
@@ -86,6 +86,7 @@ function ProductContainer() {
   }, [filter, unfilteredProducts]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchProducts = async () => {
       const db = getDatabase();
       const productsRef = ref(db, 'Products');
@@ -122,6 +123,7 @@ function ProductContainer() {
           );
 
           setUnfilteredProducts(locations);
+          setLoading(false);
         }
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -173,42 +175,46 @@ function ProductContainer() {
   return (
     <div className="all-container">
       <div className="allProducts-Container">
-        <div className="filter-section">
-          <div className="icon-container">
-            {Object.entries(ICONS).map(([category, iconPath]) => (
-              <img
-                key={category}
-                src={iconPath}
-                alt={category}
-                className={`filter-icon ${
-                  filter.category === category ? 'active' : ''
-                }`}
-                onClick={() => handleIconClick(category)}
-              />
-            ))}
+        {loading ? (
+          <div> Loading (4-5 seconds)...Thank you for your patiences! </div>
+        ) : (
+          <div className="filter-section">
+            <div className="icon-container">
+              {Object.entries(ICONS).map(([category, iconPath]) => (
+                <img
+                  key={category}
+                  src={iconPath}
+                  alt={category}
+                  className={`filter-icon ${
+                    filter.category === category ? 'active' : ''
+                  }`}
+                  onClick={() => handleIconClick(category)}
+                />
+              ))}
+            </div>
+            <div className="price-filter-container">
+              <select
+                name="price"
+                onChange={(e) =>
+                  setFilter((prev) => ({ ...prev, price: e.target.value }))
+                }>
+                <option value="All">All Prices</option>
+                <option value="50">Under 50</option>
+                <option value="50-100">50 to 100</option>
+                <option value="100-500">100 to 500</option>
+                <option value="500-1000">500 to 1000</option>
+              </select>
+            </div>
+            <AllProducts
+              filteredProducts={filteredProducts}
+              setFilteredProducts={setFilteredProducts}
+              filter={filter}
+              setFilter={setFilter}
+              updateMapLocation={updateMapLocation}
+              locateProduct={locateProduct}
+            />
           </div>
-          <div className="price-filter-container">
-            <select
-              name="price"
-              onChange={(e) =>
-                setFilter((prev) => ({ ...prev, price: e.target.value }))
-              }>
-              <option value="All">All Prices</option>
-              <option value="50">Under 50</option>
-              <option value="50-100">50 to 100</option>
-              <option value="100-500">100 to 500</option>
-              <option value="500-1000">500 to 1000</option>
-            </select>
-          </div>
-          <AllProducts
-            filteredProducts={filteredProducts}
-            setFilteredProducts={setFilteredProducts}
-            filter={filter}
-            setFilter={setFilter}
-            updateMapLocation={updateMapLocation}
-            locateProduct={locateProduct}
-          />
-        </div>
+        )}
       </div>
 
       <Map

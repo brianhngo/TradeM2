@@ -124,7 +124,7 @@ export default function Map({
       <MapContainer
         ref={mapRef}
         center={[40.7128, -74.006]}
-        zoom={userLocation ? 11 : 7}>
+        zoom={userLocation ? 14 : 7}>
         <FullscreenControl />
 
         <div className="address-container">
