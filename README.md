@@ -1,7 +1,7 @@
 
 
 
-# TradeM - Your Online Marketplace
+# TradeM - Your Online Marketplace (https://tradem-6faae.web.app)
 
 TradeM is a versatile online platform that seamlessly combines the best features of popular marketplaces like Facebook Marketplace and Craigslist with the user-friendliness of Yelp. This powerful platform empowers users to easily resell items they no longer need while discovering great deals within their local communities.
 
