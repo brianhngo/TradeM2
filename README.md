@@ -1,7 +1,10 @@
 
 
 
-# TradeM - Your Online Marketplace (https://tradem-6faae.web.app)
+# TradeM - Your Online Marketplace 
+
+## Deployed Link 
+https://tradem-6faae.web.app
 
 TradeM is a versatile online platform that seamlessly combines the best features of popular marketplaces like Facebook Marketplace and Craigslist with the user-friendliness of Yelp. This powerful platform empowers users to easily resell items they no longer need while discovering great deals within their local communities.
 
@@ -50,12 +53,12 @@ Password: 123456
 User Account #2
 Email : calvin@gmail.com
 Password: 123456
-Seller Account
+
 
 User Account #1
 Email : kate@gmail.com
 Password: 123456
-Seller Account
+
 
 
 Contributing
