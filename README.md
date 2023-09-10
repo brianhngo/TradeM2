@@ -8,6 +8,26 @@ https://tradem-6faae.web.app
 
 TradeM is a versatile online platform that seamlessly combines the best features of popular marketplaces like Facebook Marketplace and Craigslist with the user-friendliness of Yelp. This powerful platform empowers users to easily resell items they no longer need while discovering great deals within their local communities.
 
+TradeM is built using the following technologies:
+
+**Frontend**:
+  - React: A JavaScript library for building user interfaces.
+  - React Bootstrap: Frontend framework for responsive design.
+  - Leaflet: Interactive maps for visualizing market data.
+  - JavaScript: Logic for frontend functionality.
+  - HTML: Structure for web pages.
+  - CSS: Styles for web pages.
+ 
+
+**Backend**:
+  - Node.js: JavaScript runtime environment.
+  - Firebase: Backend-as-a-Service (BaaS) for building APIs and authentication.
+  - Firebase Auth: Authentication system for user management.
+
+**Deployed via Firebase**:
+ 
+
+
 ## Features
 
 ### Buy and Sell Locally
