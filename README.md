@@ -11,18 +11,50 @@ TradeM is a versatile online platform that seamlessly combines the best features
 TradeM is built using the following technologies:
 
 **Frontend**:
-  - React: A JavaScript library for building user interfaces.
-  - React Bootstrap: Frontend framework for responsive design.
-  - Leaflet: Interactive maps for visualizing market data.
-  - JavaScript: Logic for frontend functionality.
-  - HTML: Structure for web pages.
-  - CSS: Styles for web pages.
+  <p> React: A JavaScript library for building user interfaces. 
+     <a href="https://reactjs.org/"> 
+        <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" alt="react" width="40" height="40"/> 
+      </a>
+  </p>
+  <p> React Bootstrap: Frontend framework for responsive design.
+    <a href="https://getbootstrap.com/"> 
+        <img src="https://github.com/devicons/devicon/blob/master/icons/bootstrap/bootstrap-original.svg" alt="react" width="40" height="40"/> 
+      </a>
+  </p>
+  <p> Leaflet: Interactive maps for visualizing market data.
+    <a>
+      <img width="80" height = "40" src="https://rawgit.com/Leaflet/Leaflet/main/src/images/logo.svg" alt="Leaflet" />
+    </a>
+  </p>
+  <p> JavaScript: Logic for frontend functionality.
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"> 
+      <img src="https://user-images.githubusercontent.com/48143100/163075516-9b38424a-eec9-411f-8718-6facb953d642.png" alt="javascript" width="40" height="40"/> 
+      </a>
+  </p>
+  <p> HTML: Structure for web pages.
+     <a href="https://www.w3.org/html/">
+        <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="html5" width="40" height="40"/> 
+      </a> 
+  </p>
+  <p> CSS: Styles for web pages.
+     <a href="https://www.w3schools.com/css/"> 
+        <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="css3" width="40" height="40"/> 
+        </a> 
+  </p>
  
 
 **Backend**:
-  - Node.js: JavaScript runtime environment.
-  - Firebase: Backend-as-a-Service (BaaS) for building APIs and authentication.
-  - Firebase Auth: Authentication system for user management.
+  <p> Node.js: The runtime environment for server-side JavaScript. 
+        <a href="https://nodejs.org"> 
+        <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original.svg" alt="nodejs" width="40" height="40"/> 
+        </a> 
+    </p>
+  <p>Firebase: Backend-as-a-Service (BaaS) for building APIs and authentication.
+      <a href = "https://firebase.google.com/">
+        <img src = "https://github.com/devicons/devicon/blob/master/icons/firebase/firebase-plain.svg" alt = 'firebase' width='40' height = '40'/>
+      </a>
+  </p>
+  
 
 **Deployed via Firebase**:
  
@@ -55,6 +87,26 @@ Real-Time Notifications: Stay updated with real-time notifications for new messa
 
 ## Getting Started
 To start using TradeM, you have two options:
+
+## Run on Deployed Website
+
+https://tradem-6faae.web.app
+
+## Run Locally 
+
+  Clone the project
+
+  Go to the Project directory
+
+  Install dependencies
+  npm install
+
+  Start the server
+  Npm run start
+
+  Access the project in your browser at localhost:3000
+
+## Already made User Accounts to use during Demo
 
 ### Option 1: Create Your Own Account
 Visit the TradeM website at www.tradem.com.
