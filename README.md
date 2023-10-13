@@ -41,6 +41,16 @@ TradeM is built using the following technologies:
         <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="css3" width="40" height="40"/> 
         </a> 
   </p>
+   <p> Axios: Making API requests for smooth data exchange. 
+        <a href ="https://axios-http.com">
+            <img src="https://raw.githubusercontent.com/brianhngo/ChipCorner/main/public/images/axios.png" alt="axios" width="40" height="40"/>
+        </a>
+    </p>
+    <p> Webpack: Bundling your assets and managing dependencies. 
+        <a href="https://webpack.js.org/">
+        <img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original.svg" alt="webpack" width="40" height="40"/> 
+        </a> 
+    </p>
  
 
 **Backend**:
