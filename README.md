@@ -95,6 +95,19 @@ Buyer-Seller Communication: TradeM's built-in messaging system allows buyers and
 
 Real-Time Notifications: Stay updated with real-time notifications for new messages, making it easy to respond promptly.
 
+## Demo
+
+![LandingPage](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/LandingPage.gif)
+![AllProducts1](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/AllProrducts#1.gif)
+![AllProducts2](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/AllProducts#2.gif)
+![AllProducts3](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/AllProducts#3.gif)
+![LoginPage](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/LoginPage.gif)
+![ProfilePage](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/ProfilePage.gif)
+![SingleProduct](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/SingleProduct.gif)
+![SingleProduct2](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/SingleProduct2.gif)
+![ChatFeature](https://github.com/brianhngo/TradeM2/tree/main/public/gifs/ChatFeature.gif)
+
+
 ## Getting Started
 To start using TradeM, you have two options:
 
